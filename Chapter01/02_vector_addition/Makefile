@@ -20,11 +20,11 @@ $(foreach sm, ${SMS}, $(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=s
 # vector_addition: vector_addition.cu
 # 	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@ $<
 
-vector_addition_blocks: vector_addition_gpu_block_only.cu
-	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@ $<
-
-# vector_addition_threads: vector_addition_gpu_thread_only.cu
+# vector_addition_blocks: vector_addition_gpu_block_only.cu
 # 	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@ $<
+
+vector_addition_threads: vector_addition_gpu_thread_only.cu
+	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@ $<
 
 # vector_addition_threads_blocks: vector_addition_gpu_thread_block.cu
 # 	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@ $<
