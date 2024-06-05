@@ -63,7 +63,7 @@ int main(void) {
     // which pointed by the ptr_c
     cudaMemcpy(ptr_c, ref_c, size, cudaMemcpyDeviceToHost); 
 
-    // finall print result on ptr_c and free the space allocated on both gpu and cpu side 
+    // finally print result on ptr_c and free the space allocated on both gpu and cpu side 
     print_output(ptr_a, ptr_b, ptr_c);
 
     free(ptr_a); 
