@@ -1,7 +1,7 @@
 # CUDA Programming 
 
 ## Dev Environment
-* cuda version: 9.2 
+* cuda version: 10.2
 
 * nvcc version 
 ```
