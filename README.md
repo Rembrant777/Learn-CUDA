@@ -58,5 +58,5 @@ This is free software: you are free to change and redistrib
 ```
 
 ### References 
-CUDA Book: Learn CUDA Programming
-Code Repo: [link](https://github.com/PacktPublishing/Learn-CUDA-Programming)
+* CUDA Book: Learn CUDA Programming
+* Code Repo: [link](https://github.com/PacktPublishing/Learn-CUDA-Programming)
