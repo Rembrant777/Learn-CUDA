@@ -2,7 +2,7 @@
 CUDA_PATH=/usr/local/cuda-9.2
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
-TARGET=hello_world
+TARGET=vector_addition_gpu_thread_block
 
 INCLUDES= -I${CUDA_PATH}/samples/common/inc
 NVCC_FLAGS=-m64 -lineinfo
