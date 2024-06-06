@@ -43,7 +43,7 @@ int main(void)
     add<<<numBlocks, blockSize>>>(N, x, y); 
 
     // Host prefetches Memory
-    cudaMemoryPrefetchAsync(y, N * sizeof(float), cudaCpuDeviceId, NULL); 
+    cudaMemPrefetchAsync(y, N * sizeof(float), cudaCpuDeviceId, NULL); 
 
     // Wait for GPU to finish before accessing on host
     cudaDeviceSynchronize(); 

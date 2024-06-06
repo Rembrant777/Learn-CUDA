@@ -28,5 +28,8 @@ unified_initialized: unified_memory_initialized.cu
 unified_prefetch: unified_memory_prefetch.cu
 	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODEFLAGS} -o $@.out $<
 
+unified_64align: unified_memory_64align.cu
+	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@.out $<	
+
 clean:
 	rm -rf ${TARGET} && rm -rf *.out
