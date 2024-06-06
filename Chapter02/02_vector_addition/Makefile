@@ -17,7 +17,7 @@ endif
 
 $(foreach sm, ${SMS}, $(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
 
-sgemm:sgemm.cu
+vector_addition_gpu_thread_block: vector_addition_gpu_thread_block.cu
 	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@ $<
 
 clean:

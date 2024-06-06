@@ -2,7 +2,7 @@
 CUDA_PATH=/usr/local/cuda-9.2
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
-TARGET=vector_addition_gpu_thread_block
+TARGET=aos soa
 
 INCLUDES= -I${CUDA_PATH}/samples/common/inc
 NVCC_FLAGS=-m64 -lineinfo
@@ -17,8 +17,14 @@ endif
 
 $(foreach sm, ${SMS}, $(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
 
-sgemm:sgemm.cu
+
+all: ${TARGET}
+
+aos: aos.cu
 	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@ $<
+
+soa: soa.cu
+	${NVCC} ${INCLUDES} ${ALL_CCFLAGS} ${GENCODE_FLAGS} -o $@ $<	
 
 clean:
 	rm -rf ${TARGET}
