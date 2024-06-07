@@ -57,10 +57,41 @@ Thread Idx is in the grain of Block, it is the index id of total thread counts a
 Lane Idx is in the scope of Warp, it is the index id of total thread counts allocated to the warp. 
 ```
 
+### CUDA occupancy
+```
+CUDA occupancy is the ratio of active CUDA warps to the maximum warps that each streaming multi-processor can execute concurrently.
+
+Higher occupancy means higher effective GPU utilization. 
+
+Developers can determine CUDA occupancy using two methods:
+1. Theoretical occcupancy
+> Theoretical occupancy determined by the CUDA Occupancy Calculator: An Excel sheet provided by the CUDA Toolkit. 
+> Theoretical occupancy can be determined from each kernel's resource usage and GPU's streaming multiprocessor. 
+> Theoretical occupancy can be regarded as the maximum upper-bound occupancy because the occupancy number does not consider instructional dependencies or memory bandwidth limitations. 
+
+
+2. Achieved occupancy
+Achieved Occupancy reflects the true number of concurrent executed warps on a streaming multiprocessor and the maximum available warps. 
+
+Achieved occupancy can be measured by the NVIDIA profiler with metric analysis. 
+```
+
 ### Different Indexes and Concepts in CUDA Programming
 * Block Index 
 * Warp Index 
 * Lane Index
 * Thread Index
 * BlockDim 
+
+
+### Enable NVCC report GPU resource usage
 * 
+```shell
+nvcc -m 64 --resource-usage \
+    -gencode arch=compute_70,code=sm_70 \
+    -gencode arch=compute_75,code=sm_75 \
+    -I/usr/local/cuda/samples/common/inc \
+    -o sgemm ./sgemm.cu 
+```
+
+* NVCC GPU resource usage doc: [link](https://docs.nvidia.com/cuda/turing-compatibility-guide/index.html#building-turing-compatible-apps-using-cuda-10-0)
