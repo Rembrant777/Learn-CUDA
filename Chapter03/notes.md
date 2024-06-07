@@ -95,3 +95,94 @@ nvcc -m 64 --resource-usage \
 ```
 
 * NVCC GPU resource usage doc: [link](https://docs.nvidia.com/cuda/turing-compatibility-guide/index.html#building-turing-compatible-apps-using-cuda-10-0)
+
+### Parallel Reduction 
+```
+Reduction is a simple but useful algorithm to obtain a common parameter across many parameters. 
+
+Reduction tasks can be executed in sequence or in parallel. 
+
+Parallel reduction is the fastest way of getting a histogram, mean, or any other statistical values. 
+```
+
+### Shared Memory vs. Global Memory
+
+#### Shared Memory 
+* Shared Memory is block grained. All block scoped thread can get access to Shared Memory.
+* Shared Memory's bandwidth: TB/s and locates inside of Streaming Multiprocessor. 
+* Access Latency: Low
+
+#### Global Memory
+* Global Memory can be get access by all the blocks' threads. 
+* Global Memory's bandwidth: GB/s to 1TB/s depends on type of GPU.
+* Access Latency: High
+
+* Tips
+
+1. Use shared memory as much as possible. When use global memory prefer select coalesced access to maximum utilization of the memory's bandwidth. 
+2. constant memory and texture memory can be used to store `only read`` or `repeat read` data. 
+
+```
+  +---------------------+       +---------------------+
+  |      Block 0        |       |      Block 1        |
+  | +-----------------+ |       | +-----------------+ |
+  | |   Shared Mem    | |       | |   Shared Mem    | |
+  | |  (Block scope)  | |       | |  (Block scope)  | |
+  | +-----------------+ |       | +-----------------+ |
+  |     +------+         |       |     +------+         |
+  |     |Warp 0|         |       |     |Warp 0|         |
+  |     +------+         |       |     +------+         |
+  |     |Warp 1|         |       |     |Warp 1|         |
+  |     +------+         |       |     +------+         |
+  +---------------------+       +---------------------+
+              |                         |
+              |                         |
+              +-----------+-------------+
+                          |
+                    Global Memory
+                   (All Blocks scope)
+
+```
+
+### Generate Performance Report Command 
+```shell
+/usr/local/cuda-9.2/bin/nvprof -o reduction_global.nvvp ./reduction_global
+/usr/local/cuda-9.2/bin/nvprof --analysis-metrics -o reduction_global_metric.nvvp ./reduction_global
+
+/usr/local/cuda-9.2/bin/nvprof -o reduction_shared.nvvp ./reduction_shared
+/usr/local/cuda-9.2/bin/nvprof --analysis-metrics -o reduction_shared_metric.nvvp ./reduction_shared
+```
+
+### Branch Divergence
+```
+In a single instruction, multiple thread(SIMT) execution model, threads are grouped into set of 32 threads 
+and each group is called a wrap. 
+
+If a warp encounters a conditional statement or branch, its threads can be diverged and serialized to 
+execute each condition. 
+
+This is called branch divergence, which impacts performance significantly.
+```
+
+### Why we need to avoid or minimize warp divergence? 
+```
+As more of the branched part becomes significant, the GPU scheduling throughput becomes inefficient.
+Therefore, we need to avoid or minimize warp divergence effect. 
+```
+
+### How to avoid warp divergence?
+```
+* Divergence avoidance by handling different warps to execute the branched part. 
+
+* Coalsecing the branched part to reduce branches in a warp
+
+* Shortening the branched part; only critical parts to be branched.
+
+* Rearranging the data(transposing, coalescing, and so on)
+
+* Partitioning the group using tiled_partition in Cooperative Group
+```
+
+
+
+
