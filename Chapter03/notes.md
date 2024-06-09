@@ -30,7 +30,10 @@ CUDA Thread -> Spark Task // minimum executable unit defined in Spark Schedule A
 * CUDA Grid : Spark Job
 ```
 Grid in GPU represents a big compute job in which contains multiple Blocks, just like a Spark Job. 
+
+Each Grid contains multiple CUDA blocks just like one Spark Job contains multiple Spark Stages. 
 ```
+
 * CUDA Block : Spark Stage 
 ```
 Block in GPU's Grid just like Stage defined in Spark Job.
