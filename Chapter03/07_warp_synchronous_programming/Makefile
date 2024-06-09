@@ -18,10 +18,11 @@ endif
 
 $(foreach sm, ${SMS}, $(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=sm_$(sm)))
 
+# Openmp
 LIBRARIES += -lgomp
-ALL_CCFLAGS += -g -Xcompiler -fopenmp -rdc=true
+ALL_CCFLAGS += -g -Xcompiler -fopenmp -rdc=true $(NVCC_FLAGS)
 
-all: ${TARGET}
+all : ${TARGET}
 
 reduction_wp_kernel.o: reduction_wp_kernel.cu
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
@@ -29,7 +30,8 @@ reduction_wp_kernel.o: reduction_wp_kernel.cu
 reduction.o: reduction.cpp
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
-reduction: reduction.o reduction_wp_kernel.o
+reduction_wp: reduction.o reduction_wp_kernel.o
 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
+
 clean:
 	rm -rf ${TARGET} *.o	
