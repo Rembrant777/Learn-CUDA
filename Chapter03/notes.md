@@ -312,4 +312,7 @@ cudaDeviceSynchronize();
 __syncthreads()
 ```
 
-
+### [Grid Stride Loops](https://developer.nvidia.com/blog/cuda-pro-tip-write-flexible-kernels-grid-stride-loops)
+#### What's Grid Stride Loops 
+```
+```
