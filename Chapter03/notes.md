@@ -20,20 +20,48 @@ What's interesting in CUDA execution is:
 ```
 
 ### Understand Grid and Warp in CUDA
-* Grid 
 ```
-```
-
-* Warp 
-```
-```
-
-* Difference or Relationship between Grid and Warp 
-```
+CUDA Grid   -> Spark Job
+CUDA Block  -> Spark Stage 
+CUDA Warp   -> Spark Executor's Thread Pool
+CUDA Thread -> Spark Task // minimum executable unit defined in Spark Schedule Architecture 
 ```
 
-* Trying to understand Grid and Wrap with the help of Spark Architecutre 
+* CUDA Grid : Spark Job
 ```
+Grid in GPU represents a big compute job in which contains multiple Blocks, just like a Spark Job. 
+```
+* CUDA Block : Spark Stage 
+```
+Block in GPU's Grid just like Stage defined in Spark Job.
+
+One CUDA Block contains multiple Thread(s), just like one Spark Stage contains multiple Task(s).
+
+Threads in each CUDA Block can cooperate with each other, and share shared memory. 
+Similariy, Spark Stage's Task(s) can share data via shuffle operation(require network communication depends on specific compute strategy).
+```
+
+* CUDA Warp : Spark Executor(thread pool)
+```
+CUDA Warp is hardware component, usually contains 32 threads(depend on GPU type). 
+Just like the thread pool in Spark Executor. 
+```
+
+* CUDA Thread : Spark Task 
+```
+CUDA Thread is the minimum grain component to execute and handle specific compute task. 
+Just like the Spark Task is also the minimum grain component to execute and handle partition data. 
+But, CUDA Thread is the resource concept, and Spark Task is the schedule concept. 
+
+Spark Task need to be allocated thread from the Spark Executor then it can be executed. 
+
+Spark Executor's thread pool also decides the parallelism of the Spark Stage. 
+
+And there is also a big difference between the CUDA Thread and Spark Task. 
+
+Spark Task's executor the thread is apply from the Executor's JVM thread pool, and also be execute in the scope of JVM. 
+
+And the CUDA Thread is apply from the GPU which is the hardware layer's thread. 
 ```
 
 ### Understand CUDA Thread's `threadIdx.x` and CUDA Lane `LaneIndex` in CUDA 
