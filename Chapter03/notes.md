@@ -312,4 +312,10 @@ cudaDeviceSynchronize();
 __syncthreads()
 ```
 
+### [Grid Stride Loops](https://developer.nvidia.com/blog/cuda-pro-tip-write-flexible-kernels-grid-stride-loops)
+#### What's Grid Stride Loops 
+```
+Iterate the input data with a group of CUDA threads, and that size will be the grid size of our kernel function. 
 
+The style of iteration is called grid-strided loops. 
+```
