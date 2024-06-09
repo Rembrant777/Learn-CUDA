@@ -74,7 +74,6 @@ threadIdx.x means thread index of the block.
 we can regard it as the global thread index from the block, cuz one block can contain one or more warps.
 ```
 
-
 * Lane 
 ```
 lane index = threadIdx.x & (warpSize -1) menas current thread's correspoinding local index in the scope of warp.
@@ -214,6 +213,99 @@ Therefore, we need to avoid or minimize warp divergence effect.
 * Partitioning the group using tiled_partition in Cooperative Group
 ```
 
+### Understand CUDA Stream (Chapter3)
+* CUDA Stream 
+```
+In CUDA, Stream is the strategy to manage and organize a series of operation like kernel execution, memoy copy. 
+Stream enable CUDA can execute multiple tasks simultanenously which enhance both GPU resource utilization and compute effective. 
 
+There are different streams in CUDA. One is called the Default Stream and the other is called Non-default Stream. 
+
+Default Stream: if developer do not refer stream specifically, Default Stream will be used in CUDA computing. 
+
+Non-Default Stream: developer can declare, then use self-declared Non-Default Stream to let CUDA's operations execute in different Stream. In this way to maximum the CUDA operation paralleism. But I have to say the operations that executed in different Streams should take care of data results' synchronization and avoid compute conflict. 
+```
+
+* One Question Here 
+Non-Default Stream grained CUDA operate Executions is paralled in which grain? Block, Warp or Grid ? 
+```
+In CUDA, Non-Default Streaming operations execute concurrently. 
+CUDA manage different instructins's execute order and parallism via two components 
+one is CUDA Task the other is CUDA Stream.
+
+1. CUDA Task: refers to different CUDA operations, like kernel execution, memoy copy.
+2. CUDA Stream: refers to the queue orders and schedule task executes in linear sequence on CUDA devices. 
+
+1. Execute order: same stream's tasks execute in order. One task will not begin until its former task finsh. 
+2. Parallism: tasks in different streams execute in parallel, but there is a pre-condition:
+the tasks execute in parallel shouldn't have obvious dependencies. 
+
+Sometimes we say stream grained tasks are refered to those tasks are in same stream which cannobe be execute in parallel. 
+
+There are also different stream-grains:
+One is the Kernel Level: 
+Kernel-level operations can be executed in parallel in different streams. We can create different streams and allocate different kernel-level operations to these streams to enable parallelism.
+
+The other one is Memory Copy Level: 
+Memory Copy Level operations can implement parallelism via cudaMemcpyAsync such async memory copy operation allocate data to different streams to enable parallelism.
+```
+
+* How to use CUDA Stream to implement Kernel Level operation
+```cuda
+__global__
+void kernel_op1(float *data)
+{
+  int idx = blockIdx.x + blockDim.x + threadIdx.x; 
+  data[idx] = ... ; // basic operation 
+}
+
+__global__
+void kernel_op2(float *data)
+{
+  int idx = blockIdx.x * blockDim.x * threadIdx.x; 
+  data[idx] = ...; // basic operation
+}
+
+// main entry point 
+int main() 
+{
+  // device data 
+  float *d_data; 
+  cudamalloc(&d_data, size); 
+
+  cudaStream_t stream1, stream2; 
+
+  cudaStreamCreate(&stream1); 
+  cudaStreamCreate(&stream2);
+
+  // execute kernel_op1 in stream1
+  kernel_op1<<<block_nums, thread_nums, 0, stream1>>>(d_data); 
+
+  // execute kenrl_op2 in stream2; 
+  kernel_op2<<<block_nums, thread_nums, 0, stream2>>>(d_data); 
+
+  // but take care of data conflicts and data sync to make sure calcuated result as expected!
+  // avoid data conflict by control the index access range via the block id , dim id and thread id 
+  // or by creating shared memory(block grained) 
+  // ... other operations ...
+}
+```
+
+### Data Conflict and Sync
+* Stream Grained (Stream Grained, data from different Grid can add to same stream)
+```
+cudaStreamSynchronize(stream: cudaStream_t); 
+
+cudaStreamWaitEvent(stream: cudaStream_t, event: cudaEvent_t, flags: unsigned int); 
+``` 
+* Device Grained (Device: GPU grained,  All Grids data sync )
+```
+cudaDeviceSynchronize(); 
+```
+
+* Inner Kernel(Block grained, All threads in block data sync)
+```
+__syncthreads()
+```
 
 
