@@ -216,8 +216,8 @@ Therefore, we need to avoid or minimize warp divergence effect.
 ### Understand CUDA Stream (Chapter3)
 * CUDA Stream 
 ```
-In CUDA, Stream is the strategy to manage and organize a series of operation like kernel execution, memoy copy. 
-Stream enable CUDA can execute multiple tasks simultanenously which enhance both GPU resource utilization and compute effective. 
+In CUDA, Stream is the strategy to manage and organize a series of operations like kernel execution, memory copy. 
+Stream enable CUDA to execute multiple tasks simultanenously which enhance both GPU resource utilization and computing efficiency. 
 
 There are different streams in CUDA. One is called the Default Stream and the other is called Non-default Stream. 
 
@@ -279,6 +279,10 @@ int main()
   cudaStreamCreate(&stream2);
 
   // execute kernel_op1 in stream1
+  // 3rd parameter refers to how many bytes shared memory apply
+  // if 0 bytes shared memory apply, computing memory will use global memory(which is cross grids)
+  // if no shared memory is applied, take care of 
+  // global memory's operation to avoid data in-consistent and data overwrite 
   kernel_op1<<<block_nums, thread_nums, 0, stream1>>>(d_data); 
 
   // execute kenrl_op2 in stream2; 
