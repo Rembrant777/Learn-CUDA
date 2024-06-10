@@ -33,10 +33,10 @@ reduction_cg_kernel.o: reduction_cg_kernel.cu
 reduction_cg_shift_kernel.o: reduction_cg_shift_kernel.cu
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
-reduction_cg_kernel: reduction.o reduction_cg_kernel.o
+reduction_cg: reduction.o reduction_cg_kernel.o
 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
-reduction_cg_shift_kernel: reduction.o reduction_cg_shift_kernel.o 
+reduction_cg_shift: reduction.o reduction_cg_shift_kernel.o 
 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
 clean:
