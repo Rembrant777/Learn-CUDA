@@ -24,20 +24,23 @@ ALL_CCFLAGS += -g -Xcompiler -fopenmp -rdc=true $(NVCC_FLAGS)
 
 all : ${TARGET}
 
-reduction.o: reduction.cpp
+all : ${TARGET}
+
+reduction_wp_kernel.o: reduction_wp_kernel.cu
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
 reduction_cg_kernel.o: reduction_cg_kernel.cu
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
-reduction_cg_shift_kernel.o: reduction_cg_shift_kernel.cu
+reduction.o: reduction.cpp
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
+
+reduction_wp: reduction.o reduction_wp_kernel.o
+	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
 reduction_cg: reduction.o reduction_cg_kernel.o
 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
-reduction_cg_shift: reduction.o reduction_cg_shift_kernel.o 
-	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
-
 clean:
-	rm -rf ${TARGET} *.o	
+	rm -f ${TARGET} *.o
+	

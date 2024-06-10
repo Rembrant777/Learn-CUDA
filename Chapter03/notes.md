@@ -319,3 +319,43 @@ Iterate the input data with a group of CUDA threads, and that size will be the g
 
 The style of iteration is called grid-strided loops. 
 ```
+
+### Understand CUDA Thread Group
+### What's Thread Group in CUDA 
+```
+In CUDA, thread group is a collection of threads that can be executed in parallel. 
+
+Thread group in CUDA is a very import concept that provide a strategy for threads can be executed in parallel with the help of hardware resources. 
+
+
+Thread group is often created in the scope of block. 
+
+One block's all threads can belong to the same thread group. 
+
+For now, we can treate thread group as a unit to be executed in parallel and it execute the same logic branch. 
+
+Thread groups can also be tagged by different dim value, like x, y and z. 
+
+In this way, one block's threads can be divided into different groups of threads to handle different data dimensions' calculation. 
+
+CUDA also define thread groups' grained native functions to communicate across thread groups. 
+```
+
+### CUDA Thread Group common operations/functions 
+* Thread Group's inner threads' Synchronization 
+* Thread Group scope's thread communicaiton
+* Thread Group inner reduction 
+
+### CUDA Thread Group Advantages 
+* Thread Group layer is larger than warp(also known as tile) in one block, and smaller than block. This provide more fine grained manipulation operations upon the data and can handle different scale of dataset effectively.
+* Thread Group's thread number can be defined more flexibally. 
+* Thread Group is more clear and simple than other CUDA concept warp(tile) or grid.
+
+### CUDA Thread Group common algorithm/strategies 
+* Fix size thread group 
+
+* Dynamic generated size thread group 
+
+* Grouped thread groups 
+
+* Dynamic Balanced thread groups 
