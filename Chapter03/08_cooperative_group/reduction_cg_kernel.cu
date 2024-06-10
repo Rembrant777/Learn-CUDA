@@ -55,7 +55,41 @@ void reduction_kernel(float *g_out, float *g_in, unsigned int size)
         block.sync(); 
 
         // do reduction 
-        // for (unsigned int stride = block.group_dim().x)
-    }
 
+        // stride init value  = block total threads / 2
+        // stride every time divide by 2 
+        // index = current thread index + s_data[current_thread_index + stride]
+        for (unsigned int stride = block.group_dim().x / 2; stride > 0; stride >>= 1) {
+            // scheduled threads reduce for every iteration 
+            // and will be smaller than a warp size (32) eventually
+            if (block.thread_index().x < stride) {
+                s_data[block.thread_index().x] += s_data[block.thread_index().x + stride]; 
+            }
+            block.sync(); 
+        }
+
+        if (block.thread_index().x == 0) {
+            g_out[block.group_index().x] = s_data[0]; 
+        }
+    }
+}
+
+void reduction(float *g_outPtr, float *g_inPtr, int size, int n_threads)
+{
+    // num_sms: how many stream multi-processor GPU has in total 
+    int num_sms;
+
+    // num_blocks_per_sm: how many blocks each sm has 
+    int num_blocks_per_sm;
+    cudaDeviceGetAttribute(&num_sms, cudaDevAttrMultiProcessorCount, 0);
+    cudaOccupancyMaxActiveBlocksPerMultiprocessor(&num_blocks_per_sm, 
+                reduction_kernel, n_threads, n_threads*sizeof(float));
+
+    // total block apply to execute the compute = 
+    // min(max num of blocks that gpu can provide, total compute size / number of threads)
+    // depends on the data scale 
+    int n_blocks = min(num_blocks_per_sm * num_sms, (size + n_threads - 1) / n_threads);
+
+    reduction_kernel<<< n_blocks, n_threads, n_threads * sizeof(float), 0 >>>(g_outPtr, g_inPtr, size);
+    reduction_kernel<<< 1, n_threads, n_threads * sizeof(float), 0 >>>(g_outPtr, g_outPtr, n_blocks);
 }
