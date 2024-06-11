@@ -120,3 +120,9 @@ void CUDART_CB Callback(cudaStream_t stream, cudaError_t status, void *userData)
 ```
 
 ## Understand CUDA's Dynamic Parallelism 
+### What's CUDA dynamic parallelism(CDP)
+```
+CDP is a device runtime feature that enables nested calls from device functions. 
+These nested calls allow different parallelism for the child grid. (Only Tesla and Volta support this).
+CDP is useful when you need a different block size depending on the problem.s
+```
