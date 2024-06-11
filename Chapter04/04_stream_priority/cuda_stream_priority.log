@@ -1,0 +1,260 @@
+Priority Range: low(0), high(-1)
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  0 - priority -999 - elapsed 6.527 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  4 - priority -999 - elapsed 9.625 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  8 - priority -999 - elapsed 13.157 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  3 - priority -999 - elapsed 17.956 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 12 - priority -999 - elapsed 21.298 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  1 - priority -999 - elapsed 25.089 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  2 - priority -999 - elapsed 28.872 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  7 - priority -999 - elapsed 33.102 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 11 - priority -999 - elapsed 36.793 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 16 - priority -999 - elapsed 40.305 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 20 - priority -999 - elapsed 44.547 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  5 - priority -999 - elapsed 48.573 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  9 - priority -999 - elapsed 52.399 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream  6 - priority -999 - elapsed 56.030 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 10 - priority -999 - elapsed 60.089 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 15 - priority -999 - elapsed 63.956 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 24 - priority -999 - elapsed 67.435 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 13 - priority -999 - elapsed 71.612 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 14 - priority -999 - elapsed 75.501 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 19 - priority -999 - elapsed 79.356 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 23 - priority -999 - elapsed 83.109 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 28 - priority -999 - elapsed 86.576 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 32 - priority -999 - elapsed 90.566 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 17 - priority -999 - elapsed 98.360 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 21 - priority -999 - elapsed 102.549 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 18 - priority -999 - elapsed 106.366 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 22 - priority -999 - elapsed 109.919 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 27 - priority -999 - elapsed 113.715 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 36 - priority -999 - elapsed 117.476 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 40 - priority -999 - elapsed 121.054 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 25 - priority -999 - elapsed 125.357 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 26 - priority -999 - elapsed 129.445 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 31 - priority -999 - elapsed 134.372 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 35 - priority -999 - elapsed 136.733 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 44 - priority -999 - elapsed 140.343 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 29 - priority -999 - elapsed 144.944 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 33 - priority -999 - elapsed 148.358 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 30 - priority -999 - elapsed 152.463 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 34 - priority -999 - elapsed 156.634 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 39 - priority -999 - elapsed 159.726 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 43 - priority -999 - elapsed 163.700 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 48 - priority -999 - elapsed 167.420 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 52 - priority -999 - elapsed 179.133 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 37 - priority -999 - elapsed 179.669 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 41 - priority -999 - elapsed 179.596 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 38 - priority -999 - elapsed 183.283 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 42 - priority -999 - elapsed 186.824 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 47 - priority -999 - elapsed 190.816 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 56 - priority -999 - elapsed 194.265 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 45 - priority -999 - elapsed 198.265 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 46 - priority -999 - elapsed 202.222 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 51 - priority -999 - elapsed 206.172 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 55 - priority -999 - elapsed 209.701 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 60 - priority -999 - elapsed 213.333 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 64 - priority -999 - elapsed 217.220 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 49 - priority -999 - elapsed 221.571 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 53 - priority -999 - elapsed 225.226 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 50 - priority -999 - elapsed 229.191 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 54 - priority -999 - elapsed 232.973 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 59 - priority -999 - elapsed 236.604 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 68 - priority -999 - elapsed 240.127 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 72 - priority -999 - elapsed 243.936 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 57 - priority -999 - elapsed 248.395 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 58 - priority -999 - elapsed 252.139 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 63 - priority -999 - elapsed 255.804 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 67 - priority -999 - elapsed 261.590 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 76 - priority -999 - elapsed 263.121 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 61 - priority -999 - elapsed 267.551 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 65 - priority -999 - elapsed 271.869 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 62 - priority -999 - elapsed 275.172 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 66 - priority -999 - elapsed 285.758 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 71 - priority -999 - elapsed 285.604 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 75 - priority -999 - elapsed 286.277 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 80 - priority -999 - elapsed 290.246 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 84 - priority -999 - elapsed 293.832 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 69 - priority -999 - elapsed 298.132 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 70 - priority -999 - elapsed 302.127 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 74 - priority -999 - elapsed 307.416 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 79 - priority -999 - elapsed 309.444 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 88 - priority -999 - elapsed 312.891 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 73 - priority -999 - elapsed 317.895 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 77 - priority -999 - elapsed 321.152 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 78 - priority -999 - elapsed 325.078 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 83 - priority -999 - elapsed 328.800 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 87 - priority -999 - elapsed 332.364 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 92 - priority -999 - elapsed 336.168 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 96 - priority -999 - elapsed 340.207 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 81 - priority -999 - elapsed 346.937 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 85 - priority -999 - elapsed 348.090 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 82 - priority -999 - elapsed 352.204 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 86 - priority -999 - elapsed 356.510 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 91 - priority -999 - elapsed 359.644 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 100 - priority -999 - elapsed 363.144 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 104 - priority -999 - elapsed 366.883 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 89 - priority -999 - elapsed 371.576 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 90 - priority -999 - elapsed 375.179 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 95 - priority -999 - elapsed 379.249 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 99 - priority -999 - elapsed 382.761 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 108 - priority -999 - elapsed 386.314 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 93 - priority -999 - elapsed 390.657 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 97 - priority -999 - elapsed 394.515 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 94 - priority -999 - elapsed 398.620 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 98 - priority -999 - elapsed 402.340 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 103 - priority -999 - elapsed 405.628 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 107 - priority -999 - elapsed 409.507 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 112 - priority -999 - elapsed 413.459 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 116 - priority -999 - elapsed 417.027 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 101 - priority -999 - elapsed 421.568 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 102 - priority -999 - elapsed 425.549 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 106 - priority -999 - elapsed 429.096 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 111 - priority -999 - elapsed 435.805 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 120 - priority -999 - elapsed 436.449 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 105 - priority -999 - elapsed 440.959 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 109 - priority -999 - elapsed 444.704 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 110 - priority -999 - elapsed 448.491 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 115 - priority -999 - elapsed 452.206 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 119 - priority -999 - elapsed 455.936 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 124 - priority -999 - elapsed 459.594 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 113 - priority -999 - elapsed 463.887 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 117 - priority -999 - elapsed 467.857 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 114 - priority -999 - elapsed 471.796 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 118 - priority -999 - elapsed 475.788 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 123 - priority -999 - elapsed 479.356 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 127 - priority -999 - elapsed 479.477 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 121 - priority -999 - elapsed 483.200 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 122 - priority -999 - elapsed 486.999 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 125 - priority -999 - elapsed 491.072 ms 
+#get_stream_priority failed to get priority value, err msg operation not permitted
+stream 126 - priority -999 - elapsed 494.616 ms 
+compared a sample result...
+host: 1.523750, device: 1.523750
+Time= 501.027 msec, bandwidth= 1.607311 GB/s
