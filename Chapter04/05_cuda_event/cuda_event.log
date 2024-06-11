@@ -1,0 +1,4 @@
+compared a sample result ...
+host 1.278517, device: 1.278517
+CUDA event estimated(CUDA Event Recorded) - elapsed 102.585 ms
+Host measured time = 144.624 msed/s 
