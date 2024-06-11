@@ -1,7 +1,7 @@
 # Chapter 04 Kernel Execution Notes 
 
 ## Difference between `malloc` and `cudaMallocHost`
-Both `malloc` and `cudaMallocHost` functions allocate memory on host(CPU) side.
+Both `malloc` and `cudaMallocHost` functions allocate memory on the host(CPU) side.
 But they serve different purpose and have distinct characteristics, especially in the context of CUDA programming. 
 
 ### `malloc`
@@ -9,22 +9,22 @@ But they serve different purpose and have distinct characteristics, especially i
 Allocates memory on the host(CPU) using standard C library functions. 
 
 * Usage:
-General-purpose memory allocation for any C/C++ applicaiton. 
+General-purpose memory allocation for any C/C++ application. 
 
 * Memory Location:
 The allocated memory resides in the host's main memory(RAM).
 
 
 * Performance:
-No special optimizaitons for CUDA. The allocated memory may not be 
-contiguous or aligend for optimal GPU access. 
+No special optimizations for CUDA. The allocated memory may not be 
+contiguous or aligned for optimal GPU access. 
 
 ### `cudaMallocHost`
 * Purpose :
 Allocates pinned(page-locked) memory on the host. 
 
 * Usage :
-Specifically for CUDA applications to facilitate and more efficient data transfer
+Specifically for CUDA applications to facilitate more efficient data transfer
 between the host and the device(GPU).
 
 * Memory Location:
@@ -33,7 +33,7 @@ The allocated memory resides in the host's main memory (RAM), but it is pinned(p
 * Performance 
 > Pinned Memory: The memory can not be paged out by the operating system, which means the GPU can directly access it without involving the CPU.
 > Faster Transfers: Data transfers between the host and the device using pinned memory are typically faster compared to pageable memory allocated by `malloc`.
-> Asynchronous Transfers: Pinned memory allows for asynchronous memory transfers (using strams), enabling overlapping of computation and data transfer for better performance. 
+> Asynchronous Transfers: Pinned memory allows for asynchronous memory transfers (using streams), enabling overlapping of computation and data transfer for better performance. 
 
 ### Key Differences 
 * Memory Type
@@ -84,7 +84,7 @@ cudaMemcpyAsync(d_data, h_data, size, cudaMemcpyHostToDevice, stream1);
 // record event in the grain of stream1
 cudaEventRecord(event, stream1);
 
-// wait event that recorded in the stream1 get ready
+//Wait event that was recorded in the stream1 Get ready
 // only event status set ok will stream2 begin to execute the my_kernel logic 
 cudaStreamWaitEvent(stream2, event, 0);
 
@@ -97,7 +97,7 @@ my_kernel<<<grid, block, 0, stream2>>>(...);
 3. Multi Device(Block) and Stream Sync 
 4. Non-CPU Interruption 
 
-## CUDA Callback Function Signatre 
+## CUDA Callback Function Signature 
 ```cuda
 cudaError_t cudaStreamAddCallback(
     cudaStream_t stream,
@@ -107,14 +107,22 @@ cudaError_t cudaStreamAddCallback(
 );
 ```
 
-Here the param of `cudaStreamCallback_t` is defined as follow:
+Here the param of `cudaStreamCallback_t` is defined as follows:
 ```cuda 
 typedef void (CUDART_CB *cudaStreamCallback_t)(cudaStream_t stream, cudaError_t status, void *userData);
 ```
 
-Actually `cudaStreamCallback_t` is the function pointer which mean parameter to be passed to the 
+Actually `cudaStreamCallback_t` is the function pointer which means parameter to be passed to the 
 cudaStreamAddCallback should match the function signature like 
 ```cuda
 // function 
 void CUDART_CB Callback(cudaStream_t stream, cudaError_t status, void *userData);  
+```
+
+## Understand CUDA's Dynamic Parallelism 
+### What's CUDA dynamic parallelism(CDP)
+```
+CDP is a device runtime feature that enables nested calls from device functions. 
+These nested calls allow different parallelism for the child grid. (Only Tesla and Volta support this).
+CDP is useful when you need a different block size depending on the problem.s
 ```

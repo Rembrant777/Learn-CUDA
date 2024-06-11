@@ -1,0 +1,2 @@
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -I/usr/local/cuda-9.2/samples/common/inc   -o recursion.out recursion.cu	
+Makefile:33: recipe for target 'recursion' failed

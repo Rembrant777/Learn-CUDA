@@ -1,0 +1,3 @@
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -I/usr/local/cuda-9.2/samples/common/inc   -o is_support_dynamic_paralleism.out is_support_dynamic_paralleism.cu
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -I/usr/local/cuda-9.2/samples/common/inc   -o dynamic_parallelism.out dynamic_parallelism.cu
+Makefile:26: recipe for target 'dynamic_parallelism' failed
