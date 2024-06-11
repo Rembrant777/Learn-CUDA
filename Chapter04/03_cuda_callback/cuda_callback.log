@@ -1,0 +1,7 @@
+stream  0 - elasped 34.762 ms
+stream  1 - elasped 51.090 ms
+stream  3 - elasped 68.485 ms
+stream  2 - elasped 86.709 ms
+compared a sample result ...
+host: 1.278517, device: 1.278517
+Time = 86.968 msec, bandwidth = 9.259801 GB/s
