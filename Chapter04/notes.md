@@ -118,3 +118,5 @@ cudaStreamAddCallback should match the function signature like
 // function 
 void CUDART_CB Callback(cudaStream_t stream, cudaError_t status, void *userData);  
 ```
+
+## Understand CUDA's Dynamic Parallelism 
