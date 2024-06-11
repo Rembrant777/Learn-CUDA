@@ -1,0 +1,28 @@
+Priority Range: low(0), high(-1)
+#print_kernel_time_via_cpu_timer 
+stream  3 - elapsed 221.908 ms
+#print_kernel_time_via_cuda_event 
+stream  3 - elapsed 0.000000 ms
+#print_kernel_time_via_cpu_timer 
+stream  0 - elapsed 281.288 ms
+#print_kernel_time_via_cuda_event 
+stream  0 - elapsed 0.000000 ms
+#print_kernel_time_via_cpu_timer 
+stream  1 - elapsed 405.200 ms
+#print_kernel_time_via_cuda_event 
+stream  1 - elapsed 0.000000 ms
+#print_kernel_time_via_cpu_timer 
+stream  2 - elapsed 529.026 ms
+#print_kernel_time_via_cuda_event 
+stream  2 - elapsed 0.000000 ms
+#print_kernel_time_via_cpu_timer 
+stream  0 - elapsed 810.520 ms
+#print_kernel_time_via_cpu_timer 
+stream  1 - elapsed 934.286 ms
+#print_kernel_time_via_cpu_timer 
+stream  2 - elapsed 1058.084 ms
+#print_kernel_time_via_cpu_timer 
+stream  3 - elapsed 750.947 ms
+compared a sample result...
+host: 1.523750, device: 1.523750
+Time= 529.248 msec, bandwidth= 1.521605 GB/s
