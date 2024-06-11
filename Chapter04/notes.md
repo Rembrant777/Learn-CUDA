@@ -126,3 +126,120 @@ CDP is a device runtime feature that enables nested calls from device functions.
 These nested calls allow different parallelism for the child grid. (Only Tesla and Volta support this).
 CDP is useful when you need a different block size depending on the problem.s
 ```
+
+## Understand OpenMP 
+### What's OpenMP 
+```
+OpenMP(Open Multi-Processing) is a share-memory parallel programming API that can be adopted in multi-platforms(C, C++ and Fortran).
+It provides a simple and flexible coding pattern which allows developers involved parallel logic codes into their own projects to help
+them enhance the compute efficiency.
+```
+
+### What are the OpenMP's Features?
+```
+1. Simple coding pattern
+2. Multi-language supports
+3. Shared-Memory model: OpenMP adopts shared memory model that all threads share a same address space that allows 
+threads data sharing and communciation more simple. 
+4. Provide both Parallel Regions and Work-Sharing to allocate and schedule different task. And allows mult-threads can be execute the code blocks in parallel. 
+5. Dynamic Thread Management: OpenMP allows dynamic thread number manage. Threads allocated to tasks can be adjusted dynamically according to system resource. 
+```
+
+### OpenMP Basic Usage
+1. Parallel Region Declaration 
+```cpp
+#include <omp.h>
+#include <stdio.h>
+
+int main() {
+    // declare parallel region by follwing macro instruction
+    #pragma omp parallel
+    {
+        printf("Hello world "); 
+    }
+
+    return 0; 
+}
+```
+
+2. Working Sharing
+WOrking sharing struct enables working loading dispatches to multi-threads.
+Common instructions like `for`, `sections` and `single`
+
+```c
+#include <omp.h>
+#include <stdio.h>
+
+int main() {
+    int i, n = 10; 
+    int a[10], b[10] , sum[10]; 
+
+    // init arr
+    init_arr(a,b,c); 
+
+    #pragma omp parallel for
+    for (inti = 0; i < n; i++) {
+        sum[i] = a[i] + b[i]; 
+    }
+
+    print_resultsum(); 
+}
+```
+
+3. sync strategy 
+OpenMP provides multiple sync strategies to avoid data race and maintain thread safety. 
+Common instructions like `critical`, `atomic` and `barrier`.
+
+```c
+#include <omp.h>
+#include <stdio.h>
+
+int main() 
+{
+    int sum = 0; 
+    #pragma omp parallel for
+    for (int i = 0; i < 100; i++) {
+        #pragma omp atomic
+        sum += i; 
+    }
+
+    show result
+    return 0; 
+}
+```
+
+### What's the relationship between OpenMP and CUDA
+OpenMP and CUDA are both used to accelerate computational tasks through parallelism, but they 
+are designed for different types of parallel computing env.
+
+OpenMP is often used for parallel programming on shared-memory architectures(like multi-core CPUs),
+while CUDA is used for parallel programming on NVIDIA GPUs, which are specialized for massive parallelism with 
+throusands of cores.  
+
+1. (OpenMP and CUDA) Complementary Use: 
+OpenMP and CUDA can be used together in a complementary manner. 
+While CUDA handles the parallelism on the GPU, OpenMP can handle parallelism on the CPU.
+This combination can be particularly powerful for hybrid systems where both the CPU and GPU 
+are used to perform computations. 
+
+2. Different Levels of Parallelism:
+OpenMP is suitable for coarse parallelism typically found in multi-threaded CPU applications,
+whereas CUDA is suitable for fine-grained parallelism on GPUs. 
+
+3. Data Transfer Management: 
+When using both OpenMP and CUDA, managing data transfer between CPU and GPU becomes crucial.
+Data needs to be efficiently moved between the host(CPU) memory and the device (GPU) memory.
+
+### What kind of scenatrios will OpenMP and CUDA be used together? They often adopted to solve what kind of problems?
+Combining OpenMP and CUDA is useful for solving problems that require the strengths of 
+both CPU and GPU parallelism. Here are some common scenarios:
+
+1. Heterogeneous Computing.
+2. Load Balancing:
+For workloads that can be decomposed into tasks with varying computational requirements, OpenMP can be used to balance 
+the load between the CPU and GPU. 
+3. Data-Parallel and Task-Parallel: 
+Combining OpenMP and CUDA allows developers to exploit both data-parallelism on GPUs and task-parallelism on CPUs. 
+
+
+
