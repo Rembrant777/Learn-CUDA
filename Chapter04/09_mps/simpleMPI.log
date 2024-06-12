@@ -1,0 +1,13 @@
+Number of process: 1
+Number of operations: 4
+Launched GPU task (0, 2)
+Launched GPU task (0, 3)
+Launched GPU task (0, 0)
+Launched GPU task (0, 1)
+stream  0 - elapsed 156.652 ms 
+stream  3 - elapsed 281.500 ms 
+stream  2 - elapsed 406.421 ms 
+stream  1 - elapsed 529.671 ms 
+compared a sample result...
+host: 1.523750, device: 1.523750
+Time= 532.578 msec, bandwidth= 1.512091 GB/s

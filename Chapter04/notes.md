@@ -240,3 +240,53 @@ For workloads that can be decomposed into tasks with varying computational requi
 the load between the CPU and GPU. 
 3. Data-Parallel and Task-Parallel: 
 Combining OpenMP and CUDA allows developers to exploit both data-parallelism on GPUs and task-parallelism on CPUs. 
+
+
+
+
+## Understand MPI
+### Install MPI Library on Linux 
+```
+#!/bin/bash
+MPI_VERSION="3.0.4"
+
+wget -O /tmp/openmpi-${MPI_VERSION}.tar.gz https://www.open-mpi.org/software/ompi/v3.0/downloads/openmpi-${MPI_VERSION}.tar.gz
+tar xzf /tmp/openmpi-${MPI_VERSION}.tar.gz -C /tmp
+cd /tmp/openmpi-${MPI_VERSION}
+./configure --enable-orterun-prefix-by-default
+make -j $(nproc) all && sudo make install
+sudo ldconfig
+mpirun --version
+```
+### MPI, OpenMP and CUDA 
+MPI(Message Passing Interface), OpenMP(Open Multi-Processing) and CUDA(Compute Unified Device Architecture) are three common parallel programming technologies. 
+#### MPI
+```
+* usage: 
+multiple && independent compute notes's communication.
+
+* how to work: 
+message oriented, each process has its own isolated space, exchange data middle results via messaeg. 
+
+* classical scenrios: 
+large scale distributed computing env
+```
+
+### OpenMP (Open Multi-Processing)
+```
+* usage:
+parallel computing via shared-memory
+
+* how to work:
+multi-thread based. developer defines the range of parallel region via pragma 
+compiler recognizes pragma then generate multi-threads' based
+```
+
+### CUDA(Compute Unified Device Architecture)
+```
+* usage:
+executes upon nvidia gpu
+
+* how to work:
+single instruction multiple threads. developer defines kernel function will be executed by multiple gpu-based threads. 
+```
