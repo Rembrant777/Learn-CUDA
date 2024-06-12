@@ -265,3 +265,47 @@ ${CUDA_PATH}/bin/cuda-gdb simple_sgemm
 ```
 (cuda-gdb) backtrace 
 ```
+
+
+## Understand CUDA-memcheck 
+### What's CUDA-memcheck ?
+CUDA memcheck is a runtime testing tools that validates memory access if any
+GPU operation exceeds the invalid space. 
+
+* CUDA-memcheck defines different kinds of memory access error
+| Name                     | Location | Description                                                                 | Precise |
+|--------------------------|----------|-----------------------------------------------------------------------------|---------|
+| Memory access error      | Device   | Invalid memory access (out of bound, misaligned)                            | O       |
+| Hardware exception       | Device   | Errors from the hardware                                                    | X       |
+| Malloc/free errors       | Device   | Incorrect use of `malloc()/free()` in CUDA kernels                          | O       |
+| CUDA API errors          | Host     | The CUDA API's error return                                                 | O       |
+| cudaMalloc memory leaks  | Host     | Device memory that's allocated using `cudaMalloc()` did not free by the application | O       |
+| Device heap memory leaks | Device   | Allocated device memory using `malloc()` in device code is not freed by the application | X       |
+
+The above Precise (O) means that memcheck can specify the crashed line and file.
+Imprecise(X) means that the tools can identify the error, but cannot specify the error points due to the concurrency status. 
+
+### Why we use CUDA-memcheck ?
+One difficult point of CUDA programming is handling memory space. 
+Since CUDA threads operate in parallel, the boundary condition or unexpected indexing operaiton can violate valid memory space. 
+
+
+### How to use CUDA-memcheck ? 
+First, we need to add extra compile options to the compile command to retain function symbols. 
+```
+-Xcompiler -rdynamic 
+```
+
+Second, cuda-memcheck is a standalone tools and validates GPU applications at runtime. 
+So.. just use the binary executable command below to trigger is ok.
+```
+${CUDA_PATH}/bin/cuda-memcheck [options] <cuda-application>
+```
+
+CUDA-GDB and CUDA-Memcheck often use together to help developer identify errors and debug them. 
+
+In the CUDA-GDB command line, use the cuda memcheck on command to enable memory checks. 
+
+This way, CUDA-GDB can identify memory-related exceptions. 
+
+

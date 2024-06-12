@@ -117,4 +117,84 @@ Hardware watchpoint 3: C
 Undefined command: "backtrack".  Try "help".
 (cuda-gdb) backtrace
 #0  main () at simple_sgemm.cu:62
+(base) raytrack@u16-01:~/workspace/Learn-CUDA/Chapter05/07_debug_with_gdb$ ${CUDA_PATH}/bin/cuda-gdb simple_sgemm
+NVIDIA (R) CUDA Debugger
+9.2 release
+Portions Copyright (C) 2007-2018 NVIDIA Corporation
+GNU gdb (GDB) 7.12
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-pc-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from simple_sgemm...done.
+(cuda-gdb) cuda device kernel block 
+Focus is not set on any active CUDA kernel.
+(cuda-gdb) break sgemm_kernel
+Breakpoint 1 at 0x40424a: file simple_sgemm.cu, line 20.
+(cuda-gdb) break simple_sgemm.cu:25
+Breakpoint 2 at 0x40427c: file simple_sgemm.cu, line 25.
+(cuda-gdb) run
+Starting program: /home/raytrack/workspace/Learn-CUDA/Chapter05/07_debug_with_gdb/simple_sgemm 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffec91e700 (LWP 31610)]
+[New Thread 0x7fffec11d700 (LWP 31611)]
+[New Thread 0x7fffeb89b700 (LWP 31612)]
+warning: Breakpoint address adjusted from 0x00bc9360 to 0x00bc9368.
+warning: Breakpoint address adjusted from 0x00bc9360 to 0x00bc9368.
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (0,0,0), device 0, sm 0, warp 0, lane 0]
+warning: Breakpoint 1 address previously adjusted from 0x0040424a to 0x00bc9368.
+
+Thread 1 "simple_sgemm" hit Breakpoint 1, 0x0000000000bc9368 in sgemm_kernel<<<(128,128,1),(16,16,1)>>> ()
+(cuda-gdb) step
+Single stepping until exit from function _Z12sgemm_kernelPKfS0_Pfiiiff,
+which has no line number information.
+
+Thread 1 "simple_sgemm" hit Breakpoint 2, 0x0000000000bc9370 in sgemm_kernel<<<(128,128,1),(16,16,1)>>> ()
+(cuda-gdb) step
+Single stepping until exit from function _Z12sgemm_kernelPKfS0_Pfiiiff,
+which has no line number information.
+
+^C
+Thread 1 "simple_sgemm" received signal SIGINT, Interrupt.
+0x0000000000bc97a8 in sgemm_kernel<<<(128,128,1),(16,16,1)>>> ()
+(cuda-gdb) info locals
+No locals.
+(cuda-gdb) cuda device kernel block
+kernel 0, block (0,0,0), device 0
+(cuda-gdb) print col
+No symbol "col" in current context.
+(cuda-gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/raytrack/workspace/Learn-CUDA/Chapter05/07_debug_with_gdb/simple_sgemm 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffec91e700 (LWP 31886)]
+[New Thread 0x7fffec11d700 (LWP 31887)]
+[New Thread 0x7fffeb89b700 (LWP 31888)]
+warning: Breakpoint address adjusted from 0x00bc9360 to 0x00bc9368.
+warning: Breakpoint address adjusted from 0x00bc9360 to 0x00bc9368.
+[Switching focus to CUDA kernel 1, grid 1, block (0,0,0), thread (0,0,0), device 0, sm 0, warp 0, lane 0]
+warning: Breakpoint 1 address previously adjusted from 0x00bc9360 to 0x00bc9368.
+
+Thread 1 "simple_sgemm" hit Breakpoint 1, 0x0000000000bc9368 in sgemm_kernel<<<(128,128,1),(16,16,1)>>> ()
+(cuda-gdb) print col
+No symbol "col" in current context.
+(cuda-gdb) cuda device kernel block
+kernel 1, block (0,0,0), device 0
+(cuda-gdb) cuda device kernel thread
+kernel 1, thread (0,0,0), device 0
+(cuda-gdb) info cuda kernels
+  Kernel Parent Dev Grid Status   SMs Mask     GridDim  BlockDim Invocation 
+*      1      -   0    1 Active 0x0fffffff (128,128,1) (16,16,1) sgemm_kernel() 
 (cuda-gdb) 

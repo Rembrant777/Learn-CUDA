@@ -1,0 +1,266 @@
+========= CUDA-MEMCHECK
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (15,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (14,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (13,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (12,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (11,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (10,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (9,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (8,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (7,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (6,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (5,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (4,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (3,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (2,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (1,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000450 in /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm.cu:27:sgemm_kernel(float const *, float const *, float*, int, int, int, float, float)
+=========     by thread (0,15,0) in block (0,127,0)
+=========     Address 0x7f34d5800000 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x346) [0x2c4fd6]
+=========     Host Frame:simple_sgemm [0x1e9a2]
+=========     Host Frame:simple_sgemm [0x1eb97]
+=========     Host Frame:simple_sgemm [0x4d925]
+=========     Host Frame:simple_sgemm [0x4861]
+=========     Host Frame:simple_sgemm (_Z43__device_stub__Z12sgemm_kernelPKfS0_PfiiiffPKfS0_Pfiiiff + 0x213) [0x46fa]
+=========     Host Frame:simple_sgemm (_Z12sgemm_kernelPKfS0_Pfiiiff + 0x5b) [0x4779]
+=========     Host Frame:simple_sgemm (main + 0x2f3) [0x43a4]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaDeviceSynchronize. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x3da4f3]
+=========     Host Frame:simple_sgemm [0x3b2e6]
+=========     Host Frame:simple_sgemm (main + 0x31c) [0x43cd]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xf0) [0x20840]
+=========     Host Frame:simple_sgemm (_start + 0x29) [0x3759]
+=========
+========= ERROR SUMMARY: 17 errors
