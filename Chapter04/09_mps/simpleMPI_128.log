@@ -1,0 +1,261 @@
+Number of process: 1
+Number of operations: 128
+Launched GPU task (0, 55)
+Launched GPU task (0, 58)
+Launched GPU task (0, 0)
+Launched GPU task (0, 59)
+Launched GPU task (0, 54)
+Launched GPU task (0, 53)
+Launched GPU task (0, 60)
+Launched GPU task (0, 52)
+Launched GPU task (0, 61)
+Launched GPU task (0, 51)
+Launched GPU task (0, 62)
+Launched GPU task (0, 50)
+Launched GPU task (0, 63)
+Launched GPU task (0, 49)
+Launched GPU task (0, 64)
+Launched GPU task (0, 48)
+Launched GPU task (0, 65)
+Launched GPU task (0, 66)
+Launched GPU task (0, 47)
+Launched GPU task (0, 67)
+Launched GPU task (0, 68)
+Launched GPU task (0, 46)
+Launched GPU task (0, 69)
+Launched GPU task (0, 45)
+Launched GPU task (0, 70)
+Launched GPU task (0, 44)
+Launched GPU task (0, 71)
+Launched GPU task (0, 43)
+Launched GPU task (0, 72)
+Launched GPU task (0, 42)
+Launched GPU task (0, 73)
+Launched GPU task (0, 41)
+Launched GPU task (0, 74)
+Launched GPU task (0, 40)
+Launched GPU task (0, 75)
+Launched GPU task (0, 39)
+Launched GPU task (0, 76)
+Launched GPU task (0, 38)
+Launched GPU task (0, 77)
+Launched GPU task (0, 37)
+Launched GPU task (0, 78)
+Launched GPU task (0, 36)
+Launched GPU task (0, 79)
+Launched GPU task (0, 35)
+Launched GPU task (0, 80)
+Launched GPU task (0, 34)
+Launched GPU task (0, 81)
+Launched GPU task (0, 33)
+Launched GPU task (0, 82)
+Launched GPU task (0, 32)
+Launched GPU task (0, 83)
+Launched GPU task (0, 31)
+Launched GPU task (0, 84)
+Launched GPU task (0, 30)
+Launched GPU task (0, 85)
+Launched GPU task (0, 29)
+Launched GPU task (0, 86)
+Launched GPU task (0, 28)
+Launched GPU task (0, 87)
+Launched GPU task (0, 27)
+Launched GPU task (0, 88)
+Launched GPU task (0, 26)
+Launched GPU task (0, 89)
+Launched GPU task (0, 25)
+Launched GPU task (0, 90)
+Launched GPU task (0, 24)
+Launched GPU task (0, 91)
+Launched GPU task (0, 23)
+Launched GPU task (0, 92)
+Launched GPU task (0, 22)
+Launched GPU task (0, 93)
+Launched GPU task (0, 21)
+Launched GPU task (0, 94)
+Launched GPU task (0, 20)
+Launched GPU task (0, 95)
+Launched GPU task (0, 19)
+Launched GPU task (0, 96)
+Launched GPU task (0, 18)
+Launched GPU task (0, 97)
+Launched GPU task (0, 17)
+Launched GPU task (0, 98)
+Launched GPU task (0, 99)
+Launched GPU task (0, 16)
+Launched GPU task (0, 100)
+Launched GPU task (0, 15)
+Launched GPU task (0, 14)
+Launched GPU task (0, 101)
+Launched GPU task (0, 13)
+Launched GPU task (0, 102)
+Launched GPU task (0, 12)
+Launched GPU task (0, 11)
+Launched GPU task (0, 103)
+Launched GPU task (0, 10)
+Launched GPU task (0, 104)
+Launched GPU task (0, 9)
+Launched GPU task (0, 105)
+Launched GPU task (0, 8)
+Launched GPU task (0, 106)
+Launched GPU task (0, 7)
+Launched GPU task (0, 107)
+Launched GPU task (0, 6)
+Launched GPU task (0, 108)
+Launched GPU task (0, 5)
+Launched GPU task (0, 109)
+Launched GPU task (0, 4)
+Launched GPU task (0, 110)
+Launched GPU task (0, 3)
+Launched GPU task (0, 111)
+Launched GPU task (0, 2)
+Launched GPU task (0, 112)
+Launched GPU task (0, 1)
+Launched GPU task (0, 113)
+Launched GPU task (0, 56)
+Launched GPU task (0, 114)
+Launched GPU task (0, 115)
+Launched GPU task (0, 116)
+Launched GPU task (0, 117)
+Launched GPU task (0, 118)
+Launched GPU task (0, 57)
+Launched GPU task (0, 119)
+Launched GPU task (0, 120)
+Launched GPU task (0, 121)
+Launched GPU task (0, 122)
+Launched GPU task (0, 123)
+Launched GPU task (0, 124)
+Launched GPU task (0, 126)
+Launched GPU task (0, 125)
+Launched GPU task (0, 127)
+stream  0 - elapsed 6.316 ms 
+stream 55 - elapsed 9.837 ms 
+stream 47 - elapsed 13.346 ms 
+stream 51 - elapsed 20.771 ms 
+stream 50 - elapsed 20.777 ms 
+stream 113 - elapsed 20.506 ms 
+stream 112 - elapsed 21.172 ms 
+stream 54 - elapsed 22.035 ms 
+stream 111 - elapsed 23.657 ms 
+stream 52 - elapsed 23.965 ms 
+stream 101 - elapsed 24.538 ms 
+stream 109 - elapsed 25.323 ms 
+stream 89 - elapsed 26.545 ms 
+stream 48 - elapsed 28.256 ms 
+stream 63 - elapsed 29.169 ms 
+stream 88 - elapsed 30.049 ms 
+stream 62 - elapsed 31.035 ms 
+stream 44 - elapsed 31.162 ms 
+stream 98 - elapsed 31.704 ms 
+stream 100 - elapsed 32.672 ms 
+stream 72 - elapsed 33.738 ms 
+stream 61 - elapsed 36.452 ms 
+stream 91 - elapsed 36.464 ms 
+stream 20 - elapsed 37.260 ms 
+stream 21 - elapsed 38.064 ms 
+stream 14 - elapsed 38.928 ms 
+stream 42 - elapsed 40.013 ms 
+stream  4 - elapsed 40.739 ms 
+stream  5 - elapsed 41.613 ms 
+stream 19 - elapsed 42.610 ms 
+stream 82 - elapsed 43.573 ms 
+stream 86 - elapsed 43.718 ms 
+stream 17 - elapsed 44.415 ms 
+stream 11 - elapsed 45.346 ms 
+stream 28 - elapsed 46.345 ms 
+stream 12 - elapsed 47.174 ms 
+stream 25 - elapsed 48.154 ms 
+stream 46 - elapsed 49.127 ms 
+stream 24 - elapsed 49.961 ms 
+stream 40 - elapsed 50.963 ms 
+stream 36 - elapsed 51.905 ms 
+stream 22 - elapsed 52.649 ms 
+stream  6 - elapsed 53.491 ms 
+stream 18 - elapsed 54.476 ms 
+stream 27 - elapsed 55.411 ms 
+stream 38 - elapsed 56.353 ms 
+stream 39 - elapsed 57.287 ms 
+stream 26 - elapsed 58.093 ms 
+stream 30 - elapsed 59.007 ms 
+stream 34 - elapsed 59.916 ms 
+stream 33 - elapsed 60.900 ms 
+stream 32 - elapsed 61.779 ms 
+stream 16 - elapsed 62.578 ms 
+stream 37 - elapsed 63.550 ms 
+stream 41 - elapsed 64.545 ms 
+stream 35 - elapsed 65.435 ms 
+stream 43 - elapsed 66.391 ms 
+stream 85 - elapsed 67.203 ms 
+stream 31 - elapsed 68.143 ms 
+stream 13 - elapsed 68.942 ms 
+stream 118 - elapsed 69.747 ms 
+stream 121 - elapsed 70.636 ms 
+stream  3 - elapsed 71.574 ms 
+stream 15 - elapsed 72.528 ms 
+stream 123 - elapsed 73.313 ms 
+stream 122 - elapsed 79.818 ms 
+stream 119 - elapsed 79.855 ms 
+stream 124 - elapsed 79.840 ms 
+stream 125 - elapsed 79.436 ms 
+stream 58 - elapsed 80.256 ms 
+stream 97 - elapsed 86.106 ms 
+stream 120 - elapsed 93.901 ms 
+stream 59 - elapsed 94.498 ms 
+stream 60 - elapsed 97.983 ms 
+stream 83 - elapsed 109.750 ms 
+stream 87 - elapsed 121.228 ms 
+stream 64 - elapsed 121.439 ms 
+stream 66 - elapsed 125.392 ms 
+stream 73 - elapsed 125.593 ms 
+stream 103 - elapsed 136.737 ms 
+stream 114 - elapsed 136.760 ms 
+stream 56 - elapsed 140.418 ms 
+stream 81 - elapsed 140.836 ms 
+stream 68 - elapsed 144.529 ms 
+stream 79 - elapsed 144.773 ms 
+stream 90 - elapsed 148.248 ms 
+stream 67 - elapsed 156.231 ms 
+stream 74 - elapsed 156.382 ms 
+stream 92 - elapsed 159.940 ms 
+stream 107 - elapsed 160.111 ms 
+stream 78 - elapsed 163.849 ms 
+stream 94 - elapsed 164.021 ms 
+stream 69 - elapsed 167.774 ms 
+stream 110 - elapsed 171.422 ms 
+stream 105 - elapsed 175.373 ms 
+stream 95 - elapsed 179.440 ms 
+stream 115 - elapsed 183.004 ms 
+stream 70 - elapsed 187.234 ms 
+stream 76 - elapsed 190.970 ms 
+stream 65 - elapsed 194.957 ms 
+stream 106 - elapsed 198.639 ms 
+stream 102 - elapsed 202.728 ms 
+stream 99 - elapsed 206.488 ms 
+stream 75 - elapsed 210.423 ms 
+stream 77 - elapsed 214.271 ms 
+stream 104 - elapsed 218.085 ms 
+stream 45 - elapsed 226.045 ms 
+stream 10 - elapsed 226.062 ms 
+stream 117 - elapsed 229.639 ms 
+stream 116 - elapsed 241.436 ms 
+stream  9 - elapsed 241.723 ms 
+stream 23 - elapsed 245.356 ms 
+stream 57 - elapsed 249.039 ms 
+stream 80 - elapsed 257.015 ms 
+stream 93 - elapsed 260.872 ms 
+stream 96 - elapsed 268.815 ms 
+stream  2 - elapsed 268.993 ms 
+stream 84 - elapsed 273.074 ms 
+stream 126 - elapsed 272.847 ms 
+stream 53 - elapsed 276.486 ms 
+stream 71 - elapsed 280.541 ms 
+stream 108 - elapsed 291.765 ms 
+stream  7 - elapsed 292.059 ms 
+stream 127 - elapsed 295.238 ms 
+stream 49 - elapsed 296.435 ms 
+stream  8 - elapsed 301.736 ms 
+stream  1 - elapsed 301.721 ms 
+stream 29 - elapsed 303.391 ms 
+compared a sample result...
+host: 1.523750, device: 1.523750
+Time= 305.735 msec, bandwidth= 2.634001 GB/s

@@ -240,3 +240,21 @@ For workloads that can be decomposed into tasks with varying computational requi
 the load between the CPU and GPU. 
 3. Data-Parallel and Task-Parallel: 
 Combining OpenMP and CUDA allows developers to exploit both data-parallelism on GPUs and task-parallelism on CPUs. 
+
+
+
+
+## Understand MPI
+### Install MPI Library on Linux 
+```
+#!/bin/bash
+MPI_VERSION="3.0.4"
+
+wget -O /tmp/openmpi-${MPI_VERSION}.tar.gz https://www.open-mpi.org/software/ompi/v3.0/downloads/openmpi-${MPI_VERSION}.tar.gz
+tar xzf /tmp/openmpi-${MPI_VERSION}.tar.gz -C /tmp
+cd /tmp/openmpi-${MPI_VERSION}
+./configure --enable-orterun-prefix-by-default
+make -j $(nproc) all && sudo make install
+sudo ldconfig
+mpirun --version
+```
