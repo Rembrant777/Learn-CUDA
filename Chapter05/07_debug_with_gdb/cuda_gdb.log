@@ -1,0 +1,120 @@
+(base) raytrack@u16-01:~/workspace/Learn-CUDA/Chapter05/07_debug_with_gdb$ ${CUDA_PATH}/bin/cuda-gdb simple_sgemm
+NVIDIA (R) CUDA Debugger
+9.2 release
+Portions Copyright (C) 2007-2018 NVIDIA Corporation
+GNU gdb (GDB) 7.12
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-pc-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from simple_sgemm...done.
+(cuda-gdb) break simple_sgemm.cu:50
+Breakpoint 1 at 0x403c07: file simple_sgemm.cu, line 50.
+(cuda-gdb) info locals
+No frame selected.
+(cuda-gdb) run
+Starting program: /home/raytrack/workspace/Learn-CUDA/Chapter05/07_debug_with_gdb/simple_sgemm 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main () at simple_sgemm.cu:50
+50          A = (float *)malloc(N * K * sizeof(float));
+(cuda-gdb) info locals
+A = 0x404430 <__nv_cudaEntityRegisterCallback(void**)>
+B = 0x14
+C = 0x45c4fd <__libc_csu_init+77>
+d_A = 0x4043f0 <____nv_dummy_param_ref(void*)>
+d_B = 0x465a00 <__module_id_str>
+d_C = 0x41c9b3 <global constructors keyed to cudart::getCudartError(cudaError_enum)+19>
+N = 2048
+M = 2048
+K = 2048
+alpha = 2
+beta = 1
+n_iter = 1
+(cuda-gdb) step
+51          B = (float *)malloc(K * M * sizeof(float));
+(cuda-gdb) step
+52          C = (float *)malloc(N * M * sizeof(float));
+(cuda-gdb) step
+55          checkCudaErrors(cudaMalloc((void **)&d_A, N * K * sizeof(float)));
+(cuda-gdb) print A
+$1 = (float *) 0x7ffff5b42010
+(cuda-gdb) break simple_sgemm.cu:57
+Breakpoint 2 at 0x403cbe: file simple_sgemm.cu, line 57.
+(cuda-gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/raytrack/workspace/Learn-CUDA/Chapter05/07_debug_with_gdb/simple_sgemm 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main () at simple_sgemm.cu:50
+50          A = (float *)malloc(N * K * sizeof(float));
+(cuda-gdb) step
+51          B = (float *)malloc(K * M * sizeof(float));
+(cuda-gdb) step in
+No symbol "in" in current context.
+(cuda-gdb) next
+52          C = (float *)malloc(N * M * sizeof(float));
+(cuda-gdb) next
+55          checkCudaErrors(cudaMalloc((void **)&d_A, N * K * sizeof(float)));
+(cuda-gdb) next
+[New Thread 0x7fffec91e700 (LWP 30255)]
+[New Thread 0x7fffec11d700 (LWP 30256)]
+[New Thread 0x7fffeb89b700 (LWP 30257)]
+56          checkCudaErrors(cudaMalloc((void **)&d_B, K * M * sizeof(float)));
+(cuda-gdb) info lcoals
+Undefined info command: "lcoals".  Try "help info".
+(cuda-gdb) info locals
+A = 0x7ffff5b42010
+B = 0x7ffff4b41010
+C = 0x7ffff3b40010
+d_A = 0x7fffcc400000
+d_B = 0x465a00 <__module_id_str>
+d_C = 0x41c9b3 <global constructors keyed to cudart::getCudartError(cudaError_enum)+19>
+N = 2048
+M = 2048
+K = 2048
+alpha = 2
+beta = 1
+n_iter = 1
+(cuda-gdb) next
+
+Thread 1 "simple_sgemm" hit Breakpoint 2, main () at simple_sgemm.cu:57
+57          checkCudaErrors(cudaMalloc((void **)&d_C, N * M * sizeof(float)));
+(cuda-gdb) next
+60          random_init(A, N * K);
+(cuda-gdb) step
+random_init (data=0x7ffff5b42010, size=4194304) at simple_sgemm.cu:33
+33          for (int i = 0; i < size; ++i)
+(cuda-gdb) info locals
+i = 0
+(cuda-gdb) finish
+Run till exit from #0  random_init (data=0x7ffff5b42010, size=4194304) at simple_sgemm.cu:33
+main () at simple_sgemm.cu:61
+61          random_init(B, K * M);
+(cuda-gdb) next
+62          random_init(C, N * M);
+(cuda-gdb) info cuda variables
+Unrecognized option: 'variables'.
+(cuda-gdb) info cuda variable
+Unrecognized option: 'variable'.
+(cuda-gdb) info cuda thread
+Unrecognized option: 'thread'.
+(cuda-gdb) watch C
+Hardware watchpoint 3: C
+(cuda-gdb) backtrack
+Undefined command: "backtrack".  Try "help".
+(cuda-gdb) backtrace
+#0  main () at simple_sgemm.cu:62
+(cuda-gdb) 
