@@ -1,0 +1,8 @@
+Number of operations: 4
+Launched GPU task 2
+Launched GPU task 3
+Launched GPU task 0
+Launched GPU task 1
+compared a sample result...
+host: 1.278517, device: 1.278517
+Time= 531.142 msec, bandwidth= 1.516179 GB/s

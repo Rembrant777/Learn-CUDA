@@ -2,7 +2,7 @@
 CUDA_PATH=/usr/local/cuda-9.2
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
-TARGET=openmp
+TARGET=openmp openmp_gpus openmp_default_stream
 
 INCLUDES= -I${CUDA_PATH}/samples/common/inc -I${CUDA_PATH}/include
 # here we use --resource-usage to enable GPU resource usage info 
@@ -27,8 +27,11 @@ all : ${TARGET}
 openmp: openmp.cu
 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES) $(INCLUDES)
 
-# cuda_event_with_streams: cuda_event_with_streams.cu
-# 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES) $(INCLUDES)
+openmp_gpus: openmp_gpus.cu
+	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES) $(INCLUDES)
+
+openmp_default_stream: openmp_default_stream.cu
+	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES) $(INCLUDES)	
 
 clean:
 	rm -f ${TARGET} *.o *.nvvp
