@@ -258,3 +258,35 @@ make -j $(nproc) all && sudo make install
 sudo ldconfig
 mpirun --version
 ```
+### MPI, OpenMP and CUDA 
+MPI(Message Passing Interface), OpenMP(Open Multi-Processing) and CUDA(Compute Unified Device Architecture) are three common parallel programming technologies. 
+#### MPI
+```
+* usage: 
+multiple && independent compute notes's communication.
+
+* how to work: 
+message oriented, each process has its own isolated space, exchange data middle results via messaeg. 
+
+* classical scenrios: 
+large scale distributed computing env
+```
+
+### OpenMP (Open Multi-Processing)
+```
+* usage:
+parallel computing via shared-memory
+
+* how to work:
+multi-thread based. developer defines the range of parallel region via pragma 
+compiler recognizes pragma then generate multi-threads' based
+```
+
+### CUDA(Compute Unified Device Architecture)
+```
+* usage:
+executes upon nvidia gpu
+
+* how to work:
+single instruction multiple threads. developer defines kernel function will be executed by multiple gpu-based threads. 
+```
