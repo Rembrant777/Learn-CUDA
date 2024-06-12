@@ -1,0 +1,2 @@
+// error log as expected 
+CUDA error at sgemm.cu:106 code=77(cudaErrorIllegalAddress) "cudaDeviceSynchronize()" 
