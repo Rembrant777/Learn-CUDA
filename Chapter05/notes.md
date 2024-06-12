@@ -108,3 +108,160 @@ nvprof -f --profile-from-start off -o sgemm.nvvp ./sgemm.nvvp
 ```
 
 For more information of NVTX refer to this [doc link](https://devblogs.nvidia.com/cuda-pro-tip-generate-custom-application-profile-timelines-nvtx).
+
+
+## GDB CUDA Debugging 
+To debug a GPU application, the Makefile should include the -g debugging flat for the host
+and the `-G` debugging flag for the GPU. 
+
+Basically, CUDA's GDB usage is identical to the host debugging, except there are some extra debugging features alongside CUDA operations. 
+
+### Make Breakpoints of CUDA-GDB 
+* Compile command 
+```shell
+$ nvcc -run -m64 -g -G -Xcompiler -rdynamic -gencode arch=compute_70,code=sm_70 -I/usr/local/cuda/samples/common/inc -o simple_sgemm ./simple_sgemm.cu
+```
+
+In this way we got an executable binary file `simple_sgemm`
+
+
+
+### Debug `simple_sgemm` with gdb commands 
+
+We gonna add a series of common `cuda-gdb` debugging commands 
+
+* Step-1: Compile CUDA Codes
+```cuda
+__global__ 
+void sgemm_kernel(const float *A, const float *B, float *C, 
+            int N, int M, int K, float alpha, float beta)
+{
+    int col = blockIdx.x * blockDim.x + threadIdx.x;
+    int row = blockIdx.y * blockDim.y + threadIdx.y;
+
+    float sum = 0.f;
+    for (int i = 0; i < K; ++i) 
+        sum += A[row * K + i] * B[i * K + col];
+
+    C[row * M + col] = alpha * sum + beta * C[row * M + col];
+}
+```
+
+* Step-2: Setup cuda-gdb and load application of CUDA
+```shell
+export CUDA_PATH=/usr/local/cuda-9.2
+${CUDA_PATH}/bin/cuda-gdb simple_sgemm
+```
+
+* Step-3: Set breakpoint 
+> break appends function's name 
+```
+(cuda-gdb) break sgemm_kernel
+```
+
+* Step-4: Run Program
+```
+(cuda-gdb) run
+```
+
+* Step-5: Check Thread and Block Status 
+```
+(cuda-gdb) info cuda threads 
+(cuda-gdb) info cuda blocks 
+```
+
+* Step-6: View Variable Values 
+```
+(cuda-gdb) print row 
+(cuda-gdb) print col 
+```
+
+* Step-7: Execute Step by Step
+```
+(cuda-gdb) next 
+(cuda-gdb) step
+```
+
+* Step-8: Set breakpoint by conditions 
+> sgemm_kernel is the name of the function, and row is the function scoped variable name
+
+```
+(cuda-gdb) break sgemm_kernel if row == 1
+```
+
+* Step-9: Print matrix element values 
+```
+(cuda-gdb) print A[row * K + i]
+(cuda-gdb) print B[i * K + col]
+(cuda-gdb) print C[row * M + col]
+```
+
+* Step-10: Continue execute until the next breakpoint 
+```
+(cuda-gdb) continue 
+```
+
+* Step-11: Show info of All breakpoints in the context 
+```
+(cuda-gdb) info breakpoints 
+```
+
+* Step-12: Delete Specified breakpoints 
+```
+(cuda-gdb) delete 1 # delete breakpoint that with id = 1
+```
+
+* Step-13: View GPU Variable Value
+```
+(cuda-gdb) info cuda variables 
+```
+
+* Step-14: Switch Threads or Blocks 
+> print cuda all threads info 
+```
+(cuda-gdb) info cuda threads 
+```
+> print current cuda thread info 
+```
+(cuda-gdb) info cuda thread 
+```
+
+> swtich threads
+```
+(cuda-gdb) cuda thread ${threadIdx.x}
+```
+
+> print all block info 
+```
+(cuda-gdb) info cuda blocks 
+```
+
+> print current block info 
+```
+(cuda-gdb) info cuda block 
+```
+
+> switch blocks 
+```
+(cuda-gdb) switch block ${blockIdx.x}
+```
+
+* Step-15: Check CUDA state
+```
+(cuda-gdb) info cuda state
+```
+
+* Step-16: Modify Breakpoint Conditions
+> This command will replace the original cond 1's checking condition
+```
+(cuda-gdb) cond 1 row == 2 && col == 2 
+```
+
+* Step-17: Tracing Variables' Modificaiton 
+```
+(cuda-gdb) watch C[row * M + col]
+```
+* Step-18: Print GPU's Thread Stack Info 
+```
+(cuda-gdb) backtrace 
+```
