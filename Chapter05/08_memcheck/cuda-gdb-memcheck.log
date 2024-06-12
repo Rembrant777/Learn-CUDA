@@ -1,0 +1,38 @@
+(base) raytrack@u16-01:~/workspace/Learn-CUDA/Chapter05/08_memcheck$ ${CUDA_PATH}/bin/cuda-gdb simple_sgemm_oob
+NVIDIA (R) CUDA Debugger
+9.2 release
+Portions Copyright (C) 2007-2018 NVIDIA Corporation
+GNU gdb (GDB) 7.12
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-pc-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from simple_sgemm_oob...done.
+(cuda-gdb) set cuda memcheck on
+(cuda-gdb) run
+Starting program: /home/raytrack/workspace/Learn-CUDA/Chapter05/08_memcheck/simple_sgemm_oob 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffec91e700 (LWP 1886)]
+[New Thread 0x7fffec11d700 (LWP 1887)]
+[New Thread 0x7fffeb89b700 (LWP 1888)]
+
+
+Illegal access to address (@global)0x7fffcd800000 detected.
+
+Thread 1 "simple_sgemm_oo" received signal CUDA_EXCEPTION_1, Lane Illegal Address.
+[Switching focus to CUDA kernel 0, grid 1, block (0,127,0), thread (0,15,0), device 0, sm 10, warp 12, lane 16]
+0x0000000000d61350 in sgemm_kernel<<<(128,128,1),(16,16,1)>>> (A=0x7fffcc800000, B=0x7fffc4000000, C=0x7fffc5000000, N=2048, M=2048, K=2048, alpha=2, beta=1) at simple_sgemm_oob.cu:27
+27              sum += A[row * K + i] * B[i * K + col];
+(cuda-gdb) 
+(cuda-gdb) print A[row + K + i]
+$1 = 8.24220479e-08
