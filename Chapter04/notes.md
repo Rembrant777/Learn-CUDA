@@ -240,6 +240,3 @@ For workloads that can be decomposed into tasks with varying computational requi
 the load between the CPU and GPU. 
 3. Data-Parallel and Task-Parallel: 
 Combining OpenMP and CUDA allows developers to exploit both data-parallelism on GPUs and task-parallelism on CPUs. 
-
-
-

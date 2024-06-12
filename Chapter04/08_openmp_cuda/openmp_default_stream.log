@@ -1,0 +1,7 @@
+stream  0 - elapsed 156.586 ms 
+stream  2 - elapsed 280.887 ms 
+stream  1 - elapsed 404.529 ms 
+stream  3 - elapsed 529.091 ms 
+compared a sample result...
+host: 1.278517, device: 1.278517
+Time= 533.499 msec, bandwidth= 1.509480 GB/s
