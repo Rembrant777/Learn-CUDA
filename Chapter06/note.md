@@ -1,0 +1,1 @@
+PASS This Chapter. Local GPU Cores and Host not support Infinbind. TAT/~
