@@ -2,6 +2,8 @@
 ![Diagram of `C = AB` ](https://private-user-images.githubusercontent.com/61581888/339216277-b5190968-244d-4215-9812-f22734ef166e.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTgyNTQ2OTYsIm5iZiI6MTcxODI1NDM5NiwicGF0aCI6Ii82MTU4MTg4OC8zMzkyMTYyNzctYjUxOTA5NjgtMjQ0ZC00MjE1LTk4MTItZjIyNzM0ZWYxNjZlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA2MTMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNjEzVDA0NTMxNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWJjMzlhMjgxYmRmNmUxNWE5YzA5ZmE0ZmEyYWUyMWQzNjAwODQ4ZDRkM2ZiNWIyNmY3ZTIyMzBjZmFhYWQ3MTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.01zt5DtxhA8opzdce5u7igBEcM9CTKxV5nKxngyibhE)
 
 ## Optimized Codes in `sgemm.cu`
+![steps_diagram](https://github.com/Rembrant777/Learn-CUDA/pull/35#issuecomment-2165183652)
+
 We already know that 
 * `A` is a matrix with dim (M * K).
 * `B` is a matrix with dim (K * N).
