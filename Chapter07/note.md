@@ -21,16 +21,18 @@ different data structures.
 A[w][x][y][z] -> B[w*x][y][z]
 ```
 
-### 1D
+#### 1D
 * 1 dimension data structure, like array or vector.
 * to solve such kind of data structure's computation, we can use 1D Block's threads to solve. 
 
-### 2D
+#### 2D
 * 2 dimension data structure, like matrix or image(arrays)
 * to solve such kind of data 
 
-### 3D
+#### 3D
 * 3D images, cube data or physical simulation
+
+---
 
 ## Different Hierarchy Compute Components in CUDA
 * Hirarchy of compute components defined in CUDA 
@@ -53,6 +55,8 @@ Grid > Group > Block > Warp(tile) > Thread
 The term "Group" in `group cooperative` isn't typically used in CUDA documentation. 
 Instead, focus on understanding the relationship between grids, blocks, warps, and threads. 
 Warps are a critical concept for understanding performance, as threads within a warp execute synchronously. 
+
+---
 
 ## Cooperative Behavior in CUDA 
 CUDA provides mechanisms for threads to cooperate and synchronize at different granularities:
@@ -179,6 +183,7 @@ void countOccurences(int *data, int *count, int value)
 }
 ```
 
+--- 
 
 ## Common Scenarios for CUDA Synchronization 
 * Matrix Multiplication: 
