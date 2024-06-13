@@ -22,8 +22,8 @@ A[w][x][y][z] -> B[w*x][y][z]
 ```
 
 #### 1D
-* 1 dimension data structure, like array or vector.
-* to solve such kind of data structure's computation, we can use 1D Block's threads to solve. 
+* 1-dimensional data structure, like array or vector.
+* to solve such kind of data structure's computation, we can use 1D Block's threads. 
 
 #### 2D
 * 2 dimension data structure, like matrix or image(arrays)
@@ -35,16 +35,16 @@ A[w][x][y][z] -> B[w*x][y][z]
 ---
 
 ## Different Hierarchy Compute Components in CUDA
-* Hirarchy of compute components defined in CUDA 
+* Hierarchy of computing components defined in CUDA 
 ```
 Grid > Block > Thread
 ```
-> Grid: The highest level of organizaiton. A grid contians multiple blocks. 
+> Grid: The highest level of organization. A grid contains multiple blocks. 
 > Block: A grid is divided into blocks. Each block contains multiple threads. 
 > Thread: The smallest unit of computation within a block. 
 
-* Fine-Grained Management Concepts in CUDA 
-To provide more fine-grined management import some logical concepts
+* Fine-grained management Concepts in CUDA 
+To provide more fine-grained management import some logical concepts
 Grid > Group > Block > Warp(tile) > Thread 
 
 > Grid: A collection of blocks that execute a kernel.
@@ -62,17 +62,17 @@ Warps are a critical concept for understanding performance, as threads within a 
 CUDA provides mechanisms for threads to cooperate and synchronize at different granularities:
 ### Block-Level Cooperation 
 * Threads within a block can share data via shared memory
-* Threads within a block can synchornize at specific points using `__syncthreads()`. This function to ensure that all threads in the block reach a synchronization point before any thread can proceed. 
+* Threads within a block can synchronize at specific points using `__syncthreads()`. This function to ensure that all threads in the block reach a synchronization point before any thread can proceed. 
 
 ### Warp-Level Cooperation 
-* Threads within a warp executein lockstep and can use warp-level primitives for efficient communication and synchronizaiton.
-* Functins like `__shfl_sync()` , `__ballot_sync()`, and others enable cooperation among threads within a warp without the overhead of block-wide synchronization.
+* Threads within a warp execute lockstep and can use warp-level primitives for efficient communication and synchronization.
+* Functions like `__shfl_sync()`, `__ballot_sync()`, and others enable cooperation among threads within a warp without the overhead of block-wide synchronization.
 
 ---- 
 
 ## Different Hierarchy Compute Components' Synchronization Methods 
-CUDA provides several layers of parallelism, and each layer has its own synchronization methods to ensure threads of blocks cna coordinate their execution.
-Below, outlines the different components, their corresponding synchronization methods, and comon scenarios where these synchornizations are used. 
+CUDA provides several layers of parallelism, and each layer has its own synchronization methods to ensure threads of blocks can coordinate their execution.
+Below, outlines the different components, their corresponding synchronization methods, and common scenarios where these synchronizations are used. 
 
 ### Grid-Level Sync 
 * Description:
@@ -80,24 +80,24 @@ A grid is a collection of blocks. Each block in the grid operates independently.
 There is no direct synchronization mechanism provided by CUDA for synchronization between blocks within a grid. 
 
 * Common Scenario: 
-Synchornization across the grid can be achieved by breaking the kernel into multiple kernel launches. For instance, if some data needs to be processed by all blocks before the next stage of processing, you have to end the current kernel and start a new one. 
+Synchronization across the grid can be achieved by breaking the kernel into multiple kernel launches. For instance, if some data needs to be processed by all blocks before the next stage of processing, you have to end the current kernel and start a new one. 
 
 ### Block-Level Sync 
 * Description:
 A block a collection of threads. Threads within a block can share data through shared memory and can synchronize their execution. 
 
-* Kernel provides naive Method 
+* Kernel provides a naive Method 
 ```
 __syncthreads(); 
 ```
 
 * Common Scenario:
 
-Codes below is used in scenarios where threads within a block need to collaborate.
+The codes below are used in scenarios where threads within a block need to collaborate.
 For example, in matrix multiplication using shared memory, you might load tiles of matrix
 into shared memory, synchronize all threads in the block to ensure loading is complete, 
 and then proceed with the computation.
-```cudas
+```cuda
 __global__
 void matrixMulKernel(float *C, float *A, float *B, int N) 
 {
@@ -114,12 +114,12 @@ void matrixMulKernel(float *C, float *A, float *B, int N)
         _S_A[ty][tx] = A[row * N + idx * BLOCK_SIZE + tx]; 
         _S_B[ty][tx] = B[(idx * BLOCK_SIZE + ty) * N + col];
 
-        // here wait all threads write A, B corresponding data value 
+        //Here wait all threads write A, and B corresponding data value 
         // --> shared memory all get ready 
         __syncthreads();
 
         // threads with different threadIdx.x threadIdx.y 
-        // can access different range of the matrix
+        // can access different ranges of the matrix
         // then accumulate values by different threads
         // accumulate data from different regions of the shared memory to the final result 
 
@@ -127,12 +127,12 @@ void matrixMulKernel(float *C, float *A, float *B, int N)
             res += _S_A[ty][k] * _S_B[k][tx]; 
         }
 
-        // here call sync to make sure that all values from shared memory 
-        // are retrieved and accumulate to final result res 
+        //Here call sync to make sure that all values from shared memory 
+        // are retrieved and accumulate to the final result res 
         __syncthreads(); 
     }
 
-    // finally write the correspoinding row, col of A and B (that executed in parallel)
+    //Finally write the corresponding row, col of A and B (that executed in parallel)
     // to one C matrix's value 
     C[row * N + col] = res; 
 }
@@ -147,8 +147,8 @@ CUDA provides warp-level intrinsics to enable fine-grained communication and syn
 `__shfl_sync()`, `__ballot_sync()`
 
 * Common Scenario:
-Warp-level primitives are used for more efficient and fine-grained synchronization than block-wide synchronzation. 
-For example, in algorithms like reduction, prefix sum, and certain machine learning algorithms, these instrinsics are used to communicate and synchronzie between threads within a warp. 
+Warp-level primitives are used for more efficient and fine-grained synchronization than block-wide synchronization. 
+For example, in algorithms like reduction, prefix sum, and certain machine learning algorithms, these intrinsics are used to communicate and synchronize between threads within a warp. 
 ```cuda
 __global__ void warpReduction(float *input, float *output) {
     int tid = threadIdx.x;
@@ -163,14 +163,14 @@ __global__ void warpReduction(float *input, float *output) {
 ### Thread-Level Sync 
 * Description:
 The basic unit of execution. While threads do not synchronize on their own,
-they can be coordinate using atomic operations. 
+they can be coordinated using atomic operations. 
 
 * Methods:
 `atomicAdd()`, `atomicSub()`
 
 * Common Scenario:
 Atomic operations are often used in scenarios where multiple threads need to 
-safely update shared data without race conditions. For example, counting occurences 
+safely update shared data without race conditions. For example, counting occurrences 
 of certain values in a large dataset or safely accumulating results from multiple threads. 
 ```cuda 
 __global__
@@ -206,24 +206,24 @@ Synchronizing threads within a block to load input data into shared memory befor
 ## Understand Different Types of Index in CUDA 
 ### `GridIdx`
 ### `BlockIdx`
-* `blockIdx`: This is CUDA inner defined 3 dim variable, which includes current thread block(Block)'s index in the scope of Grid. 
+* `blockIdx`: This is CUDA inner defined 3 dim variable, which includes the current thread block(Block)'s index in the scope of Grid. 
 
 * `blockIdx.x`: Current Block's index in the X axis of Grid. 
 * `blockIdx.y`: Current Block's index in the X axis of Grid. 
 
 ### `BlockDim`
 * `blockDim`: This is a CUDA inner defined 3 dim variable, which determines how many threads per block. 
-* `blockDim.x`: How many threads available on the X axis in current Block.
-* `blockDim.y`: How many threads available on the Y axis in current Block. 
+* `blockDim.x`: How many threads are available on the X axis in the current Block?
+* `blockDim.y`: How many threads are available on the Y axis in the current Block? 
 
 ### `ThreadIdx`
-* `threadIdx`: CUDA inner defined 3 dim variable, which present current thread's index in the scope of Block.
-* `threadIdx.x`: current active thread's index in the X axis of current Block.
-* `threadIdx.y`: current active thread's index in the Y axis of current Block. 
+* `threadIdx`: CUDA inner defined 3 dim variable, which presents the current thread's index in the scope of Block.
+* `threadIdx.x`: current active thread's index in the X axis of the current Block.
+* `threadIdx.y`: current active thread's index in the Y axis of the current Block. 
 
 
-* `BLOCK_DIM`: dimension of the thread block which means block thread dimension is 16, each block has 16 * 16 = 256 in total threads. 
+* `BLOCK_DIM`: the dimension of the thread block which means the block thread dimension is 16, each block has 16 * 16 = 256 in total threads. 
 
-* `blockIdx.x`: means one block's thread index in the dimension of X axis. Since we set the `BLOCK_DIM` as 16, so we know that in the scope of block `blockIdx.x` value should be in the range of `[0, 16 - 1]`.
+* `blockIdx.x`: means one block's thread index in the dimension of the X axis. Since we set the `BLOCK_DIM` as 16, so we know that in the scope of block `blockIdx.x` value should be in the range of `[0, 16 - 1]`.
 
-* `blockIdx.y`: means one block's thread index in the dimension of Y axis. Since we set the `BLOCK_DIM` as 16, so we know that in the scope of block `blockIdx.y` value should be in the range of `[0, 16 - 1]`.
+* `blockIdx.y`: means one block's thread index in the dimension of the Y axis. Since we set the `BLOCK_DIM` as 16, so we know that in the scope of block `blockIdx.y` value should be in the range of `[0, 16 - 1]`.
