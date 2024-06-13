@@ -31,7 +31,8 @@ void sgemm_kernel(const float *A, const float *B,
     C[row * N + col] = alpha * element_c + beta * C[row * N + col];
 }
 
-__global__ void sgemm_kernel_opt_version(const float *A, const float *B, float *C, 
+__global__ 
+void sgemm_kernel_opt_version(const float *A, const float *B, float *C, 
                     int M, int N, int K, float alpha, float beta)
 {
     int bid_x = blockIdx.x * blockDim.x;
