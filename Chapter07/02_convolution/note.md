@@ -59,6 +59,20 @@ The main components of a CNN includes
 3. Pooling Layers: Reduce the spatial dimensions of the feature maps(e.g., max pooling)
 4. Fully Connnected Layers: Combine features for classification or regression tasks. 
 
+--- 
+### What's Filter Conefficients? 
+Filter coefficients, also known as filter weights or kernel values, are the elements of the convolution kernel 
+used in the convolution operation. 
+
+These coefficients determine how the input data is transformed or filtered during the convolution process. 
+
+Each coefficient in the filter kernel is multiplied by the correspoinding eleemnt in the input matrx
+(or a sub region of the input matrix), and the results are summed to produce the output value. 
+
+#### Convolution Kernel 
+* A small matrix(e.g., 3 * 3, 5 * 5) used to apply convolution to the input matrix.
+* That is to say, each element in this small matrix is called a filter coefficient. 
+
 ## Reference
 * Learning CUDA Programming 
 * ChatGPT =V=/~ 
