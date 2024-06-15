@@ -39,8 +39,8 @@ scan: scan.cu scan_v1.o scan_v2.o
 
 # execute make nvprof to generate performance report in *.nvvp format file 
 nvprof: scan
-	nvprof -f -o $+.nvvp --profile-from-start off ./$+
-	nvprof -f -o $+-metrics.nvvp --analysis-metrics ./$+
+	/usr/local/cuda-9.2/bin/nvprof -f -o $+.nvvp --profile-from-start off ./$+
+	/usr/local/cuda-9.2/bin/nvprof -f -o $+-metrics.nvvp --analysis-metrics ./$+
 
 clean:
 	rm -f ${TARGET} *.o *.nvvp 
