@@ -78,13 +78,18 @@ If we want to design this parallel algorithm on a CUDA pattern.  What we need to
 ### Example of CUDA Resource Allocation 
 
 Suppose we need to execute the prefix-sum scan upon an array with a length of 128.
-We apply 2 blocks and each block applies 4 threads to process the 2 phase {reduction, downsweep}
+
+We apply 2 blocks and each block applies 4 threads to process the 2 phase {reduction, downsweep}.
+
 Then for `block-0 `it will handle the array[0...63] and `block-1 ` it will handle the array[64 ...128]. 
 
-For `block-1`, it has 4 threads with idx(threadIdx.x) from `[0 ... 3]`
-All threads in `block-1` will share the shared memory that caches the data copied from global memory (`array[64 ... 128-1]`)
-So the shared memory `_s_b[0 ... 64]`
-For `block-1`'s `thread-0` it will handle data, we know that index of `idx_a` and `idx_b`
+For `block-1`, it has 4 threads with idx(threadIdx.x) from `[0 ... 3]`.
+
+All threads in `block-1` will share the shared memory that caches the data copied from global memory (`array[64 ... 128-1]`).
+
+So the shared memory `_s_b[0 ... 64]`.
+
+For `block-1`'s `thread-0` it will handle data, we know the index of `idx_a` and `idx_b`.
 #### thread-0:
 * iteration-0:(tid = 0; offset = 1) 
 // array[1] = array[0] + array[1]
