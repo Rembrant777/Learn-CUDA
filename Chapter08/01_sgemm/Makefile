@@ -2,8 +2,8 @@
 CUDA_PATH=/usr/local/cuda-9.2
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
-TARGET=cublasSgemm cublasXtSgemm
-# cublasSgemm_async 
+TARGET=cublasSgemm cublasXtSgemm cublasSgemm_async
+
 # Set the CUDA library path
 export LD_LIBRARY_PATH=${CUDA_PATH}/lib64
 #:${LD_LIBRARY_PATH}
