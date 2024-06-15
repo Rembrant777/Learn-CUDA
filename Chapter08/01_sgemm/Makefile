@@ -33,8 +33,8 @@ cublasSgemm: cublasSgemm.cpp
 cublasXtSgemm: cublasXtSgemm.cpp
 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
-# cublasSgemm_async: cublasSgemm_async.cpp
-# 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
+cublasSgemm_async: cublasSgemm_async.cpp
+	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
 nvprof: cublasSgemm
 	nvprof -f -o $+.nvvp ./$+	

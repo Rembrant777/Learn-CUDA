@@ -51,7 +51,7 @@ int main()
     }
 
     // here select devices to use in cublasxt math 
-    cudalasXtDevice(handle, num_of_devices, devices); 
+    cublasXtDeviceSelect(handle, num_of_devices, devices);
 
     // warm-up 
     cublasXtSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
