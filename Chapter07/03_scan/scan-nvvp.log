@@ -1,0 +1,26 @@
+(base) raytrack@u16-01:~/workspace/Learn-CUDA/Chapter07/03_scan$ make nvprof
+/usr/local/cuda-9.2/bin/nvprof -f -o scan.nvvp --profile-from-start off ./scan
+==30259== NVPROF is profiling process 30259, command: ./scan
+input         ::        -0.4508 -0.0210 -0.4774  0.2750 -0.2206  0.3169 -0.1268  0.1248 -0.2364  0.4241  0.0841  0.3532  0.2188  0.0052  0.0398  0.4869
+result[cpu]   ::        -0.4508 -0.4718 -0.9492 -0.6742 -0.8948 -0.5779 -0.7047 -0.5798 -0.8162 -0.3922 -0.3081  0.0452  0.2640  0.2693  0.3091  0.7960
+==30259== Warning: Profiling results might be incorrect with current version of nvcc compiler used to compile cuda app. Compile with nvcc compiler 9.0 or later version to get correct profiling results. Ignore this warning if code is already compiled with the recommended nvcc version 
+result[gpu_v1]::        -0.4508 -0.4718 -0.9492 -0.6742 -0.8948 -0.5779 -0.7047 -0.5798 -0.8162 -0.3922 -0.3081  0.0452  0.2640  0.2693  0.3091  0.7960
+SUCCESS!!
+result[cpu]   ::        -0.4508 -0.4718 -0.9492 -0.6742 -0.8948 -0.5779 -0.7047 -0.5798 -0.8162 -0.3922 -0.3081  0.0452  0.2640  0.2693  0.3091  0.7960
+result[gpu_v2]::        -0.4508 -0.4718 -0.9492 -0.6742 -0.8948 -0.5779 -0.7047 -0.5798 -0.8162 -0.3922 -0.3081  0.0452  0.2640  0.2693  0.3091  0.7960
+SUCCESS!!
+==30259== Generated result file: /home/raytrack/workspace/Learn-CUDA/Chapter07/03_scan/scan.nvvp
+/usr/local/cuda-9.2/bin/nvprof -f -o scan-metrics.nvvp --analysis-metrics ./scan
+==30290== NVPROF is profiling process 30290, command: ./scan
+input         ::        -0.4508 -0.0210 -0.4774  0.2750 -0.2206  0.3169 -0.1268  0.1248 -0.2364  0.4241  0.0841  0.3532  0.2188  0.0052  0.0398  0.4869
+result[cpu]   ::        -0.4508 -0.4718 -0.9492 -0.6742 -0.8948 -0.5779 -0.7047 -0.5798 -0.8162 -0.3922 -0.3081  0.0452  0.2640  0.2693  0.3091  0.7960
+==30290== Warning: Profiling results might be incorrect with current version of nvcc compiler used to compile cuda app. Compile with nvcc compiler 9.0 or later version to get correct profiling results. Ignore this warning if code is already compiled with the recommended nvcc version 
+==30290== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Replaying kernel "scan_v1_kernel(float*, float*, int)" (done)
+result[gpu_v1]::al event-0.4508 -0.4718 -0.9492 -0.6742 -0.8948 -0.5779 -0.7047 -0.5798 -0.8162 -0.3922 -0.3081  0.0452  0.2640  0.2693  0.3091  0.7960
+SUCCESS!!
+result[cpu]   ::        -0.4508 -0.4718 -0.9492 -0.6742 -0.8948 -0.5779 -0.7047 -0.5798 -0.8162 -0.3922 -0.3081  0.0452  0.2640  0.2693  0.3091  0.7960
+==30290== Error: Internal profiling error 4182:7.
+======== Error: CUDA profiling error.
+Makefile:42: recipe for target 'nvprof' failed
+make: *** [nvprof] Error 12
