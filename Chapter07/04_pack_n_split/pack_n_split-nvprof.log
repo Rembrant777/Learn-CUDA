@@ -1,0 +1,21 @@
+(base) raytrack@u16-01:~/workspace/Learn-CUDA/Chapter07/04_pack_n_split$ make nvprof
+/usr/local/cuda-9.2/bin/nvprof -f -o pack_n_split.nvvp --profile-from-start off ./pack_n_split
+==32327== NVPROF is profiling process 32327, command: ./pack_n_split
+input             ::    -0.1544  0.0496  0.0428  0.3810 -0.0443  0.4293 -0.3150 -0.3929 -0.1990 -0.1444  0.1398 -0.3255  0.2354  0.2740 -0.4882 -0.2026
+==32327== Warning: Profiling results might be incorrect with current version of nvcc compiler used to compile cuda app. Compile with nvcc compiler 9.0 or later version to get correct profiling results. Ignore this warning if code is already compiled with the recommended nvcc version 
+pack[cpu]::      0.0496  0.0428  0.3810  0.4293  0.1398  0.2354  0.2740  0.0769  0.1629  0.1044  0.4801  0.0785  0.4536  0.0074  0.2349  0.1901
+pack[gpu]::      0.0496  0.0428  0.3810  0.4293  0.1398  0.2354  0.2740  0.0769  0.1629  0.1044  0.4801  0.0785  0.4536  0.0074  0.2349  0.1901
+SUCCESS !!
+split[gpu]       0.0000  0.0496  0.0428  0.3810  0.0000  0.4293  0.0000  0.0000  0.0000  0.0000  0.1398  0.0000  0.2354  0.2740  0.0000  0.0000
+SUCCESS!!
+==32327== Generated result file: /home/raytrack/workspace/Learn-CUDA/Chapter07/04_pack_n_split/pack_n_split.nvvp
+/usr/local/cuda-9.2/bin/nvprof -f -o pack_n_split-metrics.nvvp --analysis-metrics ./pack_n_split
+==32374== NVPROF is profiling process 32374, command: ./pack_n_split
+input             ::    -0.1544  0.0496  0.0428  0.3810 -0.0443  0.4293 -0.3150 -0.3929 -0.1990 -0.1444  0.1398 -0.3255  0.2354  0.2740 -0.4882 -0.2026
+==32374== Warning: Profiling results might be incorrect with current version of nvcc compiler used to compile cuda app. Compile with nvcc compiler 9.0 or later version to get correct profiling results. Ignore this warning if code is already compiled with the recommended nvcc version 
+==32374== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Replaying kernel "predicate_kernel(float*, float*, int)" (done)
+==32374== Error: Internal profiling error 4182:7.
+======== Error: CUDA profiling error.
+Makefile:36: recipe for target 'nvprof' failed
+make: *** [nvprof] Error 12
