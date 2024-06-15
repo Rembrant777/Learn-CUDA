@@ -92,34 +92,52 @@ So the shared memory `_s_b[0 ... 64]`.
 For `block-1`'s `thread-0` it will handle data, we know the index of `idx_a` and `idx_b`.
 #### thread-0:
 * iteration-0:(tid = 0; offset = 1) 
+
 // array[1] = array[0] + array[1]
+
 `idx_a = offset * (2 * tid + 1) - 1 = 1 * (2 * 0 + 1) - 1 = 0`
+
 `idx_b = offset * (2 * tid + 2) - 1 = 1 * (2 * 0 + 2) - 1 = 1`
+
 `offset <<= 1 -> 2`
 
 * iteration-1:(tid = 0; offset = 2)
+
 // array[2] = array[1] + array[2] 
+
 `idx_a = offset * (2 * tid + 1) - 1 = 2 * (2 * 0 + 1) - 1 = 1`
+
 `idx_b = offset * (2 * tid + 2) - 1 = 2 * (2 * 0 + 2) - 1 = 2` 
+
 `offset <<= 1 -> 2`
+
 * iteration-2:(tid = 0; offset = 4)
+
 `...`
 
 #### thread-1: 
 * iteration-0: (tid = 1; offset = 1)
+
 // array[4] += array[3] 
+
 `idx_a = offset * (2 * tid + 1) - 1 = 1 * (2 * 1 + 1) - 1 = 2`
+
 `idx_b = offset * (2 * tid + 2) - 1 = 1 * (2 * 1 + 2) - 1 = 3`
+
 `offset <<= 1 -> 2`
 
 #### thread-2: 
 * iteration-0: (tid = 2; offset = 1)
+  
 `idx_a = offset * (2 * tid + 1) - 1 = 1 * (2 * 2 + 1) - 1 = 3`
+
 `idx_b = offset * (2 * tid + 2) - 1 = 1 * (2 * 2 + 2) - 1 = 4`
 
 #### thread-3: 
 * iteration-0: (tid = 3; offset = 1)
+
 `idx_a = offset * (2 * tid + 1) - 1 = 1 * (2 * 2 + 1) -1 = 4`
+
 `idx_b = offset * (2 * tid + 2) - 1 = 1 * (2 * 2 + 2) -1 = 5`
 
 ## Reference 
