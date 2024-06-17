@@ -1,4 +1,40 @@
-# ANN Notes 
+# Tensor 
+```
+I have a question here, tensor is the machine learning specified concept? 
+Or CUDA inner defined concept ? 
+What's the CUDA resource component associate with Tensor ? 
+What's the relationship with the CUDA's `Block`, `Warp` or `Grid` `Threads`? 
+```
+## What's Tensor ? 
+A tensor is a mathematical data structure that generalizes scalars, vectors, and matrices to higher dimensions.
+In the context of machine learning and deep learning. 
+
+* Scalars are 0-dimensional tensors
+* Vector are 1-dimensional tensors
+* Matrices are 2-dimensional tensors 
+* Higher-dimensional tensors 
+
+Tensors are fundamental in deep learning frameworks like TensorFlow, PyTorch, and others
+representing inputs, outputs, and model parameters. 
+
+### Relationship Between Tensors and CUDA 
+1. Data Storage and Transfer:
+2. Computation Acceleration:
+
+### (Tensor) Relationship with Block, Threads, and Grids in CUDA 
+1. Data Storage and Transfer
+* Tensors can reside in either CPU memory or GPU memory. When using CUDA to 
+accelerate tensor computations, the data needs to be transferred from the CPU to the GPU. 
+* This transfer is managed using CUDA memory management APIs, such as `cudaMalloc` (to allocate GPU memory) 
+and `cudaMemcpy` (to copy data between GPU and CPU)
+
+2. Computation Acceleration:
+* Deep learning frameworks use CUDA libraries like cuBLAS(for basic linear algebra subprograms) and cuDNN(for deep nerual networks) to accelerate tensor operaiton. 
+* These libraries provide highly optimized routines for matrix multiplications, convolutions, and other operaitons, leveraging the parallel processing power of GPUs. 
+
+
+
+# ANN Introduction  
 Artificial Nerual Networks (ANNS) are computing systems inspired by the biological neural networks that constitute animal brains. 
 
 ## Baisc Concepts 
