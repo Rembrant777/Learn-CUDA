@@ -97,3 +97,11 @@ Where `a[l]` is the activation of the current layer, W[l] are the weights, a[l-1
 ### Training
 * Iterate the forward and backward propagation steps over multiple epochs until the network learns the underlying patterns in the data.
 * Split data into training and validation sets to evaluate the network's performance and avoid overfitting. 
+
+# `CUDNN` CUDA Library Introduction 
+`cuDNN` (CUDA Deep Nerual Network library) is a GPU-accelerated library for deep neural networks provided by NVIDIA.
+It is designed to provide highly optimized implementation of standard deep learning routines such as forward and backward convolution, pooling, normalization, and activation layers. 
+
+`cuDNN` aims to maximize the performance of deep learning applciations by levering and the parallel processing power of NVIDIA GPUs. 
+
+## Key Features of cuDNN 
