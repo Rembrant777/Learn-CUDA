@@ -105,3 +105,220 @@ It is designed to provide highly optimized implementation of standard deep learn
 `cuDNN` aims to maximize the performance of deep learning applciations by levering and the parallel processing power of NVIDIA GPUs. 
 
 ## Key Features of cuDNN 
+* High Performance: Provides highly optimzied implementations of key deep learning primitives. 
+* Flexibility: Supports a variety of network architectures and operations. 
+* Portability: Work across different NVIDIA GPU architectures. 
+
+## `cuDNN` Functions 
+`cuDNN` provides a variety of functions, including but not limited to:
+* Convolutional forward and backward passes
+* Pooling operations (max and average)
+* Normalization(batch normalization, local response normalization)
+* Activation functions(ReLU, sigmoid, tanh)
+* Tensor transformations
+
+## Overview of cuDNN API
+The cuDNN API is designed to be used with the CUDA programming model. 
+Here is a brief overview of how to use the `cuDNN` API:
+### Initialization and Setup
+* Initialize the cuDNN library context.
+* Create and setup descriptors for tensors, convolutional layers, activation functions, etc. 
+
+### Execution 
+* Perform the desired operations using the appropriate cuDNN functions. 
+* Cleanup and release resources. 
+
+### Key cuDNN Data Structures 
+* Handle: The cuDNN handle, which is required for all cuDNN functions calls.
+* Descriptors: Describe the properties of tensors, filters, convolution operations, pooling operations, etc. 
+
+### Detailed Function Example: Convolution Forward Pass 
+Let's look at an example of performing a convolution forward pass using cuDNN.
+#### Step-by-Step Process 
+1. Initialize cuDNN 
+```cuda 
+cudnnHandle_t cudnn; 
+cudnnCreate(&cudnn); 
+```
+
+2. Create Tensor Descriptors:
+```cuda 
+cudnnTensorDescriptor_t input_descriptor; 
+cudnnCreateTensorDescriptor(&input_descriptor); 
+cudnnSetTensor4dDescriptor(
+    input_descriptor,
+    CUDNN_TENSOR_NHWC,
+    CUDNN_DATA_LOAT,
+    batch_size, 
+    channels,
+    height,
+    width); 
+
+cudnnTensorDescriptor_t output_descriptor; 
+cudnnCreateTensorDescriptor(&output_descriptor); 
+
+cudnnSetTensor4dDescriptor(
+    output_descriptor, 
+    CUDNN_TENSOR_NHWC,
+    CUDNN_DATA_FLOAT,
+    batch_size,
+    output_channels,
+    output_height,
+    output_width); 
+```
+
+3. Create Filter Descriptor
+```cuda
+cudnnFilterDescriptor_t filter_descriptor; 
+
+cudnnCreateFilterDescriptor(&filter_descriptor); 
+
+cudnnFilter4dDescriptor(
+        filter_descriptor,
+        CUDNN_DATA_FLOAT,
+        CUDNN_TENSOR_NCHW,
+        output_channels,
+        channels,
+        filter_height,
+        filter_width);         
+```
+
+4. Create Convolution Descriptor
+```cuda 
+cudnnConvolutionDescriptor_t conv_descriptor; 
+
+cudnnCreateConvolutionDescriptor(&conv_descriptor); 
+
+cudnnSetConvolution2dDescriptor(
+    conv_descriptor,
+    pad_height,
+    pad_width,
+    stride_height,
+    stride_width,
+    dilation_height,
+    dilation_width,
+    CUDNN_CROSS_CORRELATION,
+    CUDNN_DATA_FLOAT);     
+```
+
+5. Choose Convolution Algorithm
+```cuda 
+cudnnConvolutionFwdAlgo_t conv_algo; 
+cudnnGetConvolutionForwardAlgorithm(
+        cudnn,
+        input_descriptor,
+        filter_descriptor,
+        conv_descriptor,
+        output_descriptor,
+        CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
+        0,// memory limit in bytes
+        &conv_algo); 
+```
+
+6. Allocate Memory for Workspace 
+```cuda 
+size_t workspace_bytes = 0; 
+cudnnGetConvolutionForwardWorkspaceSize(
+        cudnn,
+        input_descriptor,
+        filter_descriptor,
+        conv_descriptor,
+        output_descriptor,
+        output_descriptor,
+        conv_algo,
+        &workspace_bytes); 
+
+void* d_workspace = nullptr; 
+cudaMalloc(&d_workspace, workspace_bytes);         
+```
+
+7. Perform Convolution Forward Pass:
+```cuda 
+const float alpha = 1.0f, beta = 0.0f; 
+
+cudnnConvolutionForward(
+    cudnn,
+    &alpha,
+    input_descriptor,
+    d_input,
+    filter_descriptor,
+    d_filter,
+    conv_descriptor,
+    conv_algo,
+    d_workspace, workspace_bytes,
+    &beta,
+    output_descriptor, d_output); 
+```
+
+8. Clean Up
+```cuda 
+cudnnDestroyTensorDescriptor(input_descriptor);
+
+cudnnDestroyTensorDescriptor(output_descriptor);
+
+cudnnDestroyFilterDescriptor(filter_descriptor); 
+
+cudnnDestroyConvolutionDescriptor(conv_descriptor); 
+
+cudaFree(d_workspace); 
+cudnnDestroy(cudnn); 
+```
+
+## cuDNN Key Data Structures and Function Parameters
+* `cudnnHandle_t`
+This is a handle to the cuDNN library context. 
+All cuDNN functions require this handle. 
+
+* `cudnnTensorDescriptor_t`
+Describes a tensor's format, dimensions, and data type.
+
+Parameters
+> `format`: Tensor layout (e.g., CUDNN_TENSOR_NCHW or CUDNN_TENSOR_CHWC)
+
+> `dataType`: Data type of tensor elements (e.g., CUDNN_DATA_FLAOT)
+
+> `n, c, h, w`: Dimensions of the tensor (batch size, channels, height, width)
+
+* `cudnnFilterDescriptor_t`
+Describes a filter's format, dimensions, and data type used in convolutional layers. 
+Parameters:
+
+>`dataType`: Data type of filter elements (e.g., CUDNN_DATA_FLOAT)
+> `format`: Tensor layout for the filter (e.g., CUDNN_TENSOR_NCHW).
+> `k, c, h, w`: Dimensions of the filter (number of output channels, number of input channels, height, width)
+
+## cuDNN Iterms
+### Channels 
+* Input Channel: refer to the number of different types of input features or maps provided to a layer. This is often related to the depth of the input data. 
+
+* Output Channel: refer to the number of different feature maps produced by a convolutional layer. 
+
+### CNN_TENSOR_NCHW
+This is a layout format used by `cuDNN` to specify the arrange of data in a multi-dimensional tensor, 
+particular for deep learning applications. 
+
+Like this one 
+```
+cudnnSetTensor4dDescriptor(input_descriptor, 
+                           CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
+                           batch_size, channels, height, width);
+
+cudnnSetTensor4dDescriptor(output_descriptor, 
+                           CUDNN_TENSOR_NHWC, CUDNN_DATA_FLOAT,
+                           batch_size, height, width, channel);
+    
+
+CUDNN_TENSOR_{NHWC or NCHW}                                              
+
+NHWC means 
+N: batch_size which means the number of samples in the batch(N)
+H: height which means the height of each feature map in the output tensor 
+W: width which means width of each feature map in the output tensor 
+C: channel which means the number of channels(depth) in the output tensor(C)
+```
+
+
+## References
+* [YouTube](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi)
+* Learn CUDA Programming 
+* ChatGPT
