@@ -21,12 +21,12 @@ public:
     std::string get_name() {return name_; }
 
     virtual float get_loss(Blob<float> *target); 
-    virtual float get_accuracy(Blob<float> *target); 
+    virtual int get_accuracy(Blob<float> *target); 
 
     void set_cuda_context(CudaContext *context) { cuda_ = context; }
 
     void set_load_pretrain() {
-        load_pretrain = true; 
+        load_pretrain_ = true; 
     }
 
     void set_gradient_stop() {
@@ -79,7 +79,12 @@ protected:
     CudaContext *cuda_ = nullptr; 
 
     // pretrain parameters 
-    bool load_pretrain = false; 
+    bool load_pretrain_ = false; 
+    int load_parameter(); 
+    int save_parameter(); 
+
+    // gradient stop tagging 
+    bool gradient_stop_ = false; 
 
     friend class Network; 
 }; // class Layer 

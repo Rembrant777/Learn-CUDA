@@ -23,7 +23,7 @@ namespace cudl {
 
             Blob<float> *forward(Blob<float> *input); 
 
-            void backword(Blob<float> *input = nullptr); 
+            void backward(Blob<float> *input = nullptr); 
 
             void update(float learning_rate = 0.02f); 
 
@@ -41,7 +41,7 @@ namespace cudl {
 
             Blob<float> *output_; 
 
-            std::vector<Layer *> layers_; 
+            std::vector<Layer *> layers(); 
 
         private:
             std::vector<Layer *> layers_; 
@@ -50,7 +50,7 @@ namespace cudl {
 
             WorkloadType phase_ = inference;              
     }; // class Network  
-    
+
 } // namespace 
 
 #endif // _NETWORK_H)

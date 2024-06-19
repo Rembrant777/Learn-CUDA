@@ -3,23 +3,28 @@
 
 #include <cudnn.h>
 #include <cublas_v2.h>
+
+// #include <helper_cuda.h>
 #include <curand.h>
 
 namespace cudl
 {
+#define BLOCK_DIM_1D    512
+#define BLOCK_DIM       16
 
-#define BLOCK_DIM_1D 512 
-#define BLOCK_DIM    16
-
-// debug flags 
+/* DEBUG FLAGS */
 #define DEBUG_FORWARD   0
 #define DEBUG_BACKWARD  0
+
 #define DEBUG_CONV      0
 #define DEBUG_DENSE     0
-#define DEBUG_SOFTWARE  0
+#define DEBUG_SOFTMAX   0
 #define DEBUG_UPDATE    0
+
 #define DEBUG_LOSS      0
 #define DEBUG_ACCURACY  0
+
+#define DEBUG_FIND_ALGO 0
 
 /* CUDA API error return checker */
 #ifndef checkCudaErrors
@@ -36,36 +41,39 @@ namespace cudl
 #endif
 
 static const char *_cublasGetErrorEnum(cublasStatus_t error) {
-    switch(error) {
-        case CUBLAS_STATUS_SUCCESS:
-            return "CUBLAS_STATUS_SUCCESS"; 
+  switch (error) {
+    case CUBLAS_STATUS_SUCCESS:
+      return "CUBLAS_STATUS_SUCCESS";
 
-        case CUBLAS_STATUS_NOT_INITIALIZED:
-            return "CUBLAS_STATUS_NOT_INITIALIZED"; 
+    case CUBLAS_STATUS_NOT_INITIALIZED:
+      return "CUBLAS_STATUS_NOT_INITIALIZED";
 
-        case CUBLAS_STATUS_ALLOC_FAILED:
-            return "CUBLAS_STATUS_INVALID_VALUE"; 
+    case CUBLAS_STATUS_ALLOC_FAILED:
+      return "CUBLAS_STATUS_ALLOC_FAILED";
 
-        case CUBLAS_STATUS_ARCH_MISMATCH:
-            return "CUBLAS_STATUS_ARCH_MISMATCH"; 
+    case CUBLAS_STATUS_INVALID_VALUE:
+      return "CUBLAS_STATUS_INVALID_VALUE";
 
-        case CUBLAS_STATUS_MAPPING_ERROR:
-            return "CUBLAS_STATUS_MAPPING_ERROR"; 
+    case CUBLAS_STATUS_ARCH_MISMATCH:
+      return "CUBLAS_STATUS_ARCH_MISMATCH";
 
-        case CUBLAS_STATUS_EXECUTION_FAILED:
-            return "CUBLAS_STATUS_EXECUTION_FAILED"; 
+    case CUBLAS_STATUS_MAPPING_ERROR:
+      return "CUBLAS_STATUS_MAPPING_ERROR";
 
-        case CUBLAS_STATUS_INTERNAL_ERROR:
-            return "CUBLAS_STATUS_INTERNAL_ERROR"; ; 
+    case CUBLAS_STATUS_EXECUTION_FAILED:
+      return "CUBLAS_STATUS_EXECUTION_FAILED";
 
-        case CUBLAS_STATUS_NOT_SUPPORTED:
-            return "CUBLAS_STATUS_NOT_SUPPORTED";
-        
-        case CUBLAS_STATUS_LICENSE_ERROR:
-            return "CUBLAS_STATUS_LICENSE_ERROR";
-    }
+    case CUBLAS_STATUS_INTERNAL_ERROR:
+      return "CUBLAS_STATUS_INTERNAL_ERROR";
 
-    return "<unknown>"; 
+    case CUBLAS_STATUS_NOT_SUPPORTED:
+      return "CUBLAS_STATUS_NOT_SUPPORTED";
+
+    case CUBLAS_STATUS_LICENSE_ERROR:
+      return "CUBLAS_STATUS_LICENSE_ERROR";
+  }
+
+  return "<unknown>";
 }
 
 #define checkCublasErrors(err)                                                                        \
@@ -149,34 +157,32 @@ static const char *_curandGetErrorEnum(curandStatus_t error) {
 class CudaContext
 {
     public:
-        CudaContext() {
-            cublasCreate(&_cublas_handle);
-            checkCudaErrors(cudaGetLastError()); 
-            checkCudnnErrors(cudnnCreate(*_cudnn_handle)); 
-        }
+    CudaContext()
+    {
+        cublasCreate(&_cublas_handle);
+        checkCudaErrors(cudaGetLastError());
+        checkCudnnErrors(cudnnCreate(&_cudnn_handle));
+    }
+    ~CudaContext()
+    {
+        cublasDestroy(_cublas_handle);
+        checkCudnnErrors(cudnnDestroy(_cudnn_handle));
+    }
 
-        ~cudaContext() {
-            cublasDestroy(_cublas_handle);
-            checkCudnnErrors(cudnnDestroy(_cudnn_handle)); 
-        }
+    cublasHandle_t cublas() { 
+        //std::cout << "Get cublas request" << std::endl; getchar();
+        return _cublas_handle; };
+    cudnnHandle_t cudnn() { return _cudnn_handle; };
 
-        cublasHandle_t cublas() {
-            return _cublas_handle; 
-        }
-
-        cudnnHandle_t cudnn() {
-            return _cudnn_handle; 
-        }
-
-        const float one     = 1.f; 
-        const float zero    = 0.f; 
-        const float minus_one = -1.f; 
+    const float one       =  1.f;
+    const float zero      =  0.f;
+    const float minus_one = -1.f;
 
     private:
-        cublasHandle_t  _cublas_handle; 
-        cudnnHandle_t   _cudnn_handle; 
+    cublasHandle_t _cublas_handle;
+    cudnnHandle_t  _cudnn_handle;
+};
 
-}; 
-} // namespace cudl 
+} // namespace cudl
 
-#endif 
+#endif // _HELPER_H_

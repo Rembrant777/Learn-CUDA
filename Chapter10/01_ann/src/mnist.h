@@ -1,4 +1,4 @@
-#ifnder _MNIST_H_
+#ifndef _MNIST_H_
 #define _MNIST_H_
 
 #include <string>
@@ -71,16 +71,17 @@ private:
     void load_target(std::string &label_file_path); 
 
     void normalize_data(); 
-    int to_int(unit8_t *ptr); 
+    int to_int(uint8_t *ptr); 
 
     // data loader control 
-    int step_           = -1; 
-    bool shuffle_; 
-    int batch_size_     = 1; 
-    int channels_       = 1; 
-    int height_         = 1; 
-    int num_classes_    = 10; 
-    int num_steps_      = 0; 
+    int     step_           = -1; 
+    bool    shuffle_; 
+    int     batch_size_     = 1; 
+    int     channels_       = 1; 
+    int     height_         = 1; 
+    int     width_      = 1;
+    int     num_classes_    = 10; 
+    int     num_steps_      = 0; 
 
     void create_shared_space(); 
     void shuffle_dataset(); 

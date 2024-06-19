@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <iomanip>
-#include <nvtx3/nvToolsExt.h>
+#include <nvToolsExt.h>
 
 using namespace cudl; 
 

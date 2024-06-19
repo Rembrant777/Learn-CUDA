@@ -74,10 +74,8 @@ namespace cudl
             }
 
             // return array of tensor shape 
-            std::array<int, 4> shape() {
-                return std::array<int, 4>({n_, c_, h_, w}); 
-            }
-
+            std::array<int, 4> shape() { return std::array<int, 4>({n_, c_, h_, w_}); }
+            
             // return number of elements for 1 batch 
             int size() {
                 return c_ * h_ * w_; 
@@ -106,10 +104,10 @@ namespace cudl
                     return tensor_desc_; 
                 }
 
-                cudnnCreateTensorDescriptor(&tensor_desc_); 
-                cudnnSetTensor4dDescriptor(tensor_desc_,
-                                CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
-                                n_, c_, h_, w); 
+                cudnnCreateTensorDescriptor(&tensor_desc_);
+                cudnnSetTensor4dDescriptor(tensor_desc_, 
+                                    CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
+                                    n_, c_, h_, w_);
                                 
                 is_tensor_ = true; 
                 return tensor_desc_; 
@@ -168,9 +166,9 @@ namespace cudl
                         
                         int count = 0; 
                         int print_line_count = 0; 
-                        while (cout < size() && print_line_count < max_print_line) {
+                        while (count < size() && print_line_count < max_print_line) {
                             std::cout << "\t"; 
-                            for (int s = 0; s < width && cout < size(); s++) {
+                            for (int s = 0; s < width && count < size(); s++) {
                                 std::cout << h_ptr_[size() * n + count + offset] << "\t"; 
                                 count++; 
                             }
