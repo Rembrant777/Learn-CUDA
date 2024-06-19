@@ -1,0 +1,28 @@
+(base) raytrack@u16-01:~/workspace/Learn-CUDA/Chapter10/00_cudnn/cudnn_test_00$ make clean && make 
+rm -f  test_hello_cudnn obj/*.o 
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -g -std=c++14 -m64 --resource-usage -lineinfo -lnvToolsExt -I/usr/local/cuda-9.2/samples/common/inc -I/usr/local/cuda-9.2/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/ -x cu -dc /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include/gtest/gtest.h -o obj/test_hello_cudnn.o -gencode arch=compute_52,code=sm_52 -gencode arch=compute_53,code=sm_53 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_62,code=sm_62 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_72,code=sm_72
+nvcc warning : Resource usage is not shown as the final resource allocation is not done.
+/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include/gtest/gtest.h(171): warning: variable "testing::kMaxStackTraceDepth" was declared but never referenced
+
+/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include/gtest/gtest.h(171): warning: variable "testing::kMaxStackTraceDepth" was declared but never referenced
+
+/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include/gtest/gtest.h(171): warning: variable "testing::kMaxStackTraceDepth" was declared but never referenced
+
+/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include/gtest/gtest.h(171): warning: variable "testing::kMaxStackTraceDepth" was declared but never referenced
+
+/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include/gtest/gtest.h(171): warning: variable "testing::kMaxStackTraceDepth" was declared but never referenced
+
+/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include/gtest/gtest.h(171): warning: variable "testing::kMaxStackTraceDepth" was declared but never referenced
+
+/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include/gtest/gtest.h(171): warning: variable "testing::kMaxStackTraceDepth" was declared but never referenced
+
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -g -std=c++14 -m64 --resource-usage -lineinfo -lnvToolsExt -I/usr/local/cuda-9.2/samples/common/inc -I/usr/local/cuda-9.2/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/ -x cu -dc /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest-all.cc -o obj/gtest-all.o -gencode arch=compute_52,code=sm_52 -gencode arch=compute_53,code=sm_53 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_62,code=sm_62 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_72,code=sm_72
+nvcc warning : Resource usage is not shown as the final resource allocation is not done.
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -g -std=c++14 -m64 --resource-usage -lineinfo -lnvToolsExt -I/usr/local/cuda-9.2/samples/common/inc -I/usr/local/cuda-9.2/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/ -x cu -dc /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc -o obj/gtest_main.o -gencode arch=compute_52,code=sm_52 -gencode arch=compute_53,code=sm_53 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_62,code=sm_62 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_72,code=sm_72
+nvcc warning : Resource usage is not shown as the final resource allocation is not done.
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -g -std=c++14 -m64 --resource-usage -lineinfo -lnvToolsExt -I/usr/local/cuda-9.2/samples/common/inc -I/usr/local/cuda-9.2/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/ obj/test_hello_cudnn.o obj/gtest-all.o obj/gtest_main.o -o test_hello_cudnn -gencode arch=compute_52,code=sm_52 -gencode arch=compute_53,code=sm_53 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_62,code=sm_62 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_72,code=sm_72 -L/usr/local/cuda-9.2/lib64 -lcublas -lcudnn -lgomp -lcurand 
+./test_hello_cudnn
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 0 tests from 0 test suites.
+[==========] 0 tests from 0 test suites ran. (0 ms total)
+[  PASSED  ] 0 tests.
