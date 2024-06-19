@@ -122,8 +122,8 @@ namespace cudl
             ftype *cuda() {
                 if (d_ptr_ == nullptr) {
                     cudaMalloc((void **) &d_ptr_, sizeof(ftype) * len()); 
-                    return d_ptr_; 
                 }
+                return d_ptr_;             
             }
 
             // transfer data between (gpu) memory <-> (cpu) memory 

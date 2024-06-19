@@ -5,7 +5,7 @@ NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
 TARGET=train
 
 INCLUDES= -I${CUDA_PATH}/samples/common/inc -I$(CUDA_PATH)/include
-NVCC_FLAGS=-m64 --resource-usage -lineinfo
+NVCC_FLAGS=-m64 --resource-usage -lineinfo -lnvToolsExt
 
 IS_CUDA_9:=$(shell expr `$(NVCC) --version | grep compilation | grep -Eo -m 1 '[0-9]+.[0-9]' | head -1` \>= 9.2)
 

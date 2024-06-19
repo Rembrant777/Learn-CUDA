@@ -63,7 +63,7 @@ Blob<float> *Network::forward(Blob<float> *input)
         std::cout << "--> (" << output_->n() << ", " << output_->c() << ", " << output_->h() << ", " << output_->w() << ")" << std::endl; 
         checkCudaErrors(cudaDeviceSynchronize()); 
 
-        if (DEBUG_FORWARD > 1)
+        #if (DEBUG_FORWARD > 1)
             output_->print("output", true);
             if (phase_ == inference)
                 getchar(); 
@@ -99,7 +99,6 @@ void Network::backward(Blob<float> *target)
         // and the gradient result 
         std::cout << "--> (" << gradient->n() << ", " << gradient->c() << ", " << gradient->h() << ", " << gradient->w() << ")" << std::endl; 
         checkCudaErrors(cudaDeviceSynchronize()); 
-#endif 
 
 #if (DEBUG_BACKWARD > 1)
         gradient->print((*layer)->get_name() + "::dx", true); 
@@ -146,9 +145,9 @@ int Network::write_file()
     }
 }
 
-int Network::load_pretain() 
+int Network::load_pretrain() 
 {
-    for (auto layer : layers) {
+    for (auto layer : layers_) {
         layer->set_load_pretrain(); 
     }
 

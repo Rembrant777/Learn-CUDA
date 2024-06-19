@@ -4,7 +4,8 @@
 
 #include <iomanip>
 #include <cuda_profiler_api.h>
-#include <nvToolsExt.h>
+#include "nvToolsExt.h"
+
 
 using namespace cudl;
 
