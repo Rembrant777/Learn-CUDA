@@ -45,16 +45,16 @@ OBJS = ${OBJ_DIR}/hello_cudnn.o
 GTEST_OBJS = ${OBJ_DIR}/gtest-all.o ${OBJ_DIR}/gtest_main.o
 
 # All targets
-all:  ${TEST_TARGET}
+all:  ${TARGET} ${TEST_TARGET}
 
 # Rule for training target
-# ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cu ${INCS}
-# 	@mkdir -p ${OBJ_DIR}
-# 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
+${OBJ_DIR}/%.o: ${SRC_DIR}/%.cu ${INCS}
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
 
-# ${OBJ_DIR}/hello_cudnn.o: ${SRC_DIR}/hello_cudnn.cu ${INCS}
-# 	@mkdir -p ${OBJ_DIR}
-# 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
+${OBJ_DIR}/hello_cudnn.o: ${SRC_DIR}/hello_cudnn.cu ${INCS}
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
 
 # hello_cudnn: $(OBJS)
 # 	$(NVCC) $(ALL_CCFLAGS) $(OBJS) -o $@ $(GENCODE_FLAGS) $(LIBRARIES)

@@ -1,8 +1,6 @@
 #include <iostream>
 #include "hello_cudnn.h"
 
-int main() 
-{
-    std::cout << "Hello CUDNN" << std::endl; 
-    return 0; 
+std::string HelloCudnn::say_hello() {
+    return "Hello cuDNN"; 
 }
