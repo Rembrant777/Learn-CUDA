@@ -3,8 +3,7 @@ CUDA_PATH=/usr/local/cuda-9.2
 GOOGLETEST_PATH=/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
-TEST_TARGET=test_cudnn_activation 
-#test_cudnn_activation_descriptor
+TEST_TARGET=cudnn_activation_test 
 
 # Include paths
 INCLUDES= -I${CUDA_PATH}/samples/common/inc -I$(CUDA_PATH)/include -I$(GOOGLETEST_PATH)/googletest/include -I$(GOOGLETEST_PATH)/googletest/
@@ -25,8 +24,6 @@ $(foreach sm, ${SMS}, $(eval GENCODE_FLAGS += -gencode arch=compute_$(sm),code=s
 
 # Libraries
 LIBRARIES += -L$(CUDA_PATH)/lib64 -lcublas -lcudnn -lgomp -lcurand 
-#-lgtest -lgtest_main  
-
 
 # Compiler flags
 ALL_CCFLAGS += -g -std=c++14 $(NVCC_FLAGS) $(INCLUDES)
@@ -35,67 +32,39 @@ ALL_CCFLAGS += -g -std=c++14 $(NVCC_FLAGS) $(INCLUDES)
 SRC_DIR = src
 OBJ_DIR = obj
 TEST_DIR = test
+TEST_OBJ_DIR = test_obj
 GTEST_DIR = $(GOOGLETEST_PATH)
 
-# Object files
-GTEST_OBJS = ${OBJ_DIR}/gtest-all.o ${OBJ_DIR}/gtest_main.o
+INCS = ${SRC_DIR}/cudnn_activation.h
 
 # All targets
 all:  ${TEST_TARGET}
 
-${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp ${INCS}
-	@mkdir -p ${OBJ_DIR}
-	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
-
-# we got cudnn_activation_descriptor.o and cudnn_activation.o 
-${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp ${INCS}
-	@mkdir -p ${OBJ_DIR}
-	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
-	
-${OBJ_DIR}/cudnn_activation.o: ${SRC_DIR}/cudnn_activation.cpp ${SRC_DIR}/cudnn_activation.h
-	@mkdir -p ${OBJ_DIR}
-	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
-
-# ${OBJ_DIR}/cudnn_activation_descriptor.o: ${SRC_DIR}/cudnn_activation_descriptor.cpp ${SRC_DIR}/cudnn_activation_descriptor.h 
-# 	@mkdir -p ${OBJ_DIR}
-# 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
-
-
-GTEST_ALL_OBJ=${OBJ_DIR}/gtest-all.obj
-GTEST_MAIN_OBJ=${OBJ_DIR}/gtest_main.o 
+OBJ_FILES = $(OBJ_DIR)/cudnn_activation.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o $(OBJ_DIR)/cudnn_activation_test.o
 
 # Google Test rules, if obj files already exist just skip 
 ${OBJ_DIR}/gtest-all.o: ${GTEST_DIR}/googletest/src/gtest-all.cc
-ifeq (, $(wildcard $(GTEST_ALL_OBJ)))	
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
-endif 	
 
 ${OBJ_DIR}/gtest_main.o: ${GTEST_DIR}/googletest/src/gtest_main.cc
-ifeq (, $(wildcard $(GTEST_MAIN_OBJ)))
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
-endif	
 
-${OBJ_DIR}/test_cudnn_activation.o: ${OBJ_DIR}/cudnn_activation.o ${TEST_DIR}/test_cudnn_activation.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+# ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp ${INCS}
+# 	@mkdir -p ${OBJ_DIR}
+# 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
+
+${OBJ_DIR}/cudnn_activation.o: ${SRC_DIR}/cudnn_activation.cpp ${INCS}
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
+
+${OBJ_DIR}/cudnn_activation_test.o: ${INCS} ${TEST_DIR}/cudnn_activation_test.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
 
-# ${OBJ_DIR}/test_cudnn_activation_descriptor.o: ${GTEST_DIR}/googletest/include/gtest/gtest.h
-# 	@mkdir -p ${OBJ_DIR}
-# 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
-
-test_cudnn_activation: ${OBJ_DIR}/test_cudnn_activation.o ${GTEST_OBJS}
+cudnn_activation_test: $(OBJ_FILES)
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 	./$@
 
-# test_cudnn_activation_descriptor: ${OBJ_DIR}/test_cudnn_activation_descriptor.o ${GTEST_OBJS}
-# 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
-# 	./$@
-
-# Clean rule
 .PHONY: clean
-
-# finds all google objects and skip remove them during make clean period 
-# to avoid re-compile gtest objects during make period
 clean:
-	find ${OBJ_DIR} -type f -name '*.o' ! -name 'gtest-all.o' ! -name 'gtest_main.o' -exec rm -f {} +
-	rm -f ${TEST_TARGET}
+	rm -f ${TEST_TARGET} ${OBJ_DIR}/*.o 
