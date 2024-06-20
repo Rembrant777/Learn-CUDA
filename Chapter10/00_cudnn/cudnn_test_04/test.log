@@ -1,0 +1,20 @@
+[==========] Running 6 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 6 tests from TestCudnnActivationDescriptor
+[ RUN      ] TestCudnnActivationDescriptor.CreateAndDestroyActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateAndDestroyActivationDescriptor (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.CreateReluActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateReluActivationDescriptor (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.CreateTanhActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateTanhActivationDescriptor (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.CreateClippedReluActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateClippedReluActivationDescriptor (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.CreateEluActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateEluActivationDescriptor (0 ms)
+[----------] 6 tests from TestCudnnActivationDescriptor (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 1 test suite ran. (1 ms total)
+[  PASSED  ] 6 tests.
