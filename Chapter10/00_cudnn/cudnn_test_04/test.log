@@ -1,0 +1,29 @@
+(base) raytrack@u16-01:~/workspace/Learn-CUDA/Chapter10/00_cudnn/cudnn_test_03$ make 
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -g -std=c++14 -m64 --resource-usage -lineinfo -lnvToolsExt -I/usr/local/cuda-9.2/samples/common/inc -I/usr/local/cuda-9.2/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/ -x cu -dc test/hello_cudnn.cpp -o obj/hello_cudnn.o -gencode arch=compute_52,code=sm_52 -gencode arch=compute_53,code=sm_53 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_62,code=sm_62 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_72,code=sm_72
+nvcc warning : Resource usage is not shown as the final resource allocation is not done.
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -g -std=c++14 -m64 --resource-usage -lineinfo -lnvToolsExt -I/usr/local/cuda-9.2/samples/common/inc -I/usr/local/cuda-9.2/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/ -x cu -dc test/hello_gtest.cpp -o obj/hello_gtest.o -gencode arch=compute_52,code=sm_52 -gencode arch=compute_53,code=sm_53 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_62,code=sm_62 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_72,code=sm_72
+nvcc warning : Resource usage is not shown as the final resource allocation is not done.
+/usr/local/cuda-9.2/bin/nvcc -ccbin g++ -g -std=c++14 -m64 --resource-usage -lineinfo -lnvToolsExt -I/usr/local/cuda-9.2/samples/common/inc -I/usr/local/cuda-9.2/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/include -I/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/ obj/hello_cudnn.o obj/hello_gtest.o obj/gtest-all.o obj/gtest_main.o -o hello_gtest -gencode arch=compute_52,code=sm_52 -gencode arch=compute_53,code=sm_53 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_62,code=sm_62 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_72,code=sm_72 -L/usr/local/cuda-9.2/lib64 -lcublas -lcudnn -lgomp -lcurand 
+./hello_gtest
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 5 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from HelloCudnn
+[ RUN      ] HelloCudnn.CreateActivationDescriptorSigmoid
+[       OK ] HelloCudnn.CreateActivationDescriptorSigmoid (2887 ms)
+[----------] 1 test from HelloCudnn (2887 ms total)
+
+[----------] 4 tests from HelloGTest
+[ RUN      ] HelloGTest.EqualityTest
+[       OK ] HelloGTest.EqualityTest (0 ms)
+[ RUN      ] HelloGTest.InequalityTest
+[       OK ] HelloGTest.InequalityTest (0 ms)
+[ RUN      ] HelloGTest.BooleanTest
+[       OK ] HelloGTest.BooleanTest (0 ms)
+[ RUN      ] HelloGTest.FloatingPointTest
+[       OK ] HelloGTest.FloatingPointTest (0 ms)
+[----------] 4 tests from HelloGTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 5 tests from 2 test suites ran. (2887 ms total)
+[  PASSED  ] 5 tests.
