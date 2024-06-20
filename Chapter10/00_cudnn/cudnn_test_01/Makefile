@@ -60,12 +60,19 @@ ${OBJ_DIR}/cudnn_activation_descriptor.o: ${SRC_DIR}/cudnn_activation_descriptor
 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
 
 
-# Google Test rules
+GTEST_ALL_OBJ=${OBJ_DIR}/gtest-all.obj
+GTEST_MAIN_OBJ=${OBJ_DIR}/gtest_main.o 
+
+# Google Test rules, if obj files already exist just skip 
 ${OBJ_DIR}/gtest-all.o: ${GTEST_DIR}/googletest/src/gtest-all.cc
+ifeq (, $(wildcard $(GTEST_ALL_OBJ)))	
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
+endif 	
 
 ${OBJ_DIR}/gtest_main.o: ${GTEST_DIR}/googletest/src/gtest_main.cc
+ifeq (, $(wildcard $(GTEST_MAIN_OBJ)))
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
+endif	
 
 ${OBJ_DIR}/test_cudnn_activation.o: ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
@@ -85,5 +92,9 @@ test_cudnn_activation_descriptor: ${OBJ_DIR}/test_cudnn_activation_descriptor.o 
 
 # Clean rule
 .PHONY: clean
+
+# finds all google objects and skip remove them during make clean period 
+# to avoid re-compile gtest objects during make period
 clean:
-	rm -f ${TEST_TARGET} ${OBJ_DIR}/*.o 
+	find ${OBJ_DIR} -type f -name '*.o' ! -name 'gtest-all.o' ! -name 'gtest_main.o' -exec rm -f {} +
+	rm -f ${TEST_TARGET}
