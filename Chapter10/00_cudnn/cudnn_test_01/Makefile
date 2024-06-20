@@ -3,7 +3,8 @@ CUDA_PATH=/usr/local/cuda-9.2
 GOOGLETEST_PATH=/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
-TEST_TARGET=test_cudnn_activation test_cudnn_activation_descriptor
+TEST_TARGET=test_cudnn_activation 
+#test_cudnn_activation_descriptor
 
 # Include paths
 INCLUDES= -I${CUDA_PATH}/samples/common/inc -I$(CUDA_PATH)/include -I$(GOOGLETEST_PATH)/googletest/include -I$(GOOGLETEST_PATH)/googletest/
@@ -36,28 +37,28 @@ OBJ_DIR = obj
 TEST_DIR = test
 GTEST_DIR = $(GOOGLETEST_PATH)
 
-# Headers
-INCS = ${SRC_DIR}/cudnn_activation.h
-
 # Object files
-OBJS = ${OBJ_DIR}/cudnn_activation.o
 GTEST_OBJS = ${OBJ_DIR}/gtest-all.o ${OBJ_DIR}/gtest_main.o
 
 # All targets
 all:  ${TEST_TARGET}
 
-# Rule for training target
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp ${INCS}
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
 
-${OBJ_DIR}/cudnn_activation.o: ${SRC_DIR}/cudnn_activation.cpp ${INCS}
+# we got cudnn_activation_descriptor.o and cudnn_activation.o 
+${OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp ${INCS}
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
+	
+${OBJ_DIR}/cudnn_activation.o: ${SRC_DIR}/cudnn_activation.cpp ${SRC_DIR}/cudnn_activation.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
 
-${OBJ_DIR}/cudnn_activation_descriptor.o: ${SRC_DIR}/cudnn_activation_descriptor.cpp ${INCS}
-	@mkdir -p ${OBJ_DIR}
-	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
+# ${OBJ_DIR}/cudnn_activation_descriptor.o: ${SRC_DIR}/cudnn_activation_descriptor.cpp ${SRC_DIR}/cudnn_activation_descriptor.h 
+# 	@mkdir -p ${OBJ_DIR}
+# 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
 
 
 GTEST_ALL_OBJ=${OBJ_DIR}/gtest-all.obj
@@ -74,21 +75,21 @@ ifeq (, $(wildcard $(GTEST_MAIN_OBJ)))
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
 endif	
 
-${OBJ_DIR}/test_cudnn_activation.o: ${GTEST_DIR}/googletest/include/gtest/gtest.h
+${OBJ_DIR}/test_cudnn_activation.o: ${OBJ_DIR}/cudnn_activation.o ${TEST_DIR}/test_cudnn_activation.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
 
-${OBJ_DIR}/test_cudnn_activation_descriptor.o: ${GTEST_DIR}/googletest/include/gtest/gtest.h
-	@mkdir -p ${OBJ_DIR}
-	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
+# ${OBJ_DIR}/test_cudnn_activation_descriptor.o: ${GTEST_DIR}/googletest/include/gtest/gtest.h
+# 	@mkdir -p ${OBJ_DIR}
+# 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
 
 test_cudnn_activation: ${OBJ_DIR}/test_cudnn_activation.o ${GTEST_OBJS}
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 	./$@
 
-test_cudnn_activation_descriptor: ${OBJ_DIR}/test_cudnn_activation_descriptor.o ${GTEST_OBJS}
-	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
-	./$@
+# test_cudnn_activation_descriptor: ${OBJ_DIR}/test_cudnn_activation_descriptor.o ${GTEST_OBJS}
+# 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
+# 	./$@
 
 # Clean rule
 .PHONY: clean

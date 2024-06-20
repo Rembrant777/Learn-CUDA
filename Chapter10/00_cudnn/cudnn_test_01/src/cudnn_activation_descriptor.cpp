@@ -20,15 +20,18 @@ CudnnActivationDescriptorInstance::~CudnnActivationDescriptorInstance()
 
 void CudnnActivationDescriptorInstance::createActivationDescriptor(cudnnActivationMode_t mode) 
 {
+    // create instance 
     if (cudnnCreateActivationDescriptor(&activation_desc_) != CUDNN_STATUS_SUCCESS) {
         throw std::runtime_error("Failed to create activation descriptor"); 
     }
 
+    // passing configure options 
     if (cudnnSetActivationDescriptor(activation_desc_, mode, CUDNN_PROPAGATE_NAN, 0.0) != CUDNN_STATUS_SUCCESS) {
         cudnnDestroyActivationDescriptor(activation_desc_); 
         throw std::runtime_error("Failed to set activation descriptor"); 
     }
 
+    // update flag 
     is_descriptor_created_ = true; 
 }
 

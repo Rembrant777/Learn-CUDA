@@ -4,18 +4,18 @@
 #include <cudnn.h>
 #include <stdexcept>
 
-class CudnnActivation {
+class CudnnActivationInstance {
 public:
-    CudnnActivation(); 
-    ~CudnnActivation(); 
+    CudnnActivationInstance(); 
+    ~CudnnActivationInstance(); 
 
-    void set_activation_descriptor(CudnnActivationMode_t mode, double coef); 
-    void get_activation_descriptor(cudnnActivationMode_t &mode, cudnnNanPropagation_t &nanOpt, double &coef) const; 
+    void set_activation_descriptor(cudnnActivationMode_t mode, double coef); 
+    cudnnActivationDescriptor_t get_activation_descriptor() const; 
 
 private:
     cudnnActivationDescriptor_t activation_desc_;     
     
-}; // class CudnnActivation 
+}; // class CudnnActivationInstance 
 
 
 #endif // CUDNN_ACTIVATION_H
