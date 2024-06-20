@@ -3,7 +3,7 @@ CUDA_PATH=/usr/local/cuda-9.2
 GOOGLETEST_PATH=/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
-TEST_TARGET=test_cudnn_activation
+TEST_TARGET=test_cudnn_activation test_cudnn_activation_descriptor
 
 # Include paths
 INCLUDES= -I${CUDA_PATH}/samples/common/inc -I$(CUDA_PATH)/include -I$(GOOGLETEST_PATH)/googletest/include -I$(GOOGLETEST_PATH)/googletest/
@@ -55,6 +55,10 @@ ${OBJ_DIR}/cudnn_activation.o: ${SRC_DIR}/cudnn_activation.cpp ${INCS}
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
 
+${OBJ_DIR}/cudnn_activation_descriptor.o: ${SRC_DIR}/cudnn_activation_descriptor.cpp ${INCS}
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS)
+
 
 # Google Test rules
 ${OBJ_DIR}/gtest-all.o: ${GTEST_DIR}/googletest/src/gtest-all.cc
@@ -67,12 +71,15 @@ ${OBJ_DIR}/test_cudnn_activation.o: ${GTEST_DIR}/googletest/include/gtest/gtest.
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
 
+${OBJ_DIR}/test_cudnn_activation_descriptor.o: ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
 
-# Test target
-TEST_SRCS = ${TEST_DIR}/test_cudnn_activation.cpp 
-TEST_OBJS = ${OBJ_DIR}/test_cudnn_activation.o 
+test_cudnn_activation: ${OBJ_DIR}/test_cudnn_activation.o ${GTEST_OBJS}
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
+	./$@
 
-test_cudnn_activation: ${TEST_OBJS} ${GTEST_OBJS}
+test_cudnn_activation_descriptor: ${OBJ_DIR}/test_cudnn_activation_descriptor.o ${GTEST_OBJS}
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 	./$@
 

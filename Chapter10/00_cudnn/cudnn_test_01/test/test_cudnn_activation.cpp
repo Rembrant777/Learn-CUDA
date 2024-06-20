@@ -8,6 +8,7 @@ protected:
 }; 
 
 TEST_F(CudnnActivationTest, CreateAndDestroy) {
+    
 
 }
 
