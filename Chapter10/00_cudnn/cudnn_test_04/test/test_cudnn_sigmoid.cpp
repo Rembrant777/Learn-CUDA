@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <cudnn.h>
+#include <cmath>
 #include <stdexcept>
 
 class TestCudnnActivationDescriptor {
@@ -56,14 +57,17 @@ public:
     // here we implement MSE as the loss function 
     // MSE (Mean Sequared Error)
     // MSE = { ((y(1) - y'(1))^2 + ... + (y(n) - y'(n))^2 } /n, n is the number of sample 
-    float mseLossFunc(const float *predicted, const float* expected, int N) {
-        float ret = 0.f; 
+    double mseLossFunc(const float *predicted, const float* expected, int N) {
+        double ret = 0.0; 
         for (int i = 0; i < N; i++) {
             float diff = predicted[i] - expected[i]; 
-            std::cout << "diff " << diff << std::endl; 
             ret += diff * diff;  
+            
+            // std::cout << "diff " << diff << ", ret " << ret << std::endl; 
         }
 
+        // std::cout << "ret " << ret << ", N " << N << std::endl; 
+        // std::cout << "ret / N = " << (ret / N) << std::endl; 
         ret /= N; 
         return ret; 
     }
@@ -75,6 +79,34 @@ public:
     void mseLossGradient(const float *predicted, const float *expected, float *grad, int N) {
         for (int i = 0; i < N; i++) {
             grad[i] = 2 * (predicted[i] - expected[i]) / N; 
+        }
+    }
+
+
+    float huberLoss(float *predicted, float *expected, int delta, int N) {
+        float ret = 0.f; 
+        for (int i = 0; i < N; i++) {
+            float diff = predicted[i] - expected[i]; 
+            if (abs(diff) <= delta) {
+                diff = 0.5 * diff * diff; 
+            } else {
+                diff = delta * (abs(diff) - 0.5 * delta); 
+            }
+
+            ret += diff; 
+        }
+
+        return ret / N; 
+    }
+
+    void huberLossDerivative(float *predicted, float *expected, float *grad_output, float delta, int N) {
+        for (int i = 0; i < N; i++) {
+            float diff = predicted[i] - expected[i]; 
+            if (abs(diff) <= delta) {
+                grad_output[i] = diff; 
+            } else {
+                grad_output[i] = delta * (diff > 0 ? 1 : -1); 
+            }
         }
     }
 
@@ -122,69 +154,69 @@ private:
 //     // EXPECT_NO_THROW((*instance).destroyActivationDescriptor()); 
 // }
 
-TEST(TestCudnnActivationDescriptor, ApplySigmoidActivationForward)
-{
-    cudnnActivationMode_t mode      = CUDNN_ACTIVATION_SIGMOID; 
-    cudnnNanPropagation_t nan_prop  = CUDNN_PROPAGATE_NAN; 
-    double coef                     = 0.0; 
-    // create test instance 
-    TestCudnnActivationDescriptor* instance = new TestCudnnActivationDescriptor(mode, nan_prop, coef);
+// TEST(TestCudnnActivationDescriptor, ApplySigmoidActivationForward)
+// {
+//     cudnnActivationMode_t mode      = CUDNN_ACTIVATION_SIGMOID; 
+//     cudnnNanPropagation_t nan_prop  = CUDNN_PROPAGATE_NAN; 
+//     double coef                     = 0.0; 
+//     // create test instance 
+//     TestCudnnActivationDescriptor* instance = new TestCudnnActivationDescriptor(mode, nan_prop, coef);
     
-    // invoke test instance to init activation descriptor 
-    EXPECT_NO_THROW((*instance).createActivationDescriptor()); 
-    cudnnActivationDescriptor_t act_desc = (*instance).getActivationDescriptor(); 
+//     // invoke test instance to init activation descriptor 
+//     EXPECT_NO_THROW((*instance).createActivationDescriptor()); 
+//     cudnnActivationDescriptor_t act_desc = (*instance).getActivationDescriptor(); 
 
 
-    const int batch_size = 2; 
-    const int channels   = 3; 
-    const int height     = 4; 
-    const int width      = 4; 
-    const int size       = batch_size * channels * height * width ; 
+//     const int batch_size = 2; 
+//     const int channels   = 3; 
+//     const int height     = 4; 
+//     const int width      = 4; 
+//     const int size       = batch_size * channels * height * width ; 
 
-    float input[size]   =  {
-                                1, -1, 2, -2, 0.5, -0.5, 1.5, -1.5, 0.1, -0.1, 2.1, -2.1, 0.2, -0.2, 2.2, -2.2,
-                                1, -1, 2, -2, 0.5, -0.5, 1.5, -1.5, 0.1, -0.1, 2.1, -2.1, 0.2, -0.2, 2.2, -2.2,
-                                1, -1, 2, -2, 0.5, -0.5, 1.5, -1.5, 0.1, -0.1, 2.1, -2.1, 0.2, -0.2, 2.2, -2.2
-                            };
+//     float input[size]   =  {
+//                                 1, -1, 2, -2, 0.5, -0.5, 1.5, -1.5, 0.1, -0.1, 2.1, -2.1, 0.2, -0.2, 2.2, -2.2,
+//                                 1, -1, 2, -2, 0.5, -0.5, 1.5, -1.5, 0.1, -0.1, 2.1, -2.1, 0.2, -0.2, 2.2, -2.2,
+//                                 1, -1, 2, -2, 0.5, -0.5, 1.5, -1.5, 0.1, -0.1, 2.1, -2.1, 0.2, -0.2, 2.2, -2.2
+//                             };
 
-    float output[size]; 
+//     float output[size]; 
 
-    // create & cudnn tensor descriptor which used to define the meta data configuration info 
-    cudnnTensorDescriptor_t tensor_desc; 
-    cudnnCreateTensorDescriptor(&tensor_desc); 
-    // here the CUDNN_TENSOR_NCHW tells the cudnn descriptor initializer following parameters order is:
-    //  N(batch size) C(channel num) H(height) W(width)
-    cudnnSetTensor4dDescriptor(tensor_desc, CUDNN_TENSOR_NCHW, 
-                                CUDNN_DATA_FLOAT, batch_size, channels, height, width); 
+//     // create & cudnn tensor descriptor which used to define the meta data configuration info 
+//     cudnnTensorDescriptor_t tensor_desc; 
+//     cudnnCreateTensorDescriptor(&tensor_desc); 
+//     // here the CUDNN_TENSOR_NCHW tells the cudnn descriptor initializer following parameters order is:
+//     //  N(batch size) C(channel num) H(height) W(width)
+//     cudnnSetTensor4dDescriptor(tensor_desc, CUDNN_TENSOR_NCHW, 
+//                                 CUDNN_DATA_FLOAT, batch_size, channels, height, width); 
 
     
-    float alpha = 1.0f; 
-    float beta  = 0.0f; 
-    cudnnHandle_t cudnn = (*instance).getCudnnHandle(); 
+//     float alpha = 1.0f; 
+//     float beta  = 0.0f; 
+//     cudnnHandle_t cudnn = (*instance).getCudnnHandle(); 
 
-    EXPECT_NE(&cudnn, nullptr); 
+//     EXPECT_NE(&cudnn, nullptr); 
 
-    // Invoke forward pass for activation: y = α × op(x) + β × y
-    // activation_desc provides the 'op' function's implementation (e.g., sigmoid, ReLU, etc.)
-    // tensor_desc provides the meta info like the number of rows and columns of the input and output matrices
-    // input provides the 'x' matrix
-    // alpha provides the value of 'α'
-    // beta provides the value of 'β'
-    // output provides the 'y' matrix
-    cudnnActivationForward(
-                cudnn, act_desc,
-                &alpha, tensor_desc, input, 
-                &beta, tensor_desc, output
-                ); 
+//     // Invoke forward pass for activation: y = α × op(x) + β × y
+//     // activation_desc provides the 'op' function's implementation (e.g., sigmoid, ReLU, etc.)
+//     // tensor_desc provides the meta info like the number of rows and columns of the input and output matrices
+//     // input provides the 'x' matrix
+//     // alpha provides the value of 'α'
+//     // beta provides the value of 'β'
+//     // output provides the 'y' matrix
+//     cudnnActivationForward(
+//                 cudnn, act_desc,
+//                 &alpha, tensor_desc, input, 
+//                 &beta, tensor_desc, output
+//                 ); 
 
-    // here print and verify the output of the forward pass 
-    std::cout << "Forward pass output:" << std::endl; 
-    for (int i = 0; i < size; i++) {
-        std::cout << output[i] << " " << std::endl; 
-    }                
-    std::cout << std::endl; 
-    delete instance; 
-}
+//     // here print and verify the output of the forward pass 
+//     std::cout << "Forward pass output:" << std::endl; 
+//     for (int i = 0; i < size; i++) {
+//         std::cout << output[i] << " " << std::endl; 
+//     }                
+//     std::cout << std::endl; 
+//     delete instance; 
+// }
 
 
 TEST(TestCudnnActivationDescriptor, ApplySigmoidActivationBackforward)
@@ -258,12 +290,13 @@ TEST(TestCudnnActivationDescriptor, ApplySigmoidActivationBackforward)
 
 
     // here we invoke loss function MES to calculate the loss value 
-    float loss = (*instance).mseLossFunc(output, expected, size); 
+    float delta = 1.0; 
+    double loss = (*instance).huberLoss(output, expected, delta, size); 
     std::cout << "Loss Value " << loss << std::endl; 
 
     // here we invoke gradient of loss function to calculate the gradient value array 
-    (*instance).mseLossGradient(output, expected, grad_output, size);
-    std::cout << "Loss Gradient output:" << std::endl;  
+    (*instance).huberLossDerivative(output, expected, grad_output, delta, size);
+    std::cout << "Huber Loss Gradient output:" << std::endl;  
     for (int i = 0; i < size; i++) {
         std::cout << grad_output[i] << " "; 
     }
