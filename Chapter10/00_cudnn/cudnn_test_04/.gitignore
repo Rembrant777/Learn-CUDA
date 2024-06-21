@@ -1,0 +1,52 @@
+# Ignore binary files
+*.exe
+*.out
+*.bin
+*.o
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# Ignore object files
+*.o
+
+# Ignore build directories
+/build/
+/bin/
+/obj/
+/out/
+/Debug/
+/Release/
+
+# Ignore CMake build files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.iml
+
+# Ignore test binary and object files
+test/test_cudnn_relu
+test/test_cudnn_clip_relu
+test/test_cudnn_elu
+test/test_cudnn_sigmoid
+test/test_cudnn_tanh
+obj/gtest-all.o
+obj/gtest_main.o
+obj/test_cudnn_clip_relu.o
+obj/test_cudnn_elu.o
+obj/test_cudnn_relu.o
+obj/test_cudnn_sigmoid.o
+obj/test_cudnn_tanh.o

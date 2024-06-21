@@ -2,6 +2,7 @@
 #include <cudnn.h>
 #include <stdexcept>
 
+// // @Deprecated not gonna implement this unit test case 
 class TestCudnnActivationDescriptor {
 public:
     TestCudnnActivationDescriptor(cudnnActivationMode_t mode, cudnnNanPropagation_t nan_prop, float coef): 
