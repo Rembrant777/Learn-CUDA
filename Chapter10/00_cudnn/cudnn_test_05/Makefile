@@ -88,7 +88,6 @@ test_cudnn_cov_backward_data: $(OBJ_DIR)/test_ph2_cudnn_convolution_backward_dat
 test_cudnn_cov_backward_filter: $(OBJ_DIR)/test_ph2_cudnn_convolution_backward_filter.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 
-
 run: all 
 	./test_cudnn_tensor 
 	./test_cudnn_cov_forward 
