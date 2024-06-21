@@ -1,113 +1,120 @@
 Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
 [==========] Running 3 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 3 tests from TestCudnnActivationDescriptor
-[ RUN      ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor
-[       OK ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor (1455 ms)
-[ RUN      ] TestCudnnActivationDescriptor.ApplySigmoidActivationForward
+[----------] 3 tests from CudnnActivationTest
+[ RUN      ] CudnnActivationTest.CreateSigmoidActivationDescriptor
+[       OK ] CudnnActivationTest.CreateSigmoidActivationDescriptor (0 ms)
+[ RUN      ] CudnnActivationTest.ApplySigmoidActivationForward
 Forward pass output:
+4.58879e-11 
+4.59149e-41 
+0 
+0 
+-6.64728e+36 
+2.91721e-39 
+6.42848e-40 
+6.19088e-24 
+0 
+0 
+-7.91658e-24 
+-6.8338e+21 
 0 
 0 
 0 
 0 
-2.72008e+23 
-2.72008e+23 
-2.72008e+23 
-2.72008e+23 
+4.5889e-11 
+4.59149e-41 
+1.28902e-21 
 0 
-0 
-0 
-0 
--1.70141e+38 
-0 
--nan 
--nan 
-4.62428e-44 
-0 
-7.18866e-43 
-0 
-3.02604e-22 
-0 
--nan 
--nan 
-0 
-0 
-0 
-0 
-0.000386229 
--nan 
--11616.3 
-4.59135e-41 
-1.12104e-44 
-0 
-4.62428e-44 
-7.84727e-44 
 1.4013e-45 
 0 
+4.58885e-11 
+4.59149e-41 
 0 
 0 
-1.28919e-43 
-1.54143e-43 
+4.82231e+11 
+4.56865e-41 
+2.24208e-44 
 0 
-0 
-0 
-0 
-1.66755e-43 
-1.73761e-43 
-0 
-0 
+3.47522e-43 
 0 
 0 
 0 
+4.58891e-11 
+4.59149e-41 
+4.58885e-11 
+4.59149e-41 
+6.2725e-39 
 0 
--nan 
--nan 
+4.58891e-11 
+4.59149e-41 
+4.5889e-11 
+4.59149e-41 
+4.58886e-11 
+4.59149e-41 
+6.27262e-39 
 0 
+4.5889e-11 
+4.59149e-41 
+1.29315e-21 
 0 
-0.171917 
-4.57594e-41 
-7.18866e-43 
+4.58887e-11 
+4.59149e-41 
+6.27275e-39 
 0 
--11616.5 
-4.59135e-41 
-6.86636e-44 
+2.8026e-45 
+4.48416e-44 
+4.58891e-11 
+4.59149e-41 
+4.5889e-11 
+4.59149e-41 
+1.29315e-21 
 0 
--11616.7 
-4.59135e-41 
+4.5889e-11 
+4.59149e-41 
+6.27285e-39 
 0 
+1.29317e-21 
 0 
-0.12305 
-4.57594e-41 
+4.58891e-11 
+4.59149e-41 
+4.5889e-11 
+4.59149e-41 
+1.29315e-21 
 0 
+2.38221e-44 
 0 
-7.18866e-43 
+1.29315e-21 
 0 
--11616.5 
-4.59135e-41 
-0.271839 
-4.57594e-41 
--11616.5 
-4.59135e-41 
-0.289616 
-4.57594e-41 
--2.65909e+36 
-2.89282e-39 
-7.17465e-43 
+4.58891e-11 
+4.59149e-41 
+6.27294e-39 
 0 
-3.03484e-22 
+1.29315e-21 
 0 
-3.03484e-22 
+1.29315e-21 
 0 
-6.86636e-44 
+4.58893e-11 
+4.59149e-41 
+-7.91658e-24 
+-6.8338e+21 
+4.58893e-11 
+4.59149e-41 
+6.05578e-39 
 0 
-0.288188 
-4.57594e-41 
 
-[       OK ] TestCudnnActivationDescriptor.ApplySigmoidActivationForward (0 ms)
-[ RUN      ] TestCudnnActivationDescriptor.ApplySigmoidActivationBackforward
-[       OK ] TestCudnnActivationDescriptor.ApplySigmoidActivationBackforward (0 ms)
-[----------] 3 tests from TestCudnnActivationDescriptor (1456 ms total)
+[       OK ] CudnnActivationTest.ApplySigmoidActivationForward (0 ms)
+[ RUN      ] CudnnActivationTest.ApplySigmoidActivationBackforward
+Forward pass output:
+4.58898e-11 4.59149e-41 2.24208e-44 6.72623e-44 4.58901e-11 4.59149e-41 1.12104e-44 6.72623e-44 4.589e-11 4.59149e-41 4.58893e-11 4.59149e-41 7.22146e+11 4.56865e-41 2.71078e+11 4.56865e-41 0 0 0 0 0 0 2.14396e+11 4.56865e-41 2.71078e+11 4.56865e-41 1.4013e-45 0 1.38987e-37 0 0 0 4.62428e-44 0 2.14497e+11 4.56865e-41 1.4013e-45 0 2.71078e+11 4.56865e-41 4.58893e-11 4.59149e-41 6.15467e-39 0 0 0 2.14363e+11 4.56865e-41 2.71078e+11 4.56865e-41 2.13642e+11 4.56865e-41 1.13402e-38 0 4.80082e+11 4.56865e-41 0 0 5.93206e-39 0 7.00649e-45 0 1.29315e-21 0 -1.06359e+38 2.92295e-39 1 0 1.34525e-43 0 1.4013e-45 2.8026e-45 4.2039e-45 5.60519e-45 5.60519e-45 1.34525e-43 1.28901e-21 0 1.39036e-37 0 4.58863e-11 4.59149e-41 5.78501e+11 4.56865e-41 0 0 0 0 0 0 1.29315e-21 0 1.4013e-45 0 0 0 
+Loss Value 1.10791e+36
+Huber Loss Gradient output:
+-0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 1 -0.5 1 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 1 -0.5 1 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 1 -0.5 -0.5 -0.5 1 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 1 -0.5 1 4.56865e-41 1 4.56865e-41 1.13402e-38 0 1 4.56865e-41 0 0 5.93206e-39 0 7.00649e-45 0 1.29315e-21 0 -1 2.92295e-39 1 0 1.34525e-43 0 1.4013e-45 2.8026e-45 4.2039e-45 5.60519e-45 5.60519e-45 1.34525e-43 1.28901e-21 0 1.39036e-37 0 4.58863e-11 4.59149e-41 1 4.56865e-41 0 0 0 0 0 0 1.29315e-21 0 1.4013e-45 0 0 0 
+Backward pass output (gradient w.r.t input): 
+1 -1 2 -2 0.5 -0.5 1.5 -1.5 0.1 -0.1 2.1 -2.1 0.2 -0.2 2.2 -2.2 4.62428e-44 -1 7.18866e-43 0 1.29044e-21 0 1.5 -1.5 0.1 -0.1 2.1 -2.1 -9.78104e+10 -nan 4.58872e-11 4.59149e-41 1.12104e-44 0 4.62428e-44 7.84727e-44 1.4013e-45 0 0 0 1.28919e-43 1.54143e-43 0 0 0 0 1.66755e-43 1.73761e-43 0 0 0 0 0 0 0 0 0 0 2.71032e+11 4.56865e-41 7.18866e-43 0 4.58879e-11 4.59149e-41 6.72623e-44 0 4.58885e-11 4.59149e-41 0 0 2.15159e+11 4.56865e-41 0 0 7.18866e-43 0 4.58879e-11 4.59149e-41 4.62904e+11 4.56865e-41 4.58878e-11 4.59149e-41 4.8245e+11 4.56865e-41 0 0 7.17465e-43 0 1.28904e-21 0 1.28904e-21 0 6.72623e-44 0 4.8088e+11 4.56865e-41 
+[       OK ] CudnnActivationTest.ApplySigmoidActivationBackforward (0 ms)
+[----------] 3 tests from CudnnActivationTest (1 ms total)
 
 [----------] Global test environment tear-down
-[==========] 3 tests from 1 test suite ran. (1457 ms total)
+[==========] 3 tests from 1 test suite ran. (1477 ms total)
 [  PASSED  ] 3 tests.
