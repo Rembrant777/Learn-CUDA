@@ -55,6 +55,7 @@ private:
     bool                        is_descriptor_created_; 
 }; 
 
+// enumeration: CUDNN_ACTIVATION_SIGMOID
 TEST(TestCudnnActivationDescriptor, CreateSigmoidActivationDescriptor) 
 {
     cudnnActivationMode_t mode      = CUDNN_ACTIVATION_SIGMOID; 
