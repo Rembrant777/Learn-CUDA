@@ -9,7 +9,9 @@ public:
     }
 
     ~TestCudnnActivationDescriptor() {
-        cudnnDestroy(cudnn_handle_); 
+        if (is_descriptor_created_) {
+            cudnnDestroy(cudnn_handle_); 
+        }
     }
 
     void createActivationDescriptor() {
@@ -36,7 +38,8 @@ public:
         is_descriptor_created_ = false; 
     }
 
-    void get_activation_descriptor(cudnnActivationMode_t &ret_mode, 
+    // method to retrieve Activation Descriptor Options from Cudnn Context Env Configure Options. 
+    void getActivationDescriptor(cudnnActivationMode_t &ret_mode, 
                             cudnnNanPropagation_t &ret_nan_prop, double &ret_coef) const {
         if (cudnnGetActivationDescriptor(activate_descroptor_, &ret_mode, &ret_nan_prop, &ret_coef) != CUDNN_STATUS_SUCCESS) {
             throw std::runtime_error("Failed to set activation descriptor"); 
@@ -52,7 +55,7 @@ private:
     bool                        is_descriptor_created_; 
 }; 
 
-TEST(TestCudnnActivationDescriptor, CreateAndDestroyActivationDescriptor) 
+TEST(TestCudnnActivationDescriptor, CreateSigmoidActivationDescriptor) 
 {
     cudnnActivationMode_t mode      = CUDNN_ACTIVATION_SIGMOID; 
     cudnnNanPropagation_t nan_prop  = CUDNN_PROPAGATE_NAN; 
@@ -61,29 +64,139 @@ TEST(TestCudnnActivationDescriptor, CreateAndDestroyActivationDescriptor)
     EXPECT_EQ(nan_prop, CUDNN_PROPAGATE_NAN);
 
     TestCudnnActivationDescriptor* instance = new TestCudnnActivationDescriptor(mode, nan_prop, coef);
+    EXPECT_NE(instance, nullptr); 
+
+    EXPECT_NO_THROW((*instance).createActivationDescriptor()); 
+
+    cudnnActivationMode_t ret_mode; 
+    cudnnNanPropagation_t ret_nan_prop; 
+    double ret_coef; 
+
+    EXPECT_NO_THROW((*instance).getActivationDescriptor(ret_mode, ret_nan_prop, ret_coef)); 
+
+    EXPECT_EQ(ret_mode, mode); 
+    EXPECT_EQ(ret_nan_prop, nan_prop); 
+    EXPECT_EQ(ret_coef, coef); 
+
+    EXPECT_NO_THROW((*instance).destroyActivationDescriptor()); 
 }
 
-TEST(TestCudnnActivationDescriptor, CreateSigmoidActivationDescriptor)
+// enumeration: CUDNN_ACTIVATION_RELU
+TEST(TestCudnnActivationDescriptor, CreateReluActivationDescriptor) 
 {
-    EXPECT_EQ(1, 1);
+    cudnnActivationMode_t mode      = CUDNN_ACTIVATION_RELU; 
+    cudnnNanPropagation_t nan_prop  = CUDNN_PROPAGATE_NAN; 
+    double coef                     = 0.0; 
+    EXPECT_EQ(mode, CUDNN_ACTIVATION_SIGMOID);
+    EXPECT_EQ(nan_prop, CUDNN_PROPAGATE_NAN);
+
+    TestCudnnActivationDescriptor* instance = new TestCudnnActivationDescriptor(mode, nan_prop, coef);
+    EXPECT_NE(instance, nullptr); 
+
+    EXPECT_NO_THROW((*instance).createActivationDescriptor()); 
+
+    cudnnActivationMode_t ret_mode; 
+    cudnnNanPropagation_t ret_nan_prop; 
+    double ret_coef; 
+
+    EXPECT_NO_THROW((*instance).getActivationDescriptor(ret_mode, ret_nan_prop, ret_coef)); 
+
+    EXPECT_EQ(ret_mode, mode); 
+    EXPECT_EQ(ret_nan_prop, nan_prop); 
+    EXPECT_EQ(ret_coef, coef); 
+
+    EXPECT_NO_THROW((*instance).destroyActivationDescriptor()); 
 }
 
-TEST(TestCudnnActivationDescriptor, CreateReluActivationDescriptor)
-{
-    EXPECT_EQ(1, 1);
-}
-
+// enumeration: CUDNN_ACTIVATION_TANH
 TEST(TestCudnnActivationDescriptor, CreateTanhActivationDescriptor)
 {
-    EXPECT_EQ(1, 1);
+     cudnnActivationMode_t mode      = CUDNN_ACTIVATION_TANH; 
+    cudnnNanPropagation_t nan_prop  = CUDNN_PROPAGATE_NAN; 
+    double coef                     = 0.0; 
+    EXPECT_EQ(mode, CUDNN_ACTIVATION_SIGMOID);
+    EXPECT_EQ(nan_prop, CUDNN_PROPAGATE_NAN);
+
+    TestCudnnActivationDescriptor* instance = new TestCudnnActivationDescriptor(mode, nan_prop, coef);
+    EXPECT_NE(instance, nullptr); 
+
+    EXPECT_NO_THROW((*instance).createActivationDescriptor()); 
+
+    cudnnActivationMode_t ret_mode; 
+    cudnnNanPropagation_t ret_nan_prop; 
+    double ret_coef; 
+
+    EXPECT_NO_THROW((*instance).getActivationDescriptor(ret_mode, ret_nan_prop, ret_coef)); 
+
+    EXPECT_EQ(ret_mode, mode); 
+    EXPECT_EQ(ret_nan_prop, nan_prop); 
+    EXPECT_EQ(ret_coef, coef); 
+
+    EXPECT_NO_THROW((*instance).destroyActivationDescriptor()); 
 }
 
+// enumeration: CUDNN_ACTIVATION_CLIPPED_RELU};
 TEST(TestCudnnActivationDescriptor, CreateClippedReluActivationDescriptor)
+{
+     cudnnActivationMode_t mode      = CUDNN_ACTIVATION_CLIPPED_RELU; 
+    cudnnNanPropagation_t nan_prop   = CUDNN_PROPAGATE_NAN; 
+    double coef                      = 0.0; 
+    EXPECT_EQ(mode, CUDNN_ACTIVATION_SIGMOID);
+    EXPECT_EQ(nan_prop, CUDNN_PROPAGATE_NAN);
+
+    TestCudnnActivationDescriptor* instance = new TestCudnnActivationDescriptor(mode, nan_prop, coef);
+    EXPECT_NE(instance, nullptr); 
+
+    EXPECT_NO_THROW((*instance).createActivationDescriptor()); 
+
+    cudnnActivationMode_t ret_mode; 
+    cudnnNanPropagation_t ret_nan_prop; 
+    double ret_coef; 
+
+    EXPECT_NO_THROW((*instance).getActivationDescriptor(ret_mode, ret_nan_prop, ret_coef)); 
+
+    EXPECT_EQ(ret_mode, mode); 
+    EXPECT_EQ(ret_nan_prop, nan_prop); 
+    EXPECT_EQ(ret_coef, coef); 
+
+    EXPECT_NO_THROW((*instance).destroyActivationDescriptor()); 
+}
+
+// enumeration: CUDNN_ACTIVATION_ELU
+TEST(TestCudnnActivationDescriptor, CreateEluActivationDescriptor)
+{
+    cudnnActivationMode_t mode      = CUDNN_ACTIVATION_ELU; 
+    cudnnNanPropagation_t nan_prop  = CUDNN_PROPAGATE_NAN; 
+    double coef                     = 0.0; 
+    EXPECT_EQ(mode, CUDNN_ACTIVATION_SIGMOID);
+    EXPECT_EQ(nan_prop, CUDNN_PROPAGATE_NAN);
+
+    TestCudnnActivationDescriptor* instance = new TestCudnnActivationDescriptor(mode, nan_prop, coef);
+    EXPECT_NE(instance, nullptr); 
+
+    EXPECT_NO_THROW((*instance).createActivationDescriptor()); 
+
+    cudnnActivationMode_t ret_mode; 
+    cudnnNanPropagation_t ret_nan_prop; 
+    double ret_coef; 
+
+    EXPECT_NO_THROW((*instance).getActivationDescriptor(ret_mode, ret_nan_prop, ret_coef)); 
+
+    EXPECT_EQ(ret_mode, mode); 
+    EXPECT_EQ(ret_nan_prop, nan_prop); 
+    EXPECT_EQ(ret_coef, coef); 
+
+    EXPECT_NO_THROW((*instance).destroyActivationDescriptor()); 
+}
+
+
+TEST(TestCudnnActivationDescriptor, ApplySigmoidActivationForward)
 {
     EXPECT_EQ(1, 1);
 }
 
-TEST(TestCudnnActivationDescriptor, CreateEluActivationDescriptor)
+
+TEST(TestCudnnActivationDescriptor, ApplySigmoidActivationBackforward)
 {
     EXPECT_EQ(1, 1);
 }
