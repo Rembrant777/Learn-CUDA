@@ -46,3 +46,15 @@ To faimiliar with those `cuDNN` library APIs, we add different unit tests to tes
 * Description 
 ```
 ```
+
+## `cudnnConvolutionFwdAlgo_t`
+* [Unit Test]()
+* Description 
+```
+```
+
+## `cudnnConvolutionBwdFilterAlgo_t`
+* [Unit Test]()
+* Description
+```
+```

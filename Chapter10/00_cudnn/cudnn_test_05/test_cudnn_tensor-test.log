@@ -1,0 +1,13 @@
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CudnnTensorTest
+[ RUN      ] CudnnTensorTest.CudnnTensorAdd
+Result after adding bias 
+1 2 3 4 
+[       OK ] CudnnTensorTest.CudnnTensorAdd (0 ms)
+[----------] 1 test from CudnnTensorTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1418 ms total)
+[  PASSED  ] 1 test.
