@@ -1,0 +1,113 @@
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from TestCudnnActivationDescriptor
+[ RUN      ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor (1455 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplySigmoidActivationForward
+Forward pass output:
+0 
+0 
+0 
+0 
+2.72008e+23 
+2.72008e+23 
+2.72008e+23 
+2.72008e+23 
+0 
+0 
+0 
+0 
+-1.70141e+38 
+0 
+-nan 
+-nan 
+4.62428e-44 
+0 
+7.18866e-43 
+0 
+3.02604e-22 
+0 
+-nan 
+-nan 
+0 
+0 
+0 
+0 
+0.000386229 
+-nan 
+-11616.3 
+4.59135e-41 
+1.12104e-44 
+0 
+4.62428e-44 
+7.84727e-44 
+1.4013e-45 
+0 
+0 
+0 
+1.28919e-43 
+1.54143e-43 
+0 
+0 
+0 
+0 
+1.66755e-43 
+1.73761e-43 
+0 
+0 
+0 
+0 
+0 
+0 
+-nan 
+-nan 
+0 
+0 
+0.171917 
+4.57594e-41 
+7.18866e-43 
+0 
+-11616.5 
+4.59135e-41 
+6.86636e-44 
+0 
+-11616.7 
+4.59135e-41 
+0 
+0 
+0.12305 
+4.57594e-41 
+0 
+0 
+7.18866e-43 
+0 
+-11616.5 
+4.59135e-41 
+0.271839 
+4.57594e-41 
+-11616.5 
+4.59135e-41 
+0.289616 
+4.57594e-41 
+-2.65909e+36 
+2.89282e-39 
+7.17465e-43 
+0 
+3.03484e-22 
+0 
+3.03484e-22 
+0 
+6.86636e-44 
+0 
+0.288188 
+4.57594e-41 
+
+[       OK ] TestCudnnActivationDescriptor.ApplySigmoidActivationForward (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplySigmoidActivationBackforward
+[       OK ] TestCudnnActivationDescriptor.ApplySigmoidActivationBackforward (0 ms)
+[----------] 3 tests from TestCudnnActivationDescriptor (1456 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (1457 ms total)
+[  PASSED  ] 3 tests.
