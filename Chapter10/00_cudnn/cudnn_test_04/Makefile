@@ -3,7 +3,7 @@ CUDA_PATH=/usr/local/cuda-9.2
 GOOGLETEST_PATH=/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
-TEST_TARGET=test_cudnn_04 
+TEST_TARGET=cudnn_sigmoid cudnn_relu cudnn_tanh cudnn_clip_relu cudnn_elu 
 
 # Include paths
 INCLUDES= -I${CUDA_PATH}/samples/common/inc -I$(CUDA_PATH)/include -I$(GOOGLETEST_PATH)/googletest/include -I$(GOOGLETEST_PATH)/googletest/
@@ -36,22 +36,69 @@ GTEST_DIR = $(GOOGLETEST_PATH)
 # All targets
 all:  ${TEST_TARGET}
 
-OBJ_FILES = $(OBJ_DIR)/test_cudnn_activation_descriptor.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
-
 ${OBJ_DIR}/gtest-all.o: ${GTEST_DIR}/googletest/src/gtest-all.cc
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
 
 ${OBJ_DIR}/gtest_main.o: ${GTEST_DIR}/googletest/src/gtest_main.cc
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
 
-${OBJ_DIR}/test_cudnn_activation_descriptor.o: ${TEST_DIR}/test_cudnn_activation_descriptor.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+# ${OBJ_DIR}/test_cudnn_activation_descriptor.o: ${TEST_DIR}/test_cudnn_activation_descriptor.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+# 	@mkdir -p ${OBJ_DIR}
+# 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
+
+
+# test_cudnn_sigmoid.o
+${OBJ_DIR}/test_cudnn_sigmoid.o: ${TEST_DIR}/test_cudnn_sigmoid.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
 
-test_cudnn_04: $(OBJ_FILES)
+# test_cudnn_relu.o
+${OBJ_DIR}/test_cudnn_relu.o: ${TEST_DIR}/test_cudnn_relu.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
+
+#test_cudnn_tanh.o 
+${OBJ_DIR}/test_cudnn_tanh.o: ${TEST_DIR}/test_cudnn_tanh.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
+
+#test_cudnn_clip_relu.o	
+${OBJ_DIR}/test_cudnn_clip_relu.o: ${TEST_DIR}/test_cudnn_clip_relu.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
+
+#test_cudnn_elu.o
+${OBJ_DIR}/test_cudnn_elu.o: ${TEST_DIR}/test_cudnn_elu.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)
+
+cudnn_sigmoid: $(OBJ_DIR)/test_cudnn_sigmoid.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
-	./$@
+
+cudnn_relu: $(OBJ_DIR)/test_cudnn_relu.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
+
+cudnn_tanh: $(OBJ_DIR)/test_cudnn_tanh.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
+
+cudnn_clip_relu: $(OBJ_DIR)/test_cudnn_clip_relu.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
+
+cudnn_elu: $(OBJ_DIR)/test_cudnn_elu.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
+
+
+run: all 
+	./cudnn_sigmoid 
+	./cudnn_relu 
+	./cudnn_tanh 
+	./cudnn_clip_relu 
+	./cudnn_elu 
 
 .PHONY: clean
+
 clean:
 	rm -f ${TEST_TARGET} ${OBJ_DIR}/*.o 
+
+ 
+

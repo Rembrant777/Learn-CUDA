@@ -1,20 +1,81 @@
-[==========] Running 6 tests from 1 test suite.
+(base) raytrack@u16-01:~/workspace/Learn-CUDA/Chapter10/00_cudnn/cudnn_test_04$ make run 
+./cudnn_sigmoid 
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 3 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 6 tests from TestCudnnActivationDescriptor
-[ RUN      ] TestCudnnActivationDescriptor.CreateAndDestroyActivationDescriptor
-[       OK ] TestCudnnActivationDescriptor.CreateAndDestroyActivationDescriptor (0 ms)
+[----------] 3 tests from TestCudnnActivationDescriptor
 [ RUN      ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor
-[       OK ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor (0 ms)
-[ RUN      ] TestCudnnActivationDescriptor.CreateReluActivationDescriptor
-[       OK ] TestCudnnActivationDescriptor.CreateReluActivationDescriptor (0 ms)
-[ RUN      ] TestCudnnActivationDescriptor.CreateTanhActivationDescriptor
-[       OK ] TestCudnnActivationDescriptor.CreateTanhActivationDescriptor (0 ms)
-[ RUN      ] TestCudnnActivationDescriptor.CreateClippedReluActivationDescriptor
-[       OK ] TestCudnnActivationDescriptor.CreateClippedReluActivationDescriptor (0 ms)
-[ RUN      ] TestCudnnActivationDescriptor.CreateEluActivationDescriptor
-[       OK ] TestCudnnActivationDescriptor.CreateEluActivationDescriptor (0 ms)
-[----------] 6 tests from TestCudnnActivationDescriptor (0 ms total)
+[       OK ] TestCudnnActivationDescriptor.CreateSigmoidActivationDescriptor (1417 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplySigmoidActivationForward
+[       OK ] TestCudnnActivationDescriptor.ApplySigmoidActivationForward (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplySigmoidActivationBackforward
+[       OK ] TestCudnnActivationDescriptor.ApplySigmoidActivationBackforward (0 ms)
+[----------] 3 tests from TestCudnnActivationDescriptor (1418 ms total)
 
 [----------] Global test environment tear-down
-[==========] 6 tests from 1 test suite ran. (1 ms total)
-[  PASSED  ] 6 tests.
+[==========] 3 tests from 1 test suite ran. (1418 ms total)
+[  PASSED  ] 3 tests.
+./cudnn_relu 
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from TestCudnnActivationDescriptor
+[ RUN      ] TestCudnnActivationDescriptor.CreateReluActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateReluActivationDescriptor (1481 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplyReluActivationForward
+[       OK ] TestCudnnActivationDescriptor.ApplyReluActivationForward (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplyReluActivationBackforward
+[       OK ] TestCudnnActivationDescriptor.ApplyReluActivationBackforward (0 ms)
+[----------] 3 tests from TestCudnnActivationDescriptor (1481 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (1482 ms total)
+[  PASSED  ] 3 tests.
+./cudnn_tanh 
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from TestCudnnActivationDescriptor
+[ RUN      ] TestCudnnActivationDescriptor.CreateTanhActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateTanhActivationDescriptor (1451 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplyTanhActivationForward
+[       OK ] TestCudnnActivationDescriptor.ApplyTanhActivationForward (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplyTanhActivationBackforward
+[       OK ] TestCudnnActivationDescriptor.ApplyTanhActivationBackforward (0 ms)
+[----------] 3 tests from TestCudnnActivationDescriptor (1451 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (1451 ms total)
+[  PASSED  ] 3 tests.
+./cudnn_clip_relu 
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from TestCudnnActivationDescriptor
+[ RUN      ] TestCudnnActivationDescriptor.CreateClippedReluActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateClippedReluActivationDescriptor (1465 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplyClippedReluActivationForward
+[       OK ] TestCudnnActivationDescriptor.ApplyClippedReluActivationForward (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplyClippedReluActivationBackforward
+[       OK ] TestCudnnActivationDescriptor.ApplyClippedReluActivationBackforward (0 ms)
+[----------] 3 tests from TestCudnnActivationDescriptor (1465 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (1465 ms total)
+[  PASSED  ] 3 tests.
+./cudnn_elu 
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from TestCudnnActivationDescriptor
+[ RUN      ] TestCudnnActivationDescriptor.CreateEluActivationDescriptor
+[       OK ] TestCudnnActivationDescriptor.CreateEluActivationDescriptor (1586 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplyEluActivatioForward
+[       OK ] TestCudnnActivationDescriptor.ApplyEluActivatioForward (0 ms)
+[ RUN      ] TestCudnnActivationDescriptor.ApplyEluActivatioBackforward
+[       OK ] TestCudnnActivationDescriptor.ApplyEluActivatioBackforward (0 ms)
+[----------] 3 tests from TestCudnnActivationDescriptor (1587 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (1587 ms total)
+[  PASSED  ] 3 tests.
