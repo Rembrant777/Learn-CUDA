@@ -46,46 +46,46 @@ ${OBJ_DIR}/gtest_main.o: ${GTEST_DIR}/googletest/src/gtest_main.cc
 
 
 # obj of test classes 
-# test_ph1_cudnn_add_tensor.o
-${OBJ_DIR}/test_ph1_cudnn_add_tensor.o: ${TEST_DIR}/test_ph1_cudnn_add_tensor.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+# test_cudnn_add_tensor.o
+${OBJ_DIR}/test_cudnn_add_tensor.o: ${TEST_DIR}/test_cudnn_add_tensor.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
 
-# test_ph1_cudnn_convolution_forward.o
-${OBJ_DIR}/test_ph1_cudnn_convolution_forward.o: ${TEST_DIR}/test_ph1_cudnn_convolution_forward.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+# test_cudnn_convolution_forward.o
+${OBJ_DIR}/test_cudnn_convolution_forward.o: ${TEST_DIR}/test_cudnn_convolution_forward.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
 
-#test_ph2_cudnn_convolution_backward_bias.o 
-${OBJ_DIR}/test_ph2_cudnn_convolution_backward_bias.o: ${TEST_DIR}/test_ph2_cudnn_convolution_backward_bias.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+#test_cudnn_convolution_backward_bias.o 
+${OBJ_DIR}/test_cudnn_convolution_backward_bias.o: ${TEST_DIR}/test_cudnn_convolution_backward_bias.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
 
-#test_ph2_cudnn_convolution_backward_data.o	
-${OBJ_DIR}/test_ph2_cudnn_convolution_backward_data.o: ${TEST_DIR}/test_ph2_cudnn_convolution_backward_data.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+#test_cudnn_convolution_backward_data.o	
+${OBJ_DIR}/test_cudnn_convolution_backward_data.o: ${TEST_DIR}/test_cudnn_convolution_backward_data.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)	
 
-#test_ph2_cudnn_convolution_backward_filter.o	
-${OBJ_DIR}/test_ph2_cudnn_convolution_backward_filter.o: ${TEST_DIR}/test_ph2_cudnn_convolution_backward_filter.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+#test_cudnn_convolution_backward_filter.o	
+${OBJ_DIR}/test_cudnn_convolution_backward_filter.o: ${TEST_DIR}/test_cudnn_convolution_backward_filter.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -x cu -dc $< -o $@ $(GENCODE_FLAGS)		
 
 
 ## binary 
-test_cudnn_tensor: $(OBJ_DIR)/test_ph1_cudnn_add_tensor.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+test_cudnn_tensor: $(OBJ_DIR)/test_cudnn_add_tensor.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 
-test_cudnn_cov_forward: $(OBJ_DIR)/test_ph1_cudnn_convolution_forward.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+test_cudnn_cov_forward: $(OBJ_DIR)/test_cudnn_convolution_forward.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 
-test_cudnn_cov_backward_bias: $(OBJ_DIR)/test_ph2_cudnn_convolution_backward_bias.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+test_cudnn_cov_backward_bias: $(OBJ_DIR)/test_cudnn_convolution_backward_bias.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 
-test_cudnn_cov_backward_data: $(OBJ_DIR)/test_ph2_cudnn_convolution_backward_data.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+test_cudnn_cov_backward_data: $(OBJ_DIR)/test_cudnn_convolution_backward_data.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 
-test_cudnn_cov_backward_filter: $(OBJ_DIR)/test_ph2_cudnn_convolution_backward_filter.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+test_cudnn_cov_backward_filter: $(OBJ_DIR)/test_cudnn_convolution_backward_filter.o $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 
 run: all 
