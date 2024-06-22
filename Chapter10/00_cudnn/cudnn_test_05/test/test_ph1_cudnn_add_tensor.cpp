@@ -86,9 +86,6 @@ protected:
     static void SetUpTestCase() {
         // create 
         instance = new CudnnTensorHelper(1, 2, 2, 2); 
-        
-        // init 
-        // todo 
     }
 
     static void TearDownTestCase() {
