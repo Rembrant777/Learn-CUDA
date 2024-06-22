@@ -4,6 +4,8 @@
 #include <cudnn.h>
 #include <gtest/gtest.h>
 
+// different fwd algorithms defined in the cudnn lib are in enumerations 
+// this method retrieve algorithms by enumeration value 
 const char* getFwdAlgoName(cudnnConvolutionFwdAlgo_t algo) {
     switch (algo) {
         case CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM:
