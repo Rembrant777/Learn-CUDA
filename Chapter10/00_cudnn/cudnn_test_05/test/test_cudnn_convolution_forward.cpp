@@ -4,7 +4,31 @@
 #include <cudnn.h>
 #include <gtest/gtest.h>
 
-TEST(TestPh1CudnnConvolutionForwardTest, ConvolutionForwardOperation) 
+const char* getFwdAlgoName(cudnnConvolutionFwdAlgo_t algo) {
+    switch (algo) {
+        case CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM:
+            return "IMPLICIT_GEMM";
+        case CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_PRECOMP_GEMM:
+            return "IMPLICIT_PRECOMP_GEMM";
+        case CUDNN_CONVOLUTION_FWD_ALGO_GEMM:
+            return "GEMM";
+        case CUDNN_CONVOLUTION_FWD_ALGO_DIRECT:
+            return "DIRECT";
+        case CUDNN_CONVOLUTION_FWD_ALGO_FFT:
+            return "FFT";
+        case CUDNN_CONVOLUTION_FWD_ALGO_FFT_TILING:
+            return "FFT_TILING";
+        case CUDNN_CONVOLUTION_FWD_ALGO_WINOGRAD:
+            return "WINOGRAD";
+        case CUDNN_CONVOLUTION_FWD_ALGO_WINOGRAD_NONFUSED:
+            return "WINOGRAD_NONFUSED";
+        default:
+            return "UNKNOWN";
+    }
+}
+
+
+TEST(TestPh1CudnnConvolutionForwardTest, ConvolutionForwardAlgorithmSelection) 
 {
     cudnnHandle_t cudnn; 
     if ((cudnnCreate(&cudnn)) != CUDNN_STATUS_SUCCESS) {
@@ -94,13 +118,14 @@ TEST(TestPh1CudnnConvolutionForwardTest, ConvolutionForwardOperation)
     // here get convolution algorithm 
     // can we specify different algorithms here ? 
     // is this the method to retrieve proper/prefer algorithm from the cudnn context via the input data and the dimensions? 
-    cudnnConvolutionFwdAlgo_t cudnn_picked_best_algo; 
-    // if (cudnnGetConvolutionForwardAlgorithm(cudnn, input_desc, kernel_desc, conv_desc, output_desc,
-    //                             CUDNN_CONVOLUTION_FWD_PREFER_FASTEST, 0,  &algo) != CUDNN_STATUS_SUCCESS) {
-    //     // Manually set convolution algorithm
-    //     std::cout << "Cudnn Convolution Forward Algorithm Retrieve Failed, set it by manual" << std::endl; 
-    //     algo = CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM;                                    
-    // } 
+    cudnnConvolutionFwdAlgo_t cudnn_picked_best_algo;
+    cudnnConvolutionFwdAlgo_t algo; 
+    if (cudnnGetConvolutionForwardAlgorithm(cudnn, input_desc, kernel_desc, conv_desc, output_desc,
+                                CUDNN_CONVOLUTION_FWD_PREFER_FASTEST, 0,  &algo) != CUDNN_STATUS_SUCCESS) {
+        // Manually set convolution algorithm
+        std::cout << "Cudnn Convolution Forward Algorithm Retrieve Failed, set it by manual" << std::endl; 
+        algo = CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM;                                    
+    } 
 
     // here we invoke method cudnnGetConvolutionForwardAlgorithm_v7 to retrieve the cudnn context picked prefere algorithm info 
     int returned_algo_cnt; 
@@ -108,23 +133,24 @@ TEST(TestPh1CudnnConvolutionForwardTest, ConvolutionForwardOperation)
     if (cudnnGetConvolutionForwardAlgorithm_v7(cudnn, input_desc, kernel_desc, conv_desc, output_desc,
                             CUDNN_CONVOLUTION_FWD_ALGO_COUNT, &returned_algo_cnt, perf_results) != CUDNN_STATUS_SUCCESS) {
         // if retrieve filed set the returned_algo_cnt value to -1 to avoid iterate 
-        std::cout<< "Cunn Convolution Forward Prefer Algorithms' info Retrieve Failed, set cnt to -1" << std::endl; 
+        std::cout<< "Cunn Convolution Forward Algorithms' Performance Info Retrieve Failed, set cnt to -1" << std::endl; 
         returned_algo_cnt = -1;                                 
     }
     if (returned_algo_cnt != -1) {
         std::cout << "Available Algorithms and Correspoinding Performance Metrics " << std::endl; 
         for (int i = 0; i < returned_algo_cnt; i++) {
-            std::cout << "Algorithm: " << pref_results[i].algo 
-                      << ", Time: " << pref_results[i].time 
-                      << ", Memory: " << pref_results[i].memory
-                      << ", Status" << cudnnGetErrorsString(pref_results[i].status)
-                      << std::endl; 
+            std::cout << "Algorithm: " << perf_results[i].algo 
+                      << ", Time: " << perf_results[i].time 
+                      << ", Memory: " << perf_results[i].memory
+                      << ", Status" << cudnnGetErrorString(perf_results[i].status)
+                      << std::endl;                    
         }
-        // here set the top picked prefere algo to the forward algorithm
-        cudnn_picked_best_algo = pref_results[0].algo; 
+        // here set the top best performance algorithm as the forward algorithm
+        cudnn_picked_best_algo = perf_results[0].algo; 
     }
 
-
+    std::cout << "System picked best cudnn_picked_best_algo name is " << getFwdAlgoName(cudnn_picked_best_algo) << std::endl; 
+    std::cout << "System picked algo name is " << getFwdAlgoName(algo) << std::endl; 
 
     // here relese cudnn context resources 
     cudnnDestroyTensorDescriptor(input_desc);                                     
