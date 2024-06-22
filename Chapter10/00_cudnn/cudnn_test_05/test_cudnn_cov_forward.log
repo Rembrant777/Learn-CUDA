@@ -1,8 +1,8 @@
 Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
-[==========] Running 1 test from 1 test suite.
+[==========] Running 2 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 1 test from TestPh1CudnnConvolutionForwardTest
-[ RUN      ] TestPh1CudnnConvolutionForwardTest.ConvolutionForwardOperation
+[----------] 2 tests from TestCudnnConvolutionForwardTest
+[ RUN      ] TestCudnnConvolutionForwardTest.ConvolutionForwardAlgorithmSelection
 Available Algorithms and Correspoinding Performance Metrics 
 Algorithm: 6, Time: -1, Memory: 16424, StatusCUDNN_STATUS_SUCCESS
 Algorithm: 2, Time: -1, Memory: 324, StatusCUDNN_STATUS_SUCCESS
@@ -14,9 +14,15 @@ Algorithm: 5, Time: -1, Memory: 37632, StatusCUDNN_STATUS_SUCCESS
 Algorithm: 3, Time: -1, Memory: 0, StatusCUDNN_STATUS_NOT_SUPPORTED
 System picked best cudnn_picked_best_algo name is WINOGRAD
 System picked algo name is WINOGRAD
-[       OK ] TestPh1CudnnConvolutionForwardTest.ConvolutionForwardOperation (1470 ms)
-[----------] 1 test from TestPh1CudnnConvolutionForwardTest (1470 ms total)
+[       OK ] TestCudnnConvolutionForwardTest.ConvolutionForwardAlgorithmSelection (1456 ms)
+[ RUN      ] TestCudnnConvolutionForwardTest.ConvolutionForwardAlgorithmCalculation
+Output Data Results
+-6 -6 -6 
+-6 -6 -6 
+-6 -6 -6 
+[       OK ] TestCudnnConvolutionForwardTest.ConvolutionForwardAlgorithmCalculation (4 ms)
+[----------] 2 tests from TestCudnnConvolutionForwardTest (1461 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (1470 ms total)
-[  PASSED  ] 1 test.
+[==========] 2 tests from 1 test suite ran. (1461 ms total)
+[  PASSED  ] 2 tests.
