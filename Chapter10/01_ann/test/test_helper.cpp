@@ -13,6 +13,8 @@ extern "C" {
 
 #include "../src/helper.h"
 
+using namespace cudl; 
+
 // class MockCudaContext {
 // public:
 //     MOCK_METHOD(cudaError_t, cudaMalloc, (void **, size_t)); 
@@ -49,7 +51,7 @@ TEST(HelperMacroFunction, checkCudaErrorsTestViaStderr) {
     remove("temp-stderr.log"); 
 }
 
-// test via google mock apis 
+// test via google mock apis (sad story TAT/~ gmock compiler not match with gpu's nvcc )
 // TEST(HelperMacroFunction, checkCudaErrorsTestViaMock) {
 //     MockCudaContext mockContext; 
 
@@ -88,3 +90,22 @@ TEST(HelperMacroFunction, checkCudaErrorsTestViaStderr) {
 //     // clean up 
 //     remove("temp_stderr.log"); 
 // }
+
+TEST(HelperMacroFunction, cublasGetErrorEnumTest) {
+    std::vector<cublasStatus_t> cublasStatusList = {CUBLAS_STATUS_SUCCESS, CUBLAS_STATUS_NOT_INITIALIZED,
+                CUBLAS_STATUS_ALLOC_FAILED, CUBLAS_STATUS_INVALID_VALUE, CUBLAS_STATUS_ARCH_MISMATCH,
+                CUBLAS_STATUS_MAPPING_ERROR, CUBLAS_STATUS_EXECUTION_FAILED, CUBLAS_STATUS_INTERNAL_ERROR,
+                CUBLAS_STATUS_NOT_SUPPORTED, CUBLAS_STATUS_LICENSE_ERROR};
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[0]), "CUBLAS_STATUS_SUCCESS");                 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[1]), "CUBLAS_STATUS_NOT_INITIALIZED"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[2]), "CUBLAS_STATUS_ALLOC_FAILED"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[3]), "CUBLAS_STATUS_INVALID_VALUE"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[4]), "CUBLAS_STATUS_ARCH_MISMATCH"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[5]), "CUBLAS_STATUS_MAPPING_ERROR"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[6]), "CUBLAS_STATUS_EXECUTION_FAILED"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[7]), "CUBLAS_STATUS_INTERNAL_ERROR"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[8]), "CUBLAS_STATUS_NOT_SUPPORTED"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[9]), "CUBLAS_STATUS_LICENSE_ERROR"); 
+   
+    EXPECT_NE(_cublasGetErrorEnum(nullptr), "<unknown>"); 
+}
