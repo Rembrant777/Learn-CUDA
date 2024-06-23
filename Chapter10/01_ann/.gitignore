@@ -1,0 +1,15 @@
+# Ignore object files and other binaries
+*.o
+*.obj
+*.exe
+*.out
+*.dll
+*.so
+*.dylib
+
+test_*
+
+obj/*.o 
+
+train
+
