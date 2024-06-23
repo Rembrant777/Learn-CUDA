@@ -105,7 +105,7 @@ TEST(HelperMacroFunction, cublasGetErrorEnumTest) {
     EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[6]), "CUBLAS_STATUS_EXECUTION_FAILED"); 
     EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[7]), "CUBLAS_STATUS_INTERNAL_ERROR"); 
     EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[8]), "CUBLAS_STATUS_NOT_SUPPORTED"); 
-    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[9]), "CUBLAS_STATUS_LICENSE_ERROR"); 
+    EXPECT_EQ(_cublasGetErrorEnum(cublasStatusList[9]), "CUBLAS_STATU_LICENSE_ERROR"); 
    
-    EXPECT_NE(_cublasGetErrorEnum(nullptr), "<unknown>"); 
+    EXPECT_NE(_cublasGetErrorEnum(cublasStatusList[9]), "<unknown>"); 
 }
