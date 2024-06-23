@@ -20,11 +20,11 @@ namespace cudl
     class Blob {
         public:
             Blob(int n = 1, int c = 1, int h = 1, int w = 1): n_(n), c_(c), h_(h), w_(w) {
-                h_ptr_ = new float[h_ * c_ * h_ * w_]; 
+                h_ptr_ = new ftype[h_ * c_ * h_ * w_]; 
             }
 
             Blob(std::array<int, 4> size) : n_(size[0]), c_(size[1]), h_(size[2]), w_(size[3]) {
-                h_ptr_ = new float[n_ * c_ * h_ * w_]; 
+                h_ptr_ = new ftype[n_ * c_ * h_ * w_]; 
             }
 
             ~Blob() {
@@ -59,7 +59,7 @@ namespace cudl
                 }
 
                 // create new buffer 
-                h_ptr_ = new float[n_ * c_ * h_ * w_]; 
+                h_ptr_ = new ftype[n_ * c_ * h_ * w_]; 
                 cuda(); 
 
                 // reset tensor descriptor if it was tensor 
