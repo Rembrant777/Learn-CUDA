@@ -172,5 +172,42 @@ TEST(TestLoss, softmaxLossKernelFuncTest) {
 }
 
 TEST(TestLoss, lossFuncTest) {
-    EXPECT_EQ(1, 1); 
+    int n = 2; 
+    int c = 4; 
+    int h = 3; 
+    int w = 4; 
+
+    CrossEntropyLoss* c_loss = new CrossEntropyLoss(); 
+    EXPECT_NE(c_loss, nullptr); 
+
+    Blob<float> *predict = new Blob<float>(n, c , h, w); 
+    EXPECT_NE(predict, nullptr); 
+
+    Blob<float> *target = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(target, nullptr); 
+
+    // init predict & target test data 
+    predict->gen_mock_data_for_predict(); 
+    predict->print_data("predict", 2, 4); 
+
+    target->gen_mock_data_for_target(); 
+    target->print_data("target", 2, 4); 
+    
+    EXPECT_NE(predict->ptr(), nullptr);
+    EXPECT_NE(target->ptr(), nullptr);
+
+    // make sure both space and gpu space are allocated as expected 
+    EXPECT_NE(predict->cuda(), nullptr); 
+    EXPECT_NE(target->cuda(), nullptr); 
+
+    EXPECT_EQ(predict->len(), n * c * h * w);
+    EXPECT_EQ(target->len(), n * c * h * w);
+
+    float loss_ret = c_loss->loss(predict, target); 
+
+    std::cout<<"Predict & Target Data CroEntropyLoss Value" << std::endl; 
+    std::cout <<  loss_ret << std::endl; 
+
+    delete predict; 
+    delete target; 
 }
