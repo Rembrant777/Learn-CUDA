@@ -4,7 +4,7 @@ GOOGLETEST_PATH=/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
 TARGET=train
-TEST_TARGET=test_blob test_helper test_loss 
+TEST_TARGET=test_blob test_helper test_loss test_layer
 
 GTEST_SRC_INCLUDE = $(GOOGLETEST_PATH)/googletest
 GMOCK_SRC_INCLUDE = $(GOOGLETEST_PATH)/googlemock
@@ -93,7 +93,8 @@ test_loss: $(OBJ_DIR)/test_loss.o $(OBJ_DIR)/loss.o $(GTEST_OBJS)
 test_layer: $(OBJ_DIR)/test_layer.o $(OBJ_DIR)/layer.o $(GTEST_OBJS) 
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)		
 
-all: test_blob test_helper test_loss
+all: test_layer
+#test_blob test_helper test_loss 
 .PHONY: clean 
 
 clean:
