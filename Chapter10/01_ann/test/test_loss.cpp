@@ -203,7 +203,7 @@ TEST(TestLoss, lossFuncTest) {
     EXPECT_EQ(predict->len(), n * c * h * w);
     EXPECT_EQ(target->len(), n * c * h * w);
 
-    float loss_ret = c_loss->loss(predict, target); 
+    float loss_ret = c_loss->test_clip(c_loss->loss(predict, target)); 
 
     std::cout<<"Predict & Target Data CroEntropyLoss Value" << std::endl; 
     std::cout <<  loss_ret << std::endl; 
