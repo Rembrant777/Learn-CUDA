@@ -168,7 +168,7 @@ namespace cudl
                 if (width > max_print_line) {
                     width = max_print_line; 
                 }
-                
+
                 std::cout << "**" << name << "\t: (" << size() << ") \t"; 
                 std::cout << ".n: " << n_ << ", .c: " << c_ << ", .h: " << h_ << ", .w: " << w_; 
                 std::cout << std::hex << "\t(h:" << h_ptr_ << ", d:" << d_ptr_ << ")" << std::dec << std::endl; 
@@ -260,11 +260,6 @@ namespace cudl
                 file.close();
 
                 return 0;
-            }
-
-            // generate random data and write random data to host
-            void gen_mock_data() {
-
             }
         
         private:
