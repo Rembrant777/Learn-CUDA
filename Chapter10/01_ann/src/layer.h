@@ -5,6 +5,20 @@
 #include <cublas_v2.h>
 #include <cudnn.h>
 
+
+#include <random>
+
+#include <cuda_runtime.h>
+#include <curand.h>
+#include <cassert>
+#include <math.h>
+#include <algorithm>
+
+#include <sstream>
+#include <fstream>
+#include <iostream>
+
+
 #include "blob.h"
 #include "loss.h"
 #include "helper.h"
@@ -41,8 +55,18 @@ public:
     void unfreeze() {
         freeze_ = false; 
     }
+    
+    // initialize weights along with the input size 
+    void init_weight_bias(unsigned int seed = 1); 
 
-protected:
+    void update_weights_biases(float learning_rate); 
+
+// I have to remote protected because my current CUDA nvcc compiler 
+// do not support sub-class invoke parent defined functions, link period will raise error
+// I tried to use g++ as host compiler to compile current file but it contains the cuda associated libraries so I give up to do so
+// the only solution is set all functions in base class (Layer) as public 
+
+// protected:
     virtual void fwd_initialize(Blob<float> *input) = 0; 
     virtual void bwd_initialize(Blob<float> *grad_output) = 0; 
 
@@ -70,11 +94,7 @@ protected:
     Blob<float> *grad_biases_   = nullptr; // db 
 
     int batch_size_ = 0; // mini-batch size 
-
-    // initialize weights along with the input size 
-    void init_weight_bias(unsigned int seed = 0);
-    void update_weights_biases(float learning_rate) ; 
-
+    
     // cuda handle container 
     CudaContext *cuda_ = nullptr; 
 
@@ -97,7 +117,8 @@ public:
     virtual Blob<float> *forward(Blob<float> *input); 
     virtual Blob<float> *backward(Blob<float> *grad_input); 
 
-private:
+// private:
+// remove private for testing 
     void fwd_initialize(Blob<float> *input) ; 
     void bwd_initialize(Blob<float> *grad_output); 
 

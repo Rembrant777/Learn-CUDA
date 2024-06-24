@@ -1,0 +1,22 @@
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 4 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 3 tests from TestLayer
+[ RUN      ] TestLayer.DenseLayerCreateTest
+[       OK ] TestLayer.DenseLayerCreateTest (0 ms)
+[ RUN      ] TestLayer.ActivationLayerCreateTest
+[       OK ] TestLayer.ActivationLayerCreateTest (0 ms)
+[ RUN      ] TestLayer.SoftmaxLayerCreateTest
+[       OK ] TestLayer.SoftmaxLayerCreateTest (510 ms)
+[----------] 3 tests from TestLayer (510 ms total)
+
+[----------] 1 test from Testlayer
+[ RUN      ] Testlayer.DenseInitWeightBias
+.. initialized dense-layer-0 layer ..
+.. initialized dense-layer-0 layer ..
+[       OK ] Testlayer.DenseInitWeightBias (0 ms)
+[----------] 1 test from Testlayer (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 2 test suites ran. (511 ms total)
+[  PASSED  ] 4 tests.
