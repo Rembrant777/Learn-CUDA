@@ -25,13 +25,30 @@ CrossEntropyLoss::~CrossEntropyLoss()
         cudaFree(d_workspace_);
 }
 
+/**
+ function clip is used to clip given floating value in expected range. 
+
+ Function Logic:
+ First, fmax(prediction, epsilon) is used to ensure passing prediction is at least epsilon. 
+        If prediction is smaller than epsion it will return epsion.
+ 
+ Then, fmin(result, 1.f - epsion) is used to maintain that the final return result at most 1 - epsilon.
+
+ In this way, given prediciton value will be maintained [epsilon, 1 - epsilon] range.
+
+ This function is designed to avoid input prediction value range out of control cause numerical issueds
+ associated with exterme value like A/B and B = 0 or B is overflow as float or int or double. 
+
+ @param prediction the floating-point value that needs to be clipped.
+ @param epsilon very small positive number that sets the clipping boundaries, default value is 1e-12
+*/
 __device__ float clip(float prediction, float epsilon=1e-12)
 {
     return fmin(fmax(prediction, epsilon), 1.f - epsilon);
 }
 
-__global__ void
-softmax_loss_kernel(float *reduced_loss, float *predict, float *target, float *workspace, int batch_size, int num_outputs)
+__global__ void softmax_loss_kernel(float *reduced_loss, float *predict, float *target, 
+                        float *workspace, int batch_size, int num_outputs)
 {
     int batch_idx = blockDim.x * blockIdx.x + threadIdx.x;
 
@@ -77,11 +94,9 @@ void CrossEntropyLoss::init_workspace(int batch_size)
 
 float CrossEntropyLoss::loss(Blob<float> *predict, Blob<float> *target)
 {
-    int num_sms;
-    int num_blocks_per_sm;
-    cudaDeviceGetAttribute(&num_sms, cudaDevAttrMultiProcessorCount, 0);
-    cudaOccupancyMaxActiveBlocksPerMultiprocessor(&num_blocks_per_sm, softmax_loss_kernel, BLOCK_DIM_1D, BLOCK_DIM_1D * sizeof(float));
-
+    int num_sms = get_cuda_dev_num_sms(); 
+    int num_blocks_per_sm = get_num_blocks_per_sm(); 
+    
     int batch_size = target->n();
     int num_outputs = target->c();
 
@@ -101,6 +116,19 @@ float CrossEntropyLoss::loss(Blob<float> *predict, Blob<float> *target)
     
     // batch mean loss 
     return h_loss_ / float(batch_size);
+}
+
+int CrossEntropyLoss::get_cuda_dev_num_sms()  {
+    int ret = 0; 
+    cudaDeviceGetAttribute(&ret, cudaDevAttrMultiProcessorCount, 0); 
+    return ret; 
+}
+
+int CrossEntropyLoss::get_num_blocks_per_sm() {
+    int ret = 0; 
+    cudaOccupancyMaxActiveBlocksPerMultiprocessor(&ret, softmax_loss_kernel, 
+                BLOCK_DIM_1D, BLOCK_DIM_1D * sizeof(float));
+    return ret; 
 }
 
 

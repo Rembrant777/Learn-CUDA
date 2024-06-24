@@ -32,6 +32,20 @@ public:
         return d_workspace_; 
     }
 
+    // add for testing 
+    void test_invoke_init_workspace(int batch_size) {
+        init_workspace(batch_size); 
+    }
+
+    // add for testing clip 
+    float test_clip(float prediction, float epsilon = 1e-12) {
+        return fmin(fmax(prediction, epsilon), 1.f - epsilon); 
+    }
+
+    int get_cuda_dev_num_sms(); 
+
+    int get_num_blocks_per_sm(); 
+
 private:
     // reduced loss 
     // todo here we can support more loss functions 
