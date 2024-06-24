@@ -41,8 +41,10 @@ void Layer::init_weight_bias(unsigned int seed)
 {
 	checkCudaErrors(cudaDeviceSynchronize());
 
-	if (weights_ == nullptr || biases_ == nullptr)
+	if (weights_ == nullptr || biases_ == nullptr) {
+		std::cout << "weights and biases not allocated return!" << std::endl; 
 		return;
+	}
 
 	// Create random network
 	std::random_device rd;
@@ -171,10 +173,9 @@ int Layer::save_parameter()
  * Dense Layer                                                  *
  ****************************************************************/
 
-Dense::Dense(std::string name, int output_size)
+Dense::Dense(std::string name, int output_size):Layer(), output_size_(output_size)
 {
 	name_ = name;
-	output_size_ = output_size;
 }
 
 Dense::~Dense()
@@ -338,6 +339,8 @@ Blob<float> *Dense::backward(Blob<float> *grad_output)
 
 	return grad_input_;
 }
+
+
 
 /****************************************************************
  * Activation Layer                                             *
