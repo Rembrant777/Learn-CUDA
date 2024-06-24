@@ -20,7 +20,7 @@ namespace cudl
     class Blob {
         public:
             Blob(int n = 1, int c = 1, int h = 1, int w = 1): n_(n), c_(c), h_(h), w_(w) {
-                h_ptr_ = new ftype[h_ * c_ * h_ * w_]; 
+                h_ptr_ = new ftype[n_ * c_ * h_ * w_]; 
             }
 
             Blob(std::array<int, 4> size) : n_(size[0]), c_(size[1]), h_(size[2]), w_(size[3]) {
@@ -29,10 +29,10 @@ namespace cudl
 
             ~Blob() {
                 if (h_ptr_ != nullptr) {
-
+                    free(h_ptr_); 
                 }
                 if (d_ptr_ != nullptr) {
-
+                    cudaFree(d_ptr_); 
                 }
                 if (is_tensor_) {
                     cudnnDestroyTensorDescriptor(tensor_desc_); 
@@ -126,6 +126,28 @@ namespace cudl
                 return d_ptr_;             
             }
 
+            void gen_mock_data_for_predict() {
+                if (h_ptr_ == nullptr) {
+                    h_ptr_ = new ftype[len()]; 
+                }
+
+                for (int i = 0; i < len(); i++) {
+                    // std::cout<< "Predict Value " << h_ptr_[i] << std::endl; 
+                    h_ptr_[i] =  0.5f * (1.0f + std::sin(static_cast<ftype>(i) * 0.1f)); 
+                }
+            }
+
+             void gen_mock_data_for_target() {
+                if (h_ptr_ == nullptr) {
+                    h_ptr_ = new ftype[len()]; 
+                }
+
+                for (int i = 0; i < len(); i++) {
+                    // std::cout<< "Target Value " << h_ptr_[i] << std::endl; 
+                    h_ptr_[i] = 0.5f * (1.0f + std::sin(static_cast<ftype>(i) * 0.1f));  
+                }
+            }
+
             // transfer data between (gpu) memory <-> (cpu) memory 
             ftype *to(DeviceType target) {
                 ftype *ptr = nullptr; 
@@ -139,6 +161,36 @@ namespace cudl
                     ptr = d_ptr_; 
                 }
                 return ptr; 
+            }
+
+            void print_data(std::string name, int num_batch, int width) {
+                int max_print_line = 28; 
+                if (width > max_print_line) {
+                    width = max_print_line; 
+                }
+
+                std::cout << "**" << name << "\t: (" << size() << ") \t"; 
+                std::cout << ".n: " << n_ << ", .c: " << c_ << ", .h: " << h_ << ", .w: " << w_; 
+                std::cout << std::hex << "\t(h:" << h_ptr_ << ", d:" << d_ptr_ << ")" << std::dec << std::endl; 
+
+                int offset = 0; 
+                    for (int n = 0; n < num_batch; n++) {
+                        if (num_batch > 1) {
+                            std::cout << "<---- batch [" << n << "] ----->" << std::endl; 
+                        }
+                        
+                        int count = 0; 
+                        int print_line_count = 0; 
+                        while (count < size() && print_line_count < max_print_line) {
+                            std::cout << "\t"; 
+                            for (int s = 0; s < width && count < size(); s++) {
+                                std::cout << h_ptr_[size() * n + count + offset] << "\t"; 
+                                count++; 
+                            }
+                            std::cout << std::endl; 
+                            print_line_count++; 
+                        }
+                    }
             }
 
             void print(std::string name, bool view_param = false, int num_batch = 1, int width = 16) {

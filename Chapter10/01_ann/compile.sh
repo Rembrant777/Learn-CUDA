@@ -1,3 +1,3 @@
 #!/bin/sh
 
-make clean && make all
+make clean && make && make all
