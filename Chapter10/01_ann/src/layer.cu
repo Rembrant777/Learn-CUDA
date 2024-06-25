@@ -14,6 +14,42 @@
 
 using namespace cudl;
 
+/**
+ About backward's associated gradient descent. 
+ We all know that weight's value will be updated if backward is invoked. 
+ But, how to update the weight and bias when in coding?
+ That is everytime we do not need to update the weight value instead we just update the new iteration's weight formular.
+ Suppose we set the learning-rage as R. 
+ And every time we execute the calculation :
+ y' = w * x + b
+
+ In which y' is the prediction value, w is the weight, b is the bias, and without any avtivaiton opeartion. 
+ 
+ In backward, we adopt the gradient descent in which we calculate the derivation of loss function(L) based on the weight: dL / dw 
+ Then that's the new weight weight' ?
+ It is the 
+ w' = w - R * dL/dw , in next layer we will use this w' as the new weight to execute the forward operation like:
+ y' = w' * x + b' 
+
+ And the up formular's b' also calculated in the same way, that is calculate the derivation of loss function(L) based on the bias: dL / db 
+
+ b' = b - R * dL/db
+ 
+ Then after the backward operation we got the next layer's calculation formular like 
+ y' = w' * x + b' 
+
+----  the above steps are the w*x do not need any activation function's filter, we call it as fa(function of activation =_=|| ...) -----
+ y = fa(w * x + b) = fa(w * x) + fa(b) 
+
+
+ fa' = fa - R * dL/dfa
+
+Then in next layer's calculation, the forward formular will updated as:
+
+ y' = fa'(w*x) + fa(w' * x) + fa'(b) + fa(b')
+
+*/
+
 /****************************************************************
  * Layer definition                                             *
  ****************************************************************/
@@ -126,6 +162,7 @@ int Layer::get_accuracy(Blob<float> *target)
 
 int Layer::load_parameter()
 {
+	std::cout<< name_ << "load_parameter" << std::endl; 
 	std::stringstream filename_weights, filename_biases;
 
 	// load weights and biases pretrained parameters
@@ -361,6 +398,17 @@ Activation::~Activation()
 	cudnnDestroyActivationDescriptor(act_desc_);
 }
 
+/**
+ Different layer's fwd_initialize and bwd_initialize will not trigger inner calculation.
+ It just execute the correspoinding inner data structure's initialization.
+
+ Like, fwd_initialize will init the input/output data matrix create && initialize.
+ Also the cuda side's cuda datastructures' space will be applied and initialized.
+
+ Not only the datastructures' space will be applied.
+ 
+ cuda's corresponding tensor(data structure's info metadata) objects also will be created and initialized. 
+*/
 void Activation::fwd_initialize(Blob<float> *input)
 {
 	if (input_ == nullptr || batch_size_ != input->n())

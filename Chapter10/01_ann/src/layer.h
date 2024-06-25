@@ -141,7 +141,19 @@ public:
     virtual Blob<float> *forward(Blob<float> *input); 
     virtual Blob<float> *backward(Blob<float> *grad_input); 
 
-private:
+    cudnnActivationDescriptor_t get_act_desc() {
+        return act_desc_; 
+    }
+
+    cudnnActivationMode_t get_act_mode() {
+        return act_mode_; 
+    }
+
+    float get_coef() {
+        return act_coef_; 
+    }
+
+//private:
     void fwd_initialize(Blob<float> *input); 
     void bwd_initialize(Blob<float> *output); 
 
@@ -170,7 +182,7 @@ public:
     float get_loss(Blob<float> *target); 
     int   get_accuracy(Blob<float> *target); 
 
-protected:
+// protected:
     void fwd_initialize(Blob<float> *input); 
     void bwd_initialize(Blob<float> *grad_output); 
 
