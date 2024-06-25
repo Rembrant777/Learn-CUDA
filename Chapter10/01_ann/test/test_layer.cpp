@@ -234,37 +234,105 @@ TEST(Testlayer, DenseLayerBackwardExecute)  {
 }
 
 /**
- In this test case we execute activaiton 
- layer forward init operaiton unit tests
+ In this test case we execute 
+ 1. activaiton layer forward init operaiton unit tests
+ 2. activation layer forward calculation  
 */
 TEST(Testlayer, ActivationLayerFwdInit) {
     int n = 1, c = 2, h = 3, w = 5; 
     Blob<float>* input = new Blob<float>(n, c, h, w);
     EXPECT_NE(input, nullptr); 
-
     
+    string name = "activation-layer"; 
+    cudnnActivationMode_t mode = CUDNN_ACTIVATION_SIGMOID; 
+    float coef = 0.0; 
+
+    Activation* layer = new Activation(name, mode, coef); 
+    EXPECT_NE(layer, nullptr);
+
+    // after create activation's inner activation descriptor cannot be null 
+    cudnnActivationDescriptor_t act_desc = layer->get_act_desc(); 
+    EXPECT_NE(&act_desc, nullptr); 
+
+    // here begin init forward, input structure applied is ok 
+    layer->fwd_initialize(input); 
+
+    // check fwd_initialize inner value are initialized 
+    EXPECT_NE(layer->input_desc_, nullptr); 
+
+    EXPECT_NE(layer->input_, nullptr);
+
+    EXPECT_NE(layer->output_desc_, nullptr); 
+    EXPECT_NE(layer->output_, nullptr); 
+
+    // then we invoke Blob's inner function to generate mock input data
+    input->gen_mock_data_for_predict(); 
+    input->print_data("activation_fwd_input_data", 1, input->w()); 
+
+    // create cuda context 
+    CudaContext* cuda_context = new CudaContext(); 
+    layer->set_cuda_context(cuda_context); 
+    
+    Blob<float>* output = layer->forward(input); 
+    EXPECT_NE(output, nullptr); 
+    output->print_data("activation_fwd_output_data", 1, output->w()); 
+    delete layer; 
 }
 
 /**
- In this test case we execute activation 
- layer forward operation 
-*/
-TEST(Testlayer, ActivationLayerFwdExecute) {
-
-}
-
-
-/**
- In this test case, we execute activation backward init 
-*/
-TEST(Testlayer, ActivationLayerbwdInit) {
-
-}
-
-
-/**
- In this test case, we execute activation backward operation
+ In this test case, we execute 
+ 1. activation backward create & init operation
+ 2. activation backward calculate operation 
 */
 TEST(Testlayer, ActivationLayerBwdExecute) {
+     int n = 1, c = 2, h = 8, w = 9; 
+     // create input && grad_output Blob instance 
+     Blob<float>* input = new Blob<float>(n, c, h, w); 
+     Blob<float>* grad_output = new Blob<float>(n, c, h, w); 
 
+     EXPECT_NE(input, nullptr); 
+     EXPECT_NE(grad_output, nullptr);
+
+     string name = "activation layer"; 
+     // select sigmode func as the activation function 
+     cudnnActivationMode_t mode = CUDNN_ACTIVATION_RELU; 
+    
+     Activation* layer = new Activation(name, mode);  
+     EXPECT_NE(layer, nullptr);
+
+     // init the Activation Layer's fwd and bwd env 
+     layer->fwd_initialize(input); 
+
+     // verify fwd initialized member variables 
+     EXPECT_NE(layer->input_, nullptr); 
+     EXPECT_NE(layer->output_, nullptr);
+     EXPECT_NE(layer->input_desc_, nullptr);  
+     EXPECT_NE(layer->output_desc_, nullptr); 
+
+     layer->bwd_initialize(grad_output); 
+     EXPECT_NE(layer->grad_input_, nullptr);
+     EXPECT_NE(layer->grad_output_, nullptr); 
+
+     // verify bwd initialized member variables 
+     // all bwd required member variables are initialized during fwd init period 
+
+     // create cuda context 
+     CudaContext* cuda_context = new CudaContext(); 
+     EXPECT_NE(cuda_context, nullptr); 
+     layer->set_cuda_context(cuda_context); 
+
+     // let grad_output and input generate mock dataset 
+     input->gen_mock_data_for_predict(); 
+     grad_output->gen_mock_data_for_predict(); 
+
+     Blob<float>* output = layer->forward(input); 
+     EXPECT_EQ(output, nullptr); 
+     output->print_data("forward_output_data", n, w); 
+
+     // invoke bwd calculation 
+     Blob<float>* grad_input = layer->backward(grad_output); 
+     EXPECT_EQ(grad_input, nullptr);
+     grad_input->print_data("backward_grad_input_data", n, w); 
+
+    delete layer; 
 }
