@@ -326,12 +326,12 @@ TEST(Testlayer, ActivationLayerBwdExecute) {
      grad_output->gen_mock_data_for_predict(); 
 
      Blob<float>* output = layer->forward(input); 
-     EXPECT_EQ(output, nullptr); 
+     EXPECT_NE(output, nullptr); 
      output->print_data("forward_output_data", n, w); 
 
      // invoke bwd calculation 
      Blob<float>* grad_input = layer->backward(grad_output); 
-     EXPECT_EQ(grad_input, nullptr);
+     EXPECT_NE(grad_input, nullptr);
      grad_input->print_data("backward_grad_input_data", n, w); 
 
     delete layer; 
