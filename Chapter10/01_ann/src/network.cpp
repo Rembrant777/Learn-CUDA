@@ -1,6 +1,6 @@
-#include "network.h"
-#include "helper.h"
-#include "layer.h"
+#include "../src/network.h"
+#include "../src/helper.h"
+#include "../src/layer.h"
 
 #include <iostream>
 #include <iomanip>
