@@ -126,6 +126,7 @@ int Layer::get_accuracy(Blob<float> *target)
 
 int Layer::load_parameter()
 {
+	std::cout<< name_ << "load_parameter" << std::endl; 
 	std::stringstream filename_weights, filename_biases;
 
 	// load weights and biases pretrained parameters
