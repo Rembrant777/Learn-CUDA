@@ -144,7 +144,7 @@ TEST(Testlayer, DenseInitWeightBias) {
 */ 
 TEST(Testlayer, DenseLayerForward) {
     int n = 1, c = 2, h = 3, w = 4; 
-    int output_size = 8; 
+    int output_size = w; 
 
     Blob<float>* input = new Blob<float>(n, c, h, w); 
     EXPECT_NE(input, nullptr); 
@@ -157,7 +157,9 @@ TEST(Testlayer, DenseLayerForward) {
     input->gen_mock_data_for_predict(); 
 
     // print generated test dataset 
-    input->print("input_dataset"); 
+    // cannot invoke print() here because print() function 
+    // will invoke cuda mem -> overwrite host mem -> all generated mock data will be overwrited. 
+    input->print_data("input_dataset", n, w); 
 
     string name = "dense-layer-0"; 
     Dense* d_layer = new Dense(name, output_size); 
@@ -165,17 +167,68 @@ TEST(Testlayer, DenseLayerForward) {
     // set cuda context to layer instance 
     d_layer->set_cuda_context(cuda_context);
 
+    // init weight and output data 
+    d_layer->fwd_initialize(input); 
+
     EXPECT_NE(d_layer, nullptr); 
 
     // invoke forward calculation 
     std::cout << "invoke forward func" << std::endl; 
     Blob<float>* output = d_layer->forward(input); 
     EXPECT_NE(output, nullptr); 
+    EXPECT_NE(output->ptr(), nullptr); 
+    for (int i = 0; i < output->size(); i++) {
+        std::cout << output->ptr()[i] << std::endl; 
+    }
 
     // print data of output 
-    output->print("output_value");
+    // output->print_data("output_value");
 
-    delete input;  
-    delete output;
+    delete d_layer; 
+}
+
+/**
+ In this ut we init backward calculation context and apply data space
+*/
+TEST(Testlayer, DenseLayerBackward)  {
+    int n = 1, c = 2, h = 3, w = 4; 
+    int output_size = w; 
+
+    Blob<float>* grad_output = new Blob<float>(n, c, h, w);
+    EXPECT_NE(grad_output, nullptr); 
+    grad_output->gen_mock_data_for_predict(); 
+    grad_output->print_data("grad_output", n, w); 
+    
+    Blob<float>* input = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(input, nullptr); 
+    input->gen_mock_data_for_predict(); 
+    input->print_data("input", n, w); 
+
+     // create cuda context 
+    CudaContext* cuda_context = new CudaContext(); 
+    EXPECT_NE(cuda_context, nullptr);
+
+    string name = "dense-layer"; 
+    Dense* d_layer = new Dense(name, output_size); 
+
+    d_layer->set_cuda_context(cuda_context); 
+
+    // init backward data 
+    d_layer->fwd_initialize(input); 
+    EXPECT_NE(d_layer->weights_, nullptr); 
+    EXPECT_NE(d_layer->biases_, nullptr);
+
+    d_layer->bwd_initialize(grad_output); 
+    EXPECT_NE(d_layer->grad_weights_, nullptr); 
+    EXPECT_NE(d_layer->grad_biases_, nullptr); 
+    EXPECT_NE(d_layer->grad_input_, nullptr); 
+    EXPECT_NE(d_layer->grad_output_, nullptr); 
+
+    Blob<float>* grad_input = d_layer->backward(grad_output); 
+    EXPECT_NE(grad_input, nullptr); 
+
+    std::cout << "Print Gradient Input " << std::endl; 
+    grad_input->print_data("gradient input data", 1, w); 
+
     delete d_layer; 
 }
