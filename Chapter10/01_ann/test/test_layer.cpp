@@ -336,3 +336,81 @@ TEST(Testlayer, ActivationLayerBwdExecute) {
 
     delete layer; 
 }
+
+/**
+ In this test case
+ 1. init Softmax Forward calcuation context 
+ 2. execute Softmax Forwrd calculation 
+*/
+TEST(Testlayer, DenseLayerForwardCalcuation) {
+
+}
+
+/**
+ In this test case
+ 1. init Softmax Backward calcuation context 
+ 2. execute Softmax Backward calculation 
+*/
+TEST(Testlayer, DenseLayerBackwardCalcuation) {
+    // create input and grad_output init data 
+    // and generate the exepcted results data to calcualte the loss value and accuracy value 
+    int n = 2, c = 3, h = 50, w = 20; 
+    Blob<float>* input = new Blob<float>(n, c, h, w); 
+    Blob<float>* grad_output = new Blob<float>(n, c, h, w); 
+
+    // expected result holder used to calculate loss and accuracy 
+    Blob<float>* expected_output = new Blob<float>(n, c, h, w); 
+
+    EXPECT_NE(input, nullptr); 
+    EXPECT_NE(grad_output, nullptr); 
+    EXPECT_NE(expected_output, nullptr); 
+
+    // create context of cuda 
+    CudaContext* cuda_context = new CudaContext(); 
+    EXPECT_NE(cuda_context, nullptr); 
+
+    // create instance of Softmax Layer 
+    string name = "softmax-layer"; 
+    Softmax* layer = new Softmax(name);
+    EXPECT_NE(layer, nullptr);
+
+    // set context of cuda 
+    layer->set_cuda_context(cuda_context); 
+
+    // init forward and backward 
+    layer->fwd_initialize(input); 
+    EXPECT_NE(layer->input_, nullptr); 
+    EXPECT_NE(layer->output_, nullptr); 
+
+    EXPECT_NE(layer->input_desc_, nullptr); 
+    EXPECT_NE(layer->output_desc_, nullptr);
+
+    layer->bwd_initialize(grad_output); 
+    EXPECT_NE(layer->grad_input_, nullptr);  
+
+    // use input & grad_output to init forward and backward required variables 
+    input->gen_mock_data_for_predict(); 
+    grad_output->gen_mock_data_for_predict(); 
+
+    Blob<float>* output = layer->forward(input); 
+    EXPECT_NE(output, nullptr); 
+
+    // here use softmax instance to calculate loss and accuracy 
+    int accuracy_val = layer->get_accuracy(expected_output); 
+    float loss_val   = layer->get_loss(output); 
+
+    std::cout << "Softmax Layer Forward Accuracy " << accuracy_val<< std::endl; 
+    EXPECT_TRUE(accuracy_val != 0); 
+
+    std::cout << "Softmax Layer Forward Loss " << loss_val << std::endl; 
+    EXPECT_TRUE(loss_val != 0);
+
+    // continue calculation with the backward 
+    Blob<float>* grad_input = layer->backward(grad_output);
+    EXPECT_NE(grad_input, nullptr); 
+
+    std::cout << "grad input value " << std::endl; 
+    grad_input->print_data("grad-input-data", grad_input->n(), grad_input->w()); 
+
+    delete layer; 
+}
