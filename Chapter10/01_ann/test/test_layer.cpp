@@ -142,7 +142,7 @@ TEST(Testlayer, DenseInitWeightBias) {
  In this ut we create instance of Dense and generate mock data for input data
  let Dense invoke forward function to calculate the output = weights^T * input
 */ 
-TEST(Testlayer, DenseLayerForward) {
+TEST(Testlayer, DenseLayerForwardExecute) {
     int n = 1, c = 2, h = 3, w = 4; 
     int output_size = w; 
 
@@ -190,7 +190,7 @@ TEST(Testlayer, DenseLayerForward) {
 /**
  In this ut we init backward calculation context and apply data space
 */
-TEST(Testlayer, DenseLayerBackward)  {
+TEST(Testlayer, DenseLayerBackwardExecute)  {
     int n = 1, c = 2, h = 3, w = 4; 
     int output_size = w; 
 
@@ -233,7 +233,38 @@ TEST(Testlayer, DenseLayerBackward)  {
     delete d_layer; 
 }
 
+/**
+ In this test case we execute activaiton 
+ layer forward init operaiton unit tests
+*/
+TEST(Testlayer, ActivationLayerFwdInit) {
+    int n = 1, c = 2, h = 3, w = 5; 
+    Blob<float>* input = new Blob<float>(n, c, h, w);
+    EXPECT_NE(input, nullptr); 
 
-TEST(Testlayer, DenseLayerBackward) {
     
+}
+
+/**
+ In this test case we execute activation 
+ layer forward operation 
+*/
+TEST(Testlayer, ActivationLayerFwdExecute) {
+
+}
+
+
+/**
+ In this test case, we execute activation backward init 
+*/
+TEST(Testlayer, ActivationLayerbwdInit) {
+
+}
+
+
+/**
+ In this test case, we execute activation backward operation
+*/
+TEST(Testlayer, ActivationLayerBwdExecute) {
+
 }
