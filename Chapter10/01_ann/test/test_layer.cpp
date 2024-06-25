@@ -339,15 +339,6 @@ TEST(Testlayer, ActivationLayerBwdExecute) {
 
 /**
  In this test case
- 1. init Softmax Forward calcuation context 
- 2. execute Softmax Forwrd calculation 
-*/
-TEST(Testlayer, DenseLayerForwardCalcuation) {
-
-}
-
-/**
- In this test case
  1. init Softmax Backward calcuation context 
  2. execute Softmax Backward calculation 
 */
