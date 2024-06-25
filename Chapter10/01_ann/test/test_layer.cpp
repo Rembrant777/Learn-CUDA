@@ -35,10 +35,15 @@ TEST(TestLayer, SoftmaxLayerCreateTest) {
 
 /**
  In this test, we test 
- 0. create Dense Layer and 
- 1. init weight & bias 
- 2. write parameters(weight & bias) to local file 
- 3. load parameters(weight & bias) from local file and verify 
+ 1. create Dense(Layer) instance with name of layer-0 and set input data to it 
+ 2. unfreeze its parameter update status(freeze = false means its inner parameter(weight and bias) can be modifed)
+ 3. invoke fwd_initialize function to invoke its inner init_weights_bias function to generate params to its memory space
+ 4. invoke its save_parameter function to write params to local disk file 
+ 5. create another Dense(Layer) instance with the name of layer-1 
+ 6. unfreeze layer-1 instances status and also enable its load_pretrain variable from false to true which enables 
+    load parameters from local files when invoke fwd_initialize 
+
+test results: layer-0's weight and bias value match with the layer-1's weight and bias value     
 */
 TEST(Testlayer, DenseInitWeightBias) {
     string d_name = "dense-layer-0"; 
@@ -119,6 +124,58 @@ TEST(Testlayer, DenseInitWeightBias) {
     d_layer_1->weights_->print("layer1-weights", 1, w); 
     d_layer_1->biases_->print("layer1-biases", 1, w); 
 
+    // layer0 and layer1 weight param match 
+    EXPECT_EQ(true, d_layer_1->weights_->equals(d_layer_0->weights_)); 
+    EXPECT_EQ(true, d_layer_1->weights_->equals(d_layer_1->weights_)); 
+
+    // self should be equal 
+    EXPECT_EQ(true, d_layer_1->biases_->equals(d_layer_1->biases_)); 
+
+    // layer0 and layer1 bias param match 
+    EXPECT_EQ(true, d_layer_1->biases_->equals(d_layer_0->biases_)); 
+
     delete d_layer_0; 
     delete d_layer_1; 
+}
+
+/**
+ In this ut we create instance of Dense and generate mock data for input data
+ let Dense invoke forward function to calculate the output = weights^T * input
+*/ 
+TEST(Testlayer, DenseLayerForward) {
+    int n = 1, c = 2, h = 3, w = 4; 
+    int output_size = 8; 
+
+    Blob<float>* input = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(input, nullptr); 
+
+    // create cuda context 
+    CudaContext* cuda_context = new CudaContext(); 
+    EXPECT_NE(cuda_context, nullptr); 
+
+    // invoke method to generate mock input dataset 
+    input->gen_mock_data_for_predict(); 
+
+    // print generated test dataset 
+    input->print("input_dataset"); 
+
+    string name = "dense-layer-0"; 
+    Dense* d_layer = new Dense(name, output_size); 
+
+    // set cuda context to layer instance 
+    d_layer->set_cuda_context(cuda_context);
+
+    EXPECT_NE(d_layer, nullptr); 
+
+    // invoke forward calculation 
+    std::cout << "invoke forward func" << std::endl; 
+    Blob<float>* output = d_layer->forward(input); 
+    EXPECT_NE(output, nullptr); 
+
+    // print data of output 
+    output->print("output_value");
+
+    delete input;  
+    delete output;
+    delete d_layer; 
 }

@@ -193,6 +193,54 @@ namespace cudl
                     }
             }
 
+            // method to check either input other Blob instance equals to current Blob weight equals 
+            bool equals(Blob<ftype> *other) {
+                to(host); 
+
+                if (other->ptr() == h_ptr_) {
+                    return true; 
+                }
+
+                if (other == nullptr || h_ptr_ == nullptr) {
+                    return false; 
+                }
+
+                // check size and len and bytesize 
+                int other_len = other->len(); 
+                if (other_len != len()) {
+                    return false; 
+                }
+
+                int other_size = other->size(); 
+                if (other_size != size()) {
+                    return false; 
+                }
+
+                int other_byte_size = other->buf_size(); 
+                if (other_byte_size != buf_size()) {
+                    return false; 
+                }
+
+                int other_n = other->n(); 
+                int other_c = other->c(); 
+                int other_h = other->h(); 
+                int other_w = other->w(); 
+
+                // check batch, channel, height and width 
+                if ((other_n != n()) ||(other_c != c()) || (other_h != h()) || (other_w != w())) {
+                    return false; 
+                }
+
+                // inner value equal validaiton 
+                for (int i = 0; i < size(); i++) {
+                    if (other->ptr()[i] != h_ptr_[i]) {
+                        return false; 
+                    }
+                }
+
+                return true; 
+            }
+
             void print(std::string name, bool view_param = false, int num_batch = 1, int width = 16) {
                 to(host); 
                 std::cout << "**" << name << "\t: (" << size() << ") \t"; 
