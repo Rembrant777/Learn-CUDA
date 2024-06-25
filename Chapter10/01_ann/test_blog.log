@@ -1,12 +1,15 @@
 Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
-[==========] Running 1 test from 1 test suite.
+[==========] Running 3 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 1 test from TestBlob
-[ RUN      ] TestBlob.TestBlobInit
-TestBlobInit
-[       OK ] TestBlob.TestBlobInit (0 ms)
-[----------] 1 test from TestBlob (0 ms total)
+[----------] 3 tests from TestBlob
+[ RUN      ] TestBlob.TestBlobWithFloatType
+[       OK ] TestBlob.TestBlobWithFloatType (524 ms)
+[ RUN      ] TestBlob.TestBlobInitWithIntType
+[       OK ] TestBlob.TestBlobInitWithIntType (0 ms)
+[ RUN      ] TestBlob.TestBlobInitWithDoubleType
+[       OK ] TestBlob.TestBlobInitWithDoubleType (0 ms)
+[----------] 3 tests from TestBlob (524 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
-[  PASSED  ] 1 test.
+[==========] 3 tests from 1 test suite ran. (524 ms total)
+[  PASSED  ] 3 tests.

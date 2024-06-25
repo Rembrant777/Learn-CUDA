@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <cudnn.h>
+#include <cmath>
 #include "helper.h"
 #include "loss.h"
 #include "layer.h"
