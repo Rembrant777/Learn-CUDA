@@ -232,3 +232,8 @@ TEST(Testlayer, DenseLayerBackward)  {
 
     delete d_layer; 
 }
+
+
+TEST(Testlayer, DenseLayerBackward) {
+    
+}
