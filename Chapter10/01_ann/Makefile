@@ -95,7 +95,6 @@ ${OBJ_DIR}/test_mnist.o: ${INCS} ${TEST_DIR}/test_mnist.cpp ${GTEST_DIR}/googlet
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc ${TEST_DIR}/test_mnist.cpp -o $@ $(GENCODE_FLAGS)		
 
-
 # generate test binary files 
 test_blob: $(OBJ_DIR)/test_blob.o  $(GTEST_OBJS)
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
@@ -115,7 +114,7 @@ test_layer: $(OBJ_DIR)/test_layer.o $(OBJ_DIR)/loss.o  $(OBJ_DIR)/layer.o  $(GTE
 test_network: $(OBJ_DIR)/test_network.o $(OBJ_DIR)/loss.o  $(OBJ_DIR)/layer.o $(OBJ_DIR)/network.o $(GTEST_OBJS) 
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
 
-test_mnist: $(OBJ_DIR)/test_mnist.o $(OBJ_DIR)/mnist.o $(GTEST_OBJS) 
+test_mnist: $(OBJ_DIR)/test_mnist.o $(OBJ_DIR)/mnist.o $(OBJ_DIR)/network.o $(GTEST_OBJS) 
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
 
 all: test_layer test_blob test_helper test_loss test_network test_mnist

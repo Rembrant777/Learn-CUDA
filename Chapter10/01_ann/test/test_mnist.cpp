@@ -1,4 +1,5 @@
 #include "../src/mnist.h"
+#include "../src/network.h"
 #include <gtest/gtest.h>
 
 using namespace std; 
