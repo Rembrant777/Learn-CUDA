@@ -25,7 +25,32 @@ TEST(TestNetwork, TestCreateAndInitNetwork) {
 }
 
 TEST(TestNetwork, TestCreateSingleDenseLayerNetwork) {
-    EXPECT_EQ(1, 1);
+    Network* network = new Network(); 
+    EXPECT_NE(network, nullptr); 
+
+    // creat input/output/grad_output/grad_input data's batch, channel, weight value
+    int n = 3, c = 4, h = 9, w = 10; 
+
+    string name = "dense-layer"; 
+    // create Dense Layer 
+    Dense* layer = new Dense(name, w); 
+
+    // init network's cuda context
+    network->cuda(); 
+
+    EXPECT_NE(nullptr, network->get_cuda_context()); 
+
+    // add layer to network 
+    network->add_layer(layer); 
+
+    // get layer from  network and check its inner variables 
+    Dense* layer_net = (Dense *)network->layers().at(0); 
+    EXPECT_NE(layer_net, nullptr);
+
+    // inner layer's gradient stop flag should be updated to true 
+    EXPECT_EQ(true, layer_net->get_gradient_stop()); 
+
+    delete network; 
 }
 
 TEST(TestNetwork, TestCreateSingleActivationLayerNetwork) {
