@@ -114,7 +114,7 @@ test_layer: $(OBJ_DIR)/test_layer.o $(OBJ_DIR)/loss.o  $(OBJ_DIR)/layer.o  $(GTE
 test_network: $(OBJ_DIR)/test_network.o $(OBJ_DIR)/loss.o  $(OBJ_DIR)/layer.o $(OBJ_DIR)/network.o $(GTEST_OBJS) 
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
 
-test_mnist: $(OBJ_DIR)/test_mnist.o $(OBJ_DIR)/mnist.o $(OBJ_DIR)/network.o $(GTEST_OBJS) 
+test_mnist: $(OBJ_DIR)/test_mnist.o $(OBJ_DIR)/mnist.o $(OBJ_DIR)/network.o $(OBJ_DIR)/loss.o  $(OBJ_DIR)/layer.o $(OBJ_DIR)/network.o $(GTEST_OBJS) 
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
 
 all: test_layer test_blob test_helper test_loss test_network test_mnist

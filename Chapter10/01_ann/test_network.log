@@ -1,13 +1,13 @@
 Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
-[==========] Running 6 tests from 1 test suite.
+[==========] Running 5 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 6 tests from TestNetwork
+[----------] 5 tests from TestNetwork
 [ RUN      ] TestNetwork.TestCreateAndInitNetwork
 .. model Configuration .. 
-[       OK ] TestNetwork.TestCreateAndInitNetwork (1714 ms)
-[ RUN      ] TestNetwork.TestCreateSingleDenseLayerNetwork
+[       OK ] TestNetwork.TestCreateAndInitNetwork (1565 ms)
+[ RUN      ] TestNetwork.TestSingleDenseLayerNetwork
 .. model Configuration .. 
-**network-layer-input-data	: (360) 	.n: 3, .c: 4, .h: 9, .w: 10	(h:0x8b2d6b0, d:0)
+**network-layer-input-data	: (360) 	.n: 3, .c: 4, .h: 9, .w: 10	(h:0x1e58a280, d:0)
 <---- batch [0] ----->
 	0.5	0.549917	0.599335	0.64776	0.694709	0.739713	0.782321	0.822109	0.858678	0.891663	
 	0.920735	0.945604	0.96602	0.981779	0.992725	0.998747	0.999787	0.995832	0.986924	0.97315	
@@ -98,17 +98,37 @@ Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/goo
 .. model Configuration .. 
 CUDA : dense-layer
 .. initialized dense-layer layer ..
-[       OK ] TestNetwork.TestCreateSingleDenseLayerNetwork (6 ms)
-[ RUN      ] TestNetwork.TestCreateSingleActivationLayerNetwork
-[       OK ] TestNetwork.TestCreateSingleActivationLayerNetwork (0 ms)
-[ RUN      ] TestNetwork.TestCreateSingleSoftmaxLayerNetwork
-[       OK ] TestNetwork.TestCreateSingleSoftmaxLayerNetwork (0 ms)
-[ RUN      ] TestNetwork.TestCreateMultipleMixLayerNetwork
-[       OK ] TestNetwork.TestCreateMultipleMixLayerNetwork (0 ms)
-[ RUN      ] TestNetwork.TestCreateNetworkIterateSingleTime
-[       OK ] TestNetwork.TestCreateNetworkIterateSingleTime (0 ms)
-[----------] 6 tests from TestNetwork (1720 ms total)
-
-[----------] Global test environment tear-down
-[==========] 6 tests from 1 test suite ran. (1720 ms total)
-[  PASSED  ] 6 tests.
+**network-layer-output-data	: (10) 	.n: 3, .c: 10, .h: 1, .w: 1	(h:0x1eb43ed0, d:0x7fa23f41a200)
+<---- batch [0] ----->
+	7.51642e+27	
+	4.5786e-41	
+	7.51642e+27	
+	4.5786e-41	
+	0	
+	0	
+	0	
+	0	
+	2.44547e-29	
+	4.50394e+15	
+<---- batch [1] ----->
+	2.44547e-29	
+	4.50594e+15	
+	-5.31794e+37	
+	2.91721e-39	
+	2.44547e-29	
+	4.5058e+15	
+	2.44547e-29	
+	4.506e+15	
+	2.44547e-29	
+	4.50587e+15	
+<---- batch [2] ----->
+	-5.31794e+37	
+	2.91721e-39	
+	2.44547e-29	
+	4.50621e+15	
+	2.44547e-29	
+	4.50607e+15	
+	2.44547e-29	
+	4.50628e+15	
+	-5.31794e+37	
+	2.91721e-39	

@@ -3,7 +3,7 @@ Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/goo
 [----------] Global test environment set-up.
 [----------] 5 tests from TestLoss
 [ RUN      ] TestLoss.TestLossCreateAndDestroy
-[       OK ] TestLoss.TestLossCreateAndDestroy (521 ms)
+[       OK ] TestLoss.TestLossCreateAndDestroy (516 ms)
 [ RUN      ] TestLoss.clipFuncTest
 [       OK ] TestLoss.clipFuncTest (0 ms)
 [ RUN      ] TestLoss.testGetCudaSmsNums
@@ -11,9 +11,9 @@ Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/goo
 [ RUN      ] TestLoss.softmaxLossKernelFuncTest
 expected_loss0 0.693147, h_workspace[0] 0.693147
 expected_loss1 2.30259, h_workspace[1] 2.30259
-[       OK ] TestLoss.softmaxLossKernelFuncTest (1 ms)
+[       OK ] TestLoss.softmaxLossKernelFuncTest (0 ms)
 [ RUN      ] TestLoss.lossFuncTest
-**predict	: (48) 	.n: 2, .c: 4, .h: 3, .w: 4	(h:0x2243dd0, d:0)
+**predict	: (48) 	.n: 2, .c: 4, .h: 3, .w: 4	(h:0x13a9dd0, d:0)
 <---- batch [0] ----->
 	0.5	0.549917	0.599335	0.64776	
 	0.694709	0.739713	0.782321	0.822109	
@@ -40,7 +40,7 @@ expected_loss1 2.30259, h_workspace[1] 2.30259
 	0.927299	0.899244	0.867198	0.831485	
 	0.792459	0.75051	0.706059	0.659549	
 	0.611445	0.562227	0.512387	0.462424	
-**target	: (48) 	.n: 2, .c: 4, .h: 3, .w: 4	(h:0x222ece0, d:0)
+**target	: (48) 	.n: 2, .c: 4, .h: 3, .w: 4	(h:0x1394ce0, d:0)
 <---- batch [0] ----->
 	0.5	0.549917	0.599335	0.64776	
 	0.694709	0.739713	0.782321	0.822109	
@@ -69,9 +69,9 @@ expected_loss1 2.30259, h_workspace[1] 2.30259
 	0.611445	0.562227	0.512387	0.462424	
 Predict & Target Data CroEntropyLoss Value
 1e-12
-[       OK ] TestLoss.lossFuncTest (1 ms)
-[----------] 5 tests from TestLoss (526 ms total)
+[       OK ] TestLoss.lossFuncTest (0 ms)
+[----------] 5 tests from TestLoss (518 ms total)
 
 [----------] Global test environment tear-down
-[==========] 5 tests from 1 test suite ran. (527 ms total)
+[==========] 5 tests from 1 test suite ran. (518 ms total)
 [  PASSED  ] 5 tests.
