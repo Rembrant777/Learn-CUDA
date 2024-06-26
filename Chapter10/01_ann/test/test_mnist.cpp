@@ -242,11 +242,7 @@ TEST(TestMnist, TestMnistTestPeriod) {
 
     // execute forward upon the test data 
     model.forward(test_data);
-    int test_accuracy = model.get_accuracy(test_accuracy); 
+    int test_accuracy = model.get_accuracy(test_target); 
     EXPECT_TRUE(test_accuracy > 0); 
     std::cout << "Test Accuracy Value " << test_accuracy << std::endl; 
-
-    delete model; 
-    delete mnist; 
-    delete mnist_test; 
 }
