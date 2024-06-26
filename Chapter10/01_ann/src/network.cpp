@@ -159,7 +159,9 @@ int Network::load_pretrain()
 // 2. register the resource container to all the layers 
 void Network::cuda() 
 {
-    cuda_ = new CudaContext(); 
+    if (cuda_ == nullptr) {
+        cuda_ = new CudaContext(); 
+    }
     std::cout << ".. model Configuration .. " << std::endl; 
     for (auto layer : layers_) {
         std::cout << "CUDA : " << layer->get_name() << std::endl; 

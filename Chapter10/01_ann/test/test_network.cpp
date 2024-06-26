@@ -24,7 +24,7 @@ TEST(TestNetwork, TestCreateAndInitNetwork) {
     delete network; 
 }
 
-TEST(TestNetwork, TestCreateSingleDenseLayerNetwork) {
+TEST(TestNetwork, TestSingleDenseLayerNetwork) {
     Network* network = new Network(); 
     EXPECT_NE(network, nullptr); 
 
@@ -72,23 +72,131 @@ TEST(TestNetwork, TestCreateSingleDenseLayerNetwork) {
     // then we invoke the forward calculation via network 
     Blob<float>* output = network->forward(input); 
     EXPECT_NE(nullptr, output); 
-    // output->print_data("network-layer-output-data", output->n(), output->w());
+    output->print_data("network-layer-output-data", output->n(), output->w());
+
+    // here we continue with the backward calculation and print results
+    Blob<float>* grad_output = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(nullptr, grad_output);
+
+    Blob<float>* grad_input = layer_net->grad_input_; 
+    // grad_input value should not be initialized 
+    grad_input->print_data("grad input value before backward calculation", 
+                            grad_input->n(), grad_input->w()); 
+
+    // gen mock dataset
+    grad_output->gen_mock_data_for_predict(); 
+    network->backward(grad_output); 
+    EXPECT_NE(nullptr, grad_input); 
+
+    // grad_input value should be updated after network invoke backward  
+    grad_input->print_data("grad input value before backward calculation", 
+                            grad_input->n(), grad_input->w()); 
 
     delete network; 
 }
 
-TEST(TestNetwork, TestCreateSingleActivationLayerNetwork) {
-    EXPECT_EQ(1, 1);
+TEST(TestNetwork, TestSingleActivationLayerNetwork) {
+    Network* network = new Network(); 
+    EXPECT_NE(network, nullptr); 
+    int n = 3, c = 4, h = 9, w = 10; 
+    string name = "activation-layer"; 
+    cudnnActivationMode_t mode = CUDNN_ACTIVATION_RELU; 
+    float coef = 0.0f; 
+
+    Activation* layer = new Activation(name, mode, coef); 
+    EXPECT_NE(nullptr, layer); 
+
+    network->add_layer(layer); 
+
+    Blob<float>* input = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(nullptr, input); 
+
+    input->gen_mock_data_for_predict(); 
+    input->print_data("network-act-layer-input", input->n(), input->w()); 
+
+    network->cuda(); 
+    
+    EXPECT_NE(nullptr, network->get_cuda_context()); 
+    EXPECT_NE(nullptr, network->layers().at(0)->cuda_); 
+
+    Blob<float>* output = network->forward(input);
+    EXPECT_NE(output, nullptr); 
+    output->print_data("network-act-layer-output", output->n(), output->w()); 
+
+    // here we continue with the backward calculation and print results
+    Blob<float>* grad_output = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(nullptr, grad_output);
+
+    // gen mock dataset
+    grad_output->gen_mock_data_for_predict(); 
+    network->backward(grad_output); 
+
+    Blob<float>* grad_input = network->layers().at(0)->grad_input_; 
+         EXPECT_NE(nullptr, grad_input); 
+
+    // grad_input value should not be initialized 
+    grad_input->print_data("grad input value before backward calculation", 
+                            grad_input->n(), grad_input->w()); 
+
+    delete network; 
 }
 
-TEST(TestNetwork, TestCreateSingleSoftmaxLayerNetwork) {
-    EXPECT_EQ(1, 1);
+TEST(TestNetwork, TestSingleSoftmaxLayerNetwork) {
+    Network* network = new Network(); 
+    EXPECT_NE(network, nullptr); 
+    int n = 3, c = 4, h = 9, w = 10; 
+    string name = "softmax-layer"; 
+
+    Softmax* layer = new Softmax(name); 
+    EXPECT_NE(nullptr, layer); 
+
+    network->add_layer(layer); 
+
+    Blob<float>* input = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(nullptr, input); 
+
+    input->gen_mock_data_for_predict(); 
+    input->print_data("network-softmax-layer-input", input->n(), input->w()); 
+
+    network->cuda(); 
+    
+    EXPECT_NE(nullptr, network->get_cuda_context()); 
+    EXPECT_NE(nullptr, network->layers().at(0)->cuda_); 
+
+    Blob<float>* output = network->forward(input);
+    EXPECT_NE(output, nullptr); 
+    output->print_data("network-softmax-layer-output", output->n(), output->w()); 
+
+    Blob<float>* grad_output = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(nullptr, grad_output);
+    // gen mock dataset
+    grad_output->gen_mock_data_for_predict(); 
+    network->backward(grad_output); 
+
+    Blob<float>* grad_input = network->layers().at(0)->grad_input_; 
+
+    EXPECT_NE(nullptr, grad_input); 
+    // grad_input value should be updated after network invoke backward  
+    grad_input->print_data("grad input value before backward calculation", 
+                            grad_input->n(), grad_input->w()); 
+
+    delete network; 
 }
 
 TEST(TestNetwork, TestCreateMultipleMixLayerNetwork) {
-    EXPECT_EQ(1, 1);
-}
+    Network *network = new Network(); 
+    network->add_layer(new Dense("dense1", 500)); 
+    network->add_layer(new Activation("relu", CUDNN_ACTIVATION_RELU)); 
+    network->add_layer(new Dense("dense2", 10)); 
+    network->add_layer(new Softmax("softmax")); 
+    network->cuda(); 
 
-TEST(TestNetwork, TestCreateNetworkIterateSingleTime) {
-    EXPECT_EQ(1, 1); 
+    EXPECT_NE(network, nullptr); 
+    EXPECT_EQ(network->layers().size(), 4);
+    EXPECT_NE(network->layers().at(0), nullptr);
+    EXPECT_NE(network->layers().at(1), nullptr);
+    EXPECT_NE(network->layers().at(2), nullptr);
+    EXPECT_NE(network->layers().at(3), nullptr);
+
+    delete network; 
 }
