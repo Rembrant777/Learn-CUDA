@@ -63,6 +63,10 @@ public:
     void unfreeze() {
         freeze_ = false; 
     }
+
+    bool get_freeze() {
+        return freeze_; 
+    }
     
     // initialize weights along with the input size 
     void init_weight_bias(unsigned int seed = 1); 

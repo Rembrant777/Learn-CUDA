@@ -50,6 +50,26 @@ TEST(TestNetwork, TestCreateSingleDenseLayerNetwork) {
     // inner layer's gradient stop flag should be updated to true 
     EXPECT_EQ(true, layer_net->get_gradient_stop()); 
 
+    // we do not want layer load parameters(w, b) from local file 
+    // so we disable this option via set(or make sure) that 
+    // layer#freeze = false and load_pretrain = false 
+    EXPECT_EQ(false, layer_net->get_freeze()); 
+    EXPECT_EQ(false, layer_net->get_load_pretrain()); 
+
+
+    // then we create input data instance and init its data 
+    Blob<float>* input = new Blob<float>(n, c, h, w); 
+    EXPECT_NE(nullptr, input); 
+
+    input->gen_mock_data_for_predict();  
+    input->print_data("network-layer-input-data", input->n(), input->w()); 
+
+
+    // then we invoke the forward calculation via network 
+    Blob<float>* output = network->foward(input); 
+    EXPECT_NE(nullptr, output); 
+    output->print_data("network-layer-output-data", output->n(), output->w());
+
     delete network; 
 }
 

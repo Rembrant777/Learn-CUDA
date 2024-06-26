@@ -5,6 +5,7 @@ using namespace std;
 using namespace cudl; 
 
 TEST(TestMnist, TestCreateAndInitMnist) {
-    Mnist* mnist = new Mnist("../dataset"); 
+    MNIST* mnist = new MNIST("../dataset"); 
     EXPECT_NE(mnist, nullptr); 
+    delete mnist; 
 }
