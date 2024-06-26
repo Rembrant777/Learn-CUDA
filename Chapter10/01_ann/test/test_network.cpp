@@ -64,11 +64,15 @@ TEST(TestNetwork, TestCreateSingleDenseLayerNetwork) {
     input->gen_mock_data_for_predict();  
     input->print_data("network-layer-input-data", input->n(), input->w()); 
 
+    network->cuda(); 
+
+    // make sure network's inner each layer context of cuda is available 
+    EXPECT_NE(nullptr, layer_net->cuda_); 
 
     // then we invoke the forward calculation via network 
-    Blob<float>* output = network->foward(input); 
+    Blob<float>* output = network->forward(input); 
     EXPECT_NE(nullptr, output); 
-    output->print_data("network-layer-output-data", output->n(), output->w());
+    // output->print_data("network-layer-output-data", output->n(), output->w());
 
     delete network; 
 }
