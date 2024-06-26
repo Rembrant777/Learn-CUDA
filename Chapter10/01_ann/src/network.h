@@ -4,14 +4,15 @@
 #include <string>
 #include <vector>
 #include <cudnn.h>
+#include <cmath>
 #include "helper.h"
 #include "loss.h"
 #include "layer.h"
 
 namespace cudl {
     typedef enum {
-        training,
-        inference
+        training,  
+        inference  
     } WorkloadType; 
 
     class Network {
@@ -42,6 +43,15 @@ namespace cudl {
             Blob<float> *output_; 
 
             std::vector<Layer *> layers(); 
+
+            CudaContext* get_cuda_context() {
+                return cuda_; 
+            }
+
+            WorkloadType get_network_workload() {
+                return phase_; 
+            }
+
 
         private:
             std::vector<Layer *> layers_; 

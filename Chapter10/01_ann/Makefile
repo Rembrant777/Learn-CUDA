@@ -4,7 +4,7 @@ GOOGLETEST_PATH=/home/raytrack/workspace/Learn-CUDA/Chapter10/googletest
 HOST_COMPILER ?= g++
 NVCC=${CUDA_PATH}/bin/nvcc -ccbin ${HOST_COMPILER}
 TARGET=train
-TEST_TARGET=test_blob test_helper test_loss test_layer
+TEST_TARGET=test_blob test_helper test_loss test_layer test_mnist
 
 GTEST_SRC_INCLUDE = $(GOOGLETEST_PATH)/googletest
 GMOCK_SRC_INCLUDE = $(GOOGLETEST_PATH)/googlemock
@@ -50,6 +50,14 @@ ${OBJ_DIR}/layer.o: ${SRC_DIR}/layer.cu ${INCS}
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS) 
 
+${OBJ_DIR}/network.o: ${SRC_DIR}/network.cpp ${INCS}
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS) 
+
+${OBJ_DIR}/mnist.o: ${SRC_DIR}/mnist.cpp ${SRC_DIR}/blob.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) -dc $< -o $@ $(GENCODE_FLAGS) 	
+
 # obj of gtest
 ${OBJ_DIR}/gtest-all.o: ${GTEST_DIR}/googletest/src/gtest-all.cc
 	@mkdir -p ${OBJ_DIR}
@@ -63,40 +71,53 @@ ${OBJ_DIR}/gmock-all.o: ${GTEST_DIR}/googlemock/src/gmock-all.cc
 	$(HOST_COMPILER) -g -std=c++14  ${GTEST_CCFLAGS} -c $< -o $@
 
 #objs of test 
-# ${OBJ_DIR}/test_blob.o: ${SRC_DIR}/blob.h ${TEST_DIR}/test_blob.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
-# 	@mkdir -p ${OBJ_DIR}
-# 	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc  ${TEST_DIR}/test_blob.cpp -o $@ $(GENCODE_FLAGS)	
+${OBJ_DIR}/test_blob.o: ${SRC_DIR}/blob.h ${TEST_DIR}/test_blob.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc  ${TEST_DIR}/test_blob.cpp -o $@ $(GENCODE_FLAGS)	
 
-# ${OBJ_DIR}/test_helper.o: ${SRC_DIR}/helper.h ${TEST_DIR}/test_helper.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h  
-# 	@mkdir -p ${OBJ_DIR}
-# 	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc ${TEST_DIR}/test_helper.cpp -o $@ $(GENCODE_FLAGS)	
+${OBJ_DIR}/test_helper.o: ${SRC_DIR}/helper.h ${TEST_DIR}/test_helper.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h  
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc ${TEST_DIR}/test_helper.cpp -o $@ $(GENCODE_FLAGS)	
 
-# ${OBJ_DIR}/test_loss.o: ${INCS} ${TEST_DIR}/test_loss.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
-# 	@mkdir -p ${OBJ_DIR}
-# 	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc ${TEST_DIR}/test_loss.cpp -o $@ $(GENCODE_FLAGS)	
+${OBJ_DIR}/test_loss.o: ${INCS} ${TEST_DIR}/test_loss.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc ${TEST_DIR}/test_loss.cpp -o $@ $(GENCODE_FLAGS)	
 
 ${OBJ_DIR}/test_layer.o: ${INCS} ${TEST_DIR}/test_layer.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
 	@mkdir -p ${OBJ_DIR}
 	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc ${TEST_DIR}/test_layer.cpp -o $@ $(GENCODE_FLAGS)	
 
+${OBJ_DIR}/test_network.o: ${INCS} ${TEST_DIR}/test_network.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc ${TEST_DIR}/test_network.cpp -o $@ $(GENCODE_FLAGS)		
+
+${OBJ_DIR}/test_mnist.o: ${INCS} ${TEST_DIR}/test_mnist.cpp ${GTEST_DIR}/googletest/include/gtest/gtest.h
+	@mkdir -p ${OBJ_DIR}
+	$(NVCC) $(ALL_CCFLAGS) $(GTEST_CCFLAGS) -x cu -dc ${TEST_DIR}/test_mnist.cpp -o $@ $(GENCODE_FLAGS)		
+
 # generate test binary files 
-# test_blob: $(OBJ_DIR)/test_blob.o  $(GTEST_OBJS)
-# 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
+test_blob: $(OBJ_DIR)/test_blob.o  $(GTEST_OBJS)
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 
-# test_helper: $(OBJ_DIR)/test_helper.o $(GTEST_OBJS)
-# 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
+test_helper: $(OBJ_DIR)/test_helper.o $(GTEST_OBJS)
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
 
-# test_loss: $(OBJ_DIR)/test_loss.o $(OBJ_DIR)/loss.o $(GTEST_OBJS)
-# 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)		
+test_loss: $(OBJ_DIR)/test_loss.o $(OBJ_DIR)/loss.o $(GTEST_OBJS)
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)		
 
-# test_layer: $(OBJ_DIR)/test_layer.o $(OBJ_DIR)/layer.o  $(OBJ_DIR)/loss.o $(GTEST_OBJS) 
-# 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
+test_layer: $(OBJ_DIR)/test_layer.o $(OBJ_DIR)/layer.o  $(OBJ_DIR)/loss.o $(GTEST_OBJS) 
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)
 
 test_layer: $(OBJ_DIR)/test_layer.o $(OBJ_DIR)/loss.o  $(OBJ_DIR)/layer.o  $(GTEST_OBJS) 
 	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
 
-all: test_layer 
-#test_blob test_helper test_loss 
+test_network: $(OBJ_DIR)/test_network.o $(OBJ_DIR)/loss.o  $(OBJ_DIR)/layer.o $(OBJ_DIR)/network.o $(GTEST_OBJS) 
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
+
+test_mnist: $(OBJ_DIR)/test_mnist.o $(OBJ_DIR)/mnist.o $(OBJ_DIR)/network.o $(OBJ_DIR)/loss.o  $(OBJ_DIR)/layer.o $(OBJ_DIR)/network.o $(GTEST_OBJS) 
+	$(NVCC) $(ALL_CCFLAGS) $^ -o $@ $(GENCODE_FLAGS) $(LIBRARIES)	
+
+all: test_layer test_blob test_helper test_loss test_network test_mnist
 .PHONY: clean 
 
 clean:

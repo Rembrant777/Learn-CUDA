@@ -1,0 +1,66 @@
+Running main() from /home/raytrack/workspace/Learn-CUDA/Chapter10/googletest/googletest/src/gtest_main.cc
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from TestMnist
+[ RUN      ] TestMnist.TestCreateAndInitMnist
+loading ./dataset/train-images-idx3-ubyte
+loaded 60000 items..
+Blob#n 256
+Blob#c 1
+Blob#h 28
+Blob#w 28
+Blob#n 256
+Blob#c 10
+Blob#h 1
+Blob#w 1
+[       OK ] TestMnist.TestCreateAndInitMnist (540 ms)
+[ RUN      ] TestMnist.TestMnistTrain
+.. model Configuration .. 
+CUDA : dense1
+CUDA : relu
+CUDA : dense2
+CUDA : softmax
+loading ./dataset/train-images-idx3-ubyte
+loaded 60000 items..
+Blob#n 256
+Blob#c 1
+Blob#h 28
+Blob#w 28
+Blob#n 256
+Blob#c 10
+Blob#h 1
+Blob#w 1
+.. initialized dense1 layer ..
+.. initialized dense2 layer ..
+.. store weights to the storage ..
+.. saving dense1 parameter .. done ..
+[       OK ] TestMnist.TestMnistTrain (2327 ms)
+[ RUN      ] TestMnist.TestMnistTestPeriod
+.. model Configuration .. 
+CUDA : dense1
+CUDA : relu
+CUDA : dense2
+CUDA : softmax
+loading ./dataset/train-images-idx3-ubyte
+loaded 60000 items..
+Blob#n 256
+Blob#c 1
+Blob#h 28
+Blob#w 28
+Blob#n 256
+Blob#c 10
+Blob#h 1
+Blob#w 1
+.. initialized dense1 layer ..
+.. initialized dense2 layer ..
+.. store weights to the storage ..
+.. saving dense1 parameter .. done ..
+loading ./dataset/t10k-images-idx3-ubyte
+loaded 10000 items..
+Test Accuracy Value 1
+[       OK ] TestMnist.TestMnistTestPeriod (726 ms)
+[----------] 3 tests from TestMnist (3594 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (3594 ms total)
+[  PASSED  ] 3 tests.

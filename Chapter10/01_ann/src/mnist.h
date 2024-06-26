@@ -45,7 +45,7 @@ public:
         return target_; 
     }
 
-private:
+// private: remove this for testing TVT/~
     // predefined file names 
     std::string dataset_dir_; 
 #ifdef __linux__

@@ -43,8 +43,16 @@ public:
         load_pretrain_ = true; 
     }
 
+    bool get_load_pretrain() {
+        return load_pretrain_; 
+    }
+
     void set_gradient_stop() {
         gradient_stop_ = true; 
+    }
+
+    bool get_gradient_stop() {
+        return gradient_stop_; 
     }
 
     // weight freeze or un-freeze 
@@ -54,6 +62,10 @@ public:
 
     void unfreeze() {
         freeze_ = false; 
+    }
+
+    bool get_freeze() {
+        return freeze_; 
     }
     
     // initialize weights along with the input size 
